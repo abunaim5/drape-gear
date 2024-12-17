@@ -13,8 +13,11 @@ export default {
         DEFAULT: '1rem',
         md: '1.5rem',
         lg: '2rem'
-      }
-    }
+      },
+      screens: {
+        DEFAULT: '1440px',
+      },
+    },
   },
   plugins: [],
 } satisfies Config;
