@@ -3,7 +3,7 @@ export default function Home() {
   return (
     <main>
       <div className="container">
-          <h1>RSIN PROJECT</h1>
+          <h1>Drape Gear Project</h1>
       </div>
     </main>
   );

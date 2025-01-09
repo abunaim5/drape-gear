@@ -1,7 +1,8 @@
 export const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'For Business', href: '/forbusiness' },
-  { label: 'For Investor', href: '/forinvestor' },
-  { label: 'For Rates', href: '/forrates' },
-  { label: 'Others', href: '/others' },
+  { label: 'Shop', href: '/shop' },
+  { label: 'Products', href: '/products' },
+  { label: 'Sale', href: '/sale' },
+  { label: 'Support', href: '/support' },
+  { label: 'Dashboard', href: '/dashboard' },
 ];
