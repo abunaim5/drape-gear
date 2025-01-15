@@ -10,9 +10,7 @@ const NavLink = ({ href, label }: { href: string; label: string }) => {
   return (
     <Link href={href}>
       <span
-        className={`text-[#00233F] ${
-          isActive ? 'font-semibold' : ''
-        }`}
+        className={`text-[#00233F] ${isActive ? 'font-semibold' : ''} ${isActive ? 'text-cyan-500' : ''} hover:text-cyan-500 transition-all duration-300`}
       >
         {label}
       </span>
