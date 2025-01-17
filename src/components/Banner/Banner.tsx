@@ -2,7 +2,7 @@
 const Banner = () => {
     return (
         <div>
-            This is a banner
+            <button>Explore Now</button>
         </div>
     );
 };
