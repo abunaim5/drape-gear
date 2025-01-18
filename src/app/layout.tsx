@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import Banner from "@/components/Banner/Banner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -31,8 +30,9 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <Navbar />
-        <Banner />
-        {children}
+        <main>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

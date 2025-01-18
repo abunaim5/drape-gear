@@ -14,7 +14,7 @@ const Banner = () => {
     ];
 
     return (
-        <div className='h-[320px] md:h-[450px] lg:h-[calc(100vh-88px)] cursor-grab'>
+        <section className='h-[320px] md:h-[450px] lg:h-[calc(100vh-88px)] cursor-grab'>
             <Flicking circular={true} plugins={_plugins}>
                 {
                     banners.map((banner, idx) => <div key={idx} className='w-full h-full bg-no-repeat bg-right-top md:bg-top bg-cover object-contain flex-1' style={{ backgroundImage: `url(${banner.img})` }}>
@@ -33,7 +33,7 @@ const Banner = () => {
                     <div className="flicking-pagination"></div>
                 </ViewportSlot>
             </Flicking>
-        </div>
+        </section>
     );
 };
 
