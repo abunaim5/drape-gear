@@ -1,6 +1,7 @@
+import { footContentType } from "@/types/types";
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
 
-export type footContents = [
+const footContents: footContentType = [
     {
         name: 'Category',
         cls: 'flex-col',
@@ -99,13 +100,15 @@ export type footContents = [
         description: 'Feel free to connect with us on social media for latest updates.',
         routes: [
             {
-                name: typeof FaFacebookSquare,
+                name: FaFacebookSquare,
                 link: '/'
             },
             {
-                name: typeof FaInstagramSquare,
+                name: FaInstagramSquare,
                 link: '/'
             }
         ],
     },
 ];
+
+export { footContents }
