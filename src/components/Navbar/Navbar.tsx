@@ -5,14 +5,16 @@ import Link from 'next/link';
 import { FiUser } from 'react-icons/fi';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiShoppingCartSimple } from 'react-icons/pi';
+import { HiOutlineMenuAlt1 } from 'react-icons/hi';
 
 const Navbar = () => {
   return (
-    <nav className='bg-transparent h-fit py-8 border-b-[1px]'>
+    <nav className='bg-transparent h-fit py-6'>
       <div className='container flex items-center'>
         <div className='flex items-center gap-2 flex-1'>
+          <HiOutlineMenuAlt1 className='block lg:hidden text-3xl' />
           <div className='logo flex-1 text-2xl md:text-3xl font-semibold'>
-            drapeGear
+            drapegear.
           </div>
         </div>
         <div className='hidden lg:block'>

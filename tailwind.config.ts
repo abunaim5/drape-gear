@@ -15,7 +15,7 @@ export default {
         lg: '2rem'
       },
       screens: {
-        DEFAULT: '1440px',
+        DEFAULT: '1650px',
       },
     },
   },

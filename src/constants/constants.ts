@@ -1,7 +1,20 @@
-import { footContentType } from "@/types/types";
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
+import { BannerType, FootContentType } from "@/types/types";
 
-const footContents: footContentType = [
+const banners: BannerType = [
+    {
+        title: 'Fashion For Her',
+        subtitle: 'New Arrival',
+        img: '/images/banner1.png'
+    },
+    {
+        title: 'Fashion For Him',
+        subtitle: 'New Arrival',
+        img: '/images/banner2.png'
+    },
+];
+
+const footContents: FootContentType = [
     {
         name: 'Category',
         cls: 'flex-col',
@@ -111,4 +124,4 @@ const footContents: footContentType = [
     },
 ];
 
-export { footContents }
+export { banners, footContents }
