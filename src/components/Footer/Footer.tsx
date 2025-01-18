@@ -14,7 +14,7 @@ const Footer = () => {
                         <p className=''>{content.description}</p>
                         <div className={`flex gap-2 ${content.cls}`}>
                             {
-                                content.routes.map((route, idx) => <Link key={idx} href='/' className={`text-gray-500 w-fit hover:text-[#00BADB] ${route.name === FaFacebookSquare ? 'mt-2 text-2xl lg:text-3xl' : route.name === FaInstagramSquare ? 'mt-2 text-2xl lg:text-3xl' : ''}`}>{typeof route.name === 'function' ? <route.name /> : route.name}</Link>)
+                                content.routes.map((route, idx) => <Link key={idx} href='/' className={`text-gray-500 w-fit transition-all duration-300 hover:text-cyan-500 ${route.name === FaFacebookSquare ? 'mt-2 text-2xl lg:text-3xl' : route.name === FaInstagramSquare ? 'mt-2 text-2xl lg:text-3xl' : ''}`}>{typeof route.name === 'function' ? <route.name /> : route.name}</Link>)
                             }
                         </div>
                     </div>)

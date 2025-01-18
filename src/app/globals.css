@@ -1,4 +1,31 @@
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/futuraLt-regular.woff2') format('woff2'),
+        url('/fonts/futuraLt-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/FuturaTS-Medium.woff2') format('woff2'),
+        url('/fonts/FuturaTS-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/FuturaTS-DemiBold.woff2') format('woff'),
+        url('/fonts/FuturaTS-DemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: "Futura", sans-serif;
+}
