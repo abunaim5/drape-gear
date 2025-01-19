@@ -6,6 +6,13 @@ export type BannerType = {
     img: string
 }[];
 
+export type CollectionType = {
+    img: string,
+    btnName: string,
+    path: string,
+    colSpan: number
+}[];
+
 export type FootContentType = {
     name: string,
     cls: string,

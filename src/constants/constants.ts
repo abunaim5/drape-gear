@@ -1,5 +1,5 @@
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
-import { BannerType, FootContentType } from "@/types/types";
+import { BannerType, CollectionType, FootContentType } from "@/types/types";
 
 const banners: BannerType = [
     {
@@ -11,6 +11,39 @@ const banners: BannerType = [
         title: 'Fashion For Him',
         subtitle: 'New Arrival',
         img: '/images/banner2.png'
+    },
+];
+
+const collections: CollectionType = [
+    {
+        img: '/images/women.png',
+        btnName: 'Women',
+        path: '/products/women',
+        colSpan: 2
+    },
+    {
+        img: '/images/men.png',
+        btnName: 'Men',
+        path: '/products/men',
+        colSpan: 2
+    },
+    {
+        img: '/images/3.png',
+        btnName: 'Kids',
+        path: '/products/kids',
+        colSpan: 2
+    },
+    {
+        img: '/images/accessories.png',
+        btnName: 'Accessories',
+        path: '/products/accessories',
+        colSpan: 3
+    },
+    {
+        img: '/images/home-decor.png',
+        btnName: 'Decor',
+        path: '/products/decor',
+        colSpan: 3
     },
 ];
 
@@ -124,4 +157,4 @@ const footContents: FootContentType = [
     },
 ];
 
-export { banners, footContents }
+export { banners, collections, footContents }

@@ -33,7 +33,7 @@ const Navbar = () => {
             <IoMdHeartEmpty className='transition-all duration-300 group-hover:text-cyan-500' />
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
           </div>
-          <div className='relative hidden md:block cursor-pointer group'>
+          <div className='relative cursor-pointer group'>
             <PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' />
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
           </div>
