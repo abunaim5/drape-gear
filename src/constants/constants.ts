@@ -1,5 +1,5 @@
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
-import { BannerType, CollectionType, FootContentType } from "@/types/types";
+import { BannerType, CollectionType, FootContentType, SupportType } from "@/types/types";
 
 const banners: BannerType = [
     {
@@ -22,7 +22,7 @@ const collections: CollectionType = [
         colSpan: 2
     },
     {
-        img: '/images/men.png',
+        img: '/images/1.png',
         btnName: 'Men',
         path: '/products/men',
         colSpan: 2
@@ -46,6 +46,30 @@ const collections: CollectionType = [
         colSpan: 3
     },
 ];
+
+const supports: SupportType = [
+    {
+        title: 'Fast Delivery',
+        description: '70 Taka shipping on all orders',
+        img: '/icons/fast-delivery.png'
+    },
+    {
+        title: 'Safe Payment',
+        description: 'We ensure cash on delivery',
+        img: '/icons/payment.png'
+    },
+    {
+        title: '24/7 Online Support',
+        description: '24 hours a day, 7 days a week',
+        img: '/icons/chat.png'
+    },
+    {
+        title: 'Free Return',
+        description: 'Simply return it within 7 days',
+        img: '/icons/return.png'
+    }
+];
+
 
 const footContents: FootContentType = [
     {
@@ -157,4 +181,4 @@ const footContents: FootContentType = [
     },
 ];
 
-export { banners, collections, footContents }
+export { banners, collections, supports, footContents }

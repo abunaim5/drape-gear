@@ -27,14 +27,14 @@ const Navbar = () => {
           </ul>
         </div>
         <div className='flex items-center justify-end gap-2 md:gap-4 text-[22px] md:text-2xl flex-1'>
-          <IoSearchOutline className='cursor-pointer transition-all duration-300 hover:text-cyan-500' />
-          <Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' /></Link>
+          <IoSearchOutline className='cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
+          <Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>
           <div className='relative hidden md:block cursor-pointer group'>
-            <IoMdHeartEmpty className='transition-all duration-300 group-hover:text-cyan-500' />
+            <IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' />
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
           </div>
           <div className='relative cursor-pointer group'>
-            <PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' />
+            <PiShoppingCartSimple className='transition-all duration-[400ms] group-hover:text-cyan-500' />
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
           </div>
         </div>

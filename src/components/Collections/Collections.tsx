@@ -23,7 +23,7 @@ const Collections = () => {
                         <Link href={collection.path} key={idx} className={`relative col-span-6 ${colSpanClass} overflow-hidden group`}>
                             <div className='h-[50vh] lg:h-[85vh] bg-no-repeat bg-top bg-cover group-hover:scale-110 transform transition-transform ease-in-out duration-1000' style={{ backgroundImage: `url(${collection.img})` }} />
 
-                            <button className='absolute bottom-8 z-10 left-1/2 transform -translate-x-1/2 right-0 w-[119px] lg:w-[190px] text-sm md:text-base py-2 md:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
+                            <button className='absolute bottom-8 z-10 left-1/2 transform -translate-x-1/2 right-0 w-[119px] md:w-[145px] lg:w-[190px] text-sm md:text-base py-2 md:py-3 lg:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
                                 {collection.btnName}
                             </button>
                         </Link>

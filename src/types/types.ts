@@ -13,6 +13,12 @@ export type CollectionType = {
     colSpan: number
 }[];
 
+export type SupportType = {
+    title: string,
+    description: string,
+    img: string
+}[];
+
 export type FootContentType = {
     name: string,
     cls: string,

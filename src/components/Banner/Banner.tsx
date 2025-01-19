@@ -22,7 +22,7 @@ const Banner = () => {
                             <div className='w-full'>
                                 <h3 className='text-xl md:text-2xl lg:text-3xl'>{banner.subtitle}</h3>
                                 <h1 className='text-3xl md:text-6xl lg:text-8xl mt-2 md:mt-4 mb-4 md:mb-7'>{banner.title}</h1>
-                                <button className='w-[119px] lg:w-[190px] text-sm md:text-base py-2 md:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
+                                <button className='w-[119px] md:w-[145px] lg:w-[190px] text-sm md:text-base py-2 md:py-3 lg:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
                                     Shop Now
                                 </button>
                             </div>
