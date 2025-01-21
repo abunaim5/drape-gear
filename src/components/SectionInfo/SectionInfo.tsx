@@ -1,3 +1,4 @@
+'use client';
 
 const SectionInfo = ({title, description}: {title: string, description: string}) => {
     return (
