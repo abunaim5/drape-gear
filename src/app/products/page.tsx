@@ -1,6 +1,6 @@
 'use client';
 import ProductCard from "@/components/ProductCard/ProductCard";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { productListType } from "@/types/types";
 import { CiFilter } from "react-icons/ci";
 import {
@@ -10,19 +10,19 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react";
+import { fetchProducts } from "@/lib/features/products/productsSlice";
 
 const Products = () => {
     const { products, loading, error } = useAppSelector((state) => state.products);
-    const [sortPriceVal, setSortPriceVal] = useState('default');
+    const dispatch = useAppDispatch();
 
     const handleFilterDrawer = () => {
-        
+
     };
 
     // handle sorting by price
     const handleSortByPrice = (value: string) => {
-        setSortPriceVal(value);
+        dispatch(fetchProducts(value));
     };
 
     return (

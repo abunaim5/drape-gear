@@ -2,8 +2,9 @@ import { productType } from "@/types/types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-    const res = await axios.get('http://localhost:5000/products');
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async (sortPriceVal: string) => {
+    console.log(sortPriceVal);
+    const res = await axios.get(`http://localhost:5000/products?sort=${sortPriceVal ? sortPriceVal : 'default'}`);
     return res.data.products;
 });
 
