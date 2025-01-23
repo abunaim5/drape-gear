@@ -1,7 +1,8 @@
 'use client'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '@/lib/store'
+import { fetchProducts } from '@/lib/features/products/productsSlice'
 
 const StoreProvider = ({
     children
@@ -13,6 +14,12 @@ const StoreProvider = ({
         // Create the store instance the first time this renders
         storeRef.current = makeStore()
     }
+
+    useEffect(() => {
+        if(storeRef.current) {
+            storeRef.current.dispatch(fetchProducts());
+        }
+    }, []);
 
     return <Provider store={storeRef.current}>{children}</Provider>
 }

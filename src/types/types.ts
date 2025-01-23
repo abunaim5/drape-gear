@@ -1,5 +1,23 @@
 import { IconType } from "react-icons"
 
+export type productType = {
+    _id: string,
+    name: string,
+    image: string,
+    description: string,
+    category: string,
+    price: number,
+    createdAt: string,
+    availability: boolean,
+    collection: string
+}[];
+
+export type productListType = {
+    name: string,
+    image: string,
+    price: number
+};
+
 export type BannerType = {
     title: string,
     subtitle: string,

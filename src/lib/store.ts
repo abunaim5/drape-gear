@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import productReducer from './features/products/productsSlice'
 
 export const makeStore = () => {
     return configureStore({
-        reducer: {}
-    })
-}
+        reducer: {
+            products: productReducer
+        }
+    });
+};
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>
