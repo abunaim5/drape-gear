@@ -11,10 +11,16 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { fetchProducts } from "@/lib/features/products/productsSlice";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Products = () => {
-    const { products, loading, error } = useAppSelector((state) => state.products);
+    const { products } = useAppSelector((state) => state.products);
+    const [sortPriceVal, setSortPriceVal] = useState('default');
     const dispatch = useAppDispatch();
+    const location = usePathname();
+    const collection = location.split('/')[2];
+    console.log(collection);
 
     const handleFilterDrawer = () => {
 
@@ -22,8 +28,12 @@ const Products = () => {
 
     // handle sorting by price
     const handleSortByPrice = (value: string) => {
-        dispatch(fetchProducts(value));
+        setSortPriceVal(value);
     };
+
+    useEffect(() => {
+        dispatch(fetchProducts({ sortPriceVal, collection }));
+    }, [dispatch, sortPriceVal, collection]);
 
     return (
         <div className='mb-16'>

@@ -17,7 +17,7 @@ const StoreProvider = ({
 
     useEffect(() => {
         if(storeRef.current) {
-            storeRef.current.dispatch(fetchProducts());
+            storeRef.current.dispatch(fetchProducts({collection: 'all', sortPriceVal: 'default'}));
         }
     }, []);
 

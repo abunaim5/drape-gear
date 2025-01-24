@@ -2,9 +2,8 @@ import { productType } from "@/types/types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async (sortPriceVal: string) => {
-    console.log(sortPriceVal);
-    const res = await axios.get(`http://localhost:5000/products?sort=${sortPriceVal ? sortPriceVal : 'default'}`);
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ collection, sortPriceVal }: { collection: string, sortPriceVal: string }) => {
+    const res = await axios.get(`http://localhost:5000/products?filter=${collection}&sort=${sortPriceVal ? sortPriceVal : 'default'}`);
     return res.data.products;
 });
 
@@ -28,18 +27,18 @@ const productsSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-        .addCase(fetchProducts.pending, (state) => {
-            state.loading = true;
-            state.error = null;
-        })
-        .addCase(fetchProducts.fulfilled, (state, action) => {
-            state.loading = false;
-            state.products = action.payload;
-        })
-        .addCase(fetchProducts.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message
-        })
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload;
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
     },
 });
 

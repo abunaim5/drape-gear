@@ -12,7 +12,7 @@ const ProductCard = ({name, image, price} : productListType) => {
             </div>
             <div className='flex items-center justify-between border-[1px] p-3 mt-4'>
                 <div>
-                    <h1 className='text-lg hover:text-primary cursor-pointer'>{name}</h1>
+                    <h1 className='text-lg hover:text-cyan-500 cursor-pointer'>{name}</h1>
                     <div className='flex items-center gap-3'>
                         <h3 className='text-base'>&#2547;{price}</h3>
                         <h3 className='text-base text-gray-400 line-through'>&#2547;{price}</h3>
