@@ -2,13 +2,13 @@ import { productType } from "@/types/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ itemsPerPage, collection, sortPriceVal }: { itemsPerPage: number, collection: string, sortPriceVal: string }) => {
-    const res = await axios.get(`http://localhost:5000/products?size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}`);
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ currentPage, itemsPerPage, collection, sortPriceVal }: { currentPage: number, itemsPerPage: number, collection: string, sortPriceVal: string }) => {
+    const res = await axios.get(`http://localhost:5000/products?page=${currentPage}&size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}`);
     return res.data.products;
 });
 
-export const fetchProductCount = createAsyncThunk('count/fetchProductCount', async () => {
-    const res = await axios.get('http://localhost:5000/productCount');
+export const fetchProductCount = createAsyncThunk('count/fetchProductCount', async ({collection}: {collection: string}) => {
+    const res = await axios.get(`http://localhost:5000/productCount?filter=${collection}`);
     return res.data.count;
 });
 

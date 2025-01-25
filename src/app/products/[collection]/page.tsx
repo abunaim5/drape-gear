@@ -19,20 +19,21 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-import { fetchProducts } from "@/lib/features/products/productsSlice";
+import { fetchProductCount, fetchProducts } from "@/lib/features/products/productsSlice";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const Products = () => {
     const { products, productCount } = useAppSelector((state) => state.products);
     const [sortPriceVal, setSortPriceVal] = useState('default');
-    const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
     const totalPages = Math.ceil(productCount / itemsPerPage);
     const dispatch = useAppDispatch();
     const location = usePathname();
     const collection = location.split('/')[2];
-    console.log(currentPage)
+    console.log(products, productCount);
+
     const handleFilterDrawer = () => {
 
     };
@@ -49,11 +50,12 @@ const Products = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProducts({ itemsPerPage, collection, sortPriceVal }));
-    }, [dispatch, itemsPerPage, collection, sortPriceVal]);
+        dispatch(fetchProducts({ currentPage, itemsPerPage, collection, sortPriceVal }));
+        dispatch(fetchProductCount({collection}));
+    }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
 
     return (
-        <div className='mb-16'>
+        <div className='mb-16' id={`${currentPage}`}>
             <div className='container my-16'>
                 <div className='flex gap-4 items-center justify-between'>
                     <div onClick={handleFilterDrawer} className='flex items-center gap-1 text-2xl hover:text-[#00BADB] cursor-pointer'>
@@ -77,22 +79,23 @@ const Products = () => {
                     }
                 </div>
             </div>
-            <Pagination>
+            <Pagination className={!productCount ? 'hidden' : undefined}>
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious
-                            href="#"
-                            className={currentPage === 1 ? 'pointer-events-none opacity-50' : undefined}
+                            href={`#${currentPage}`}
+                            className={`rounded-none ${currentPage === 1 ? 'pointer-events-none opacity-50' : undefined}`}
                             onClick={() => handlePageAndItemsPerPage(currentPage - 1)}
                         />
                     </PaginationItem>
                     {
-                        [...Array(totalPages).keys()].map(page => <PaginationItem
-                            className={currentPage === page + 1 ? 'pointer-events-none opacity-50' : undefined}
-                            key={page + 1}
-                            onClick={() => currentPage !== page - 1 ? handlePageAndItemsPerPage(currentPage + 1) : handlePageAndItemsPerPage(currentPage - 1)}
-                        >
-                            <PaginationLink isActive={currentPage === page + 1} href="#">{page + 1}</PaginationLink>
+                        [...Array(totalPages).keys()].map(page => <PaginationItem key={page + 1}>
+                            <PaginationLink
+                                className={`rounded-none ${currentPage === page + 1 ? 'pointer-events-none opacity-50' : undefined}`}
+                                isActive={currentPage === page + 1}
+                                href={`#${currentPage}`}
+                                onClick={() => currentPage < page + 1 ? handlePageAndItemsPerPage(currentPage + 1) : handlePageAndItemsPerPage(currentPage - 1)}
+                            >{page + 1}</PaginationLink>
                         </PaginationItem>)
                     }
                     <PaginationItem>
@@ -100,8 +103,8 @@ const Products = () => {
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationNext
-                            href="#"
-                            className={currentPage === totalPages ? 'pointer-events-none opacity-50' : undefined}
+                            href={`#${currentPage}`}
+                            className={`rounded-none ${currentPage === totalPages ? 'pointer-events-none opacity-50' : undefined}`}
                             onClick={() => handlePageAndItemsPerPage(currentPage + 1)}
                         />
                     </PaginationItem>
