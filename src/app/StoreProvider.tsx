@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '@/lib/store'
-import { fetchProducts } from '@/lib/features/products/productsSlice'
+import { fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
 
 const StoreProvider = ({
     children
@@ -17,7 +17,8 @@ const StoreProvider = ({
 
     useEffect(() => {
         if(storeRef.current) {
-            storeRef.current.dispatch(fetchProducts({collection: 'all', sortPriceVal: 'default'}));
+            storeRef.current.dispatch(fetchProducts({itemsPerPage: 10, collection: 'all', sortPriceVal: 'default'}));
+            storeRef.current.dispatch(fetchProductCount());
         }
     }, []);
 
