@@ -50,17 +50,17 @@ const Products = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProducts({ currentPage, itemsPerPage, collection, sortPriceVal }));
-        dispatch(fetchProductCount({collection}));
+        dispatch(fetchProducts({ currentPage, itemsPerPage, collection: collection, sortPriceVal }));
+        dispatch(fetchProductCount({collection: collection}));
     }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
 
     return (
         <div className='mb-16' id={`${currentPage}`}>
             <div className='container my-16'>
                 <div className='flex gap-4 items-center justify-between'>
-                    <div onClick={handleFilterDrawer} className='flex items-center gap-1 text-2xl hover:text-[#00BADB] cursor-pointer'>
+                    <div onClick={handleFilterDrawer} className='flex items-center gap-[2px] text-xl hover:text-[#00BADB] cursor-pointer'>
                         <CiFilter />
-                        <h4 className='text-lg'>Filter</h4>
+                        <h4 className='text-base'>Filter</h4>
                     </div>
                     <Select onValueChange={handleSortByPrice}>
                         <SelectTrigger className="w-36">
