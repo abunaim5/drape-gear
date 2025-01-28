@@ -12,7 +12,7 @@ const NewArrivals = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchProducts({itemsPerPage: 10, collection: 'all', sortPriceVal: 'default'}))
+        dispatch(fetchProducts({currentPage: 1, itemsPerPage: 10, collection: 'all', sortPriceVal: 'default'}));
     }, [dispatch]);
 
     return (
