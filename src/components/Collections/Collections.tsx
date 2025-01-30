@@ -1,5 +1,4 @@
 'use client';
-
 import { collections } from "@/constants/constants";
 import Link from "next/link";
 

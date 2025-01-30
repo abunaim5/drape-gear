@@ -32,7 +32,7 @@ const Products = () => {
     const dispatch = useAppDispatch();
     const location = usePathname();
     const collection = location.split('/')[2];
-    console.log(products, productCount);
+    // console.log(products, productCount);
 
     const handleFilterDrawer = () => {
 
