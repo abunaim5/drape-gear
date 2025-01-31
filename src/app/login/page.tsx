@@ -10,26 +10,64 @@ interface IFormInput {
 };
 
 const Login = () => {
-    const { register, handleSubmit } = useForm<IFormInput>()
-    const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
-    const iClass = 'rounded-none px-[14px] py-[10px] border focus:outline-none focus:border-black'
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+    const iClass = 'rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none focus:border-black'
 
 
     return (
-        <div className='min-h-[calc(100vh-272px)] flex items-center justify-center py-10'>
-            <form className='flex flex-col gap-4 w-1/5' onSubmit={handleSubmit(onSubmit)}>
+        <div className='min-h-[calc(100vh-272px)] py-10 text-sm'>
+            <form className='container flex flex-col w-full md:w-[410px] mx-auto' onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor='email'>Email</label>
-                <input id='email' className={iClass} type='text' {...register("email", { required: true, maxLength: 20 })} placeholder='email' autoComplete='email' />
-                <label htmlFor='pass'>Password</label>
-                <input id='pass' className={iClass} type='text' {...register("password", { pattern: /^[A-Za-z]+$/i })} placeholder='password' autoComplete='pass' />
-                <a href="">Forgot password?</a>
+                <input
+                    id='mail'
+                    className={iClass}
+                    type='text'
+                    {...register("email", {
+                        required: 'Please input your email!',
+                        maxLength: 20,
+                        pattern: {
+                            value: /^\S+@\S+$/i,
+                            message: 'Invalid email format.'
+                        }
+                    }
+                    )}
+                    aria-invalid={errors.email ? 'true' : 'false'}
+                    placeholder='Email'
+                    autoComplete='email'
+                />
+                {errors.email && (
+                    <p className='text-red-500' role="alert">{errors.email.message}</p>
+                )}
+
+                <label className='mt-4' htmlFor='pass'>Password</label>
+                <input
+                    id='pass'
+                    className={iClass}
+                    type='text'
+                    {...register("password", {
+                        required: 'Please input your password!',
+                        minLength: {
+                            value: 6,
+                            message: 'Password must be at least 6 characters long.'
+                        },
+                        // pattern: /^[A-Za-z]+$/i
+                    })}
+                    aria-invalid={errors.password ? 'true' : 'false'}
+                    placeholder='Password'
+                    autoComplete='pass'
+                />
+                {errors.password && (
+                    <p className='text-red-500' role="alert">{errors.password.message}</p>
+                )}
+                <a className='py-4' href="">Forgot password?</a>
                 <input className='cursor-pointer py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value='Login' />
-                <div className='flex items-center justify-between gap-2'>
+                <div className='flex items-center justify-between gap-2 my-4'>
                     <div className='w-full h-[1px] bg-black' />
                     <span className='text-nowrap'>Login with social account</span>
                     <div className='w-full h-[1px] bg-black' />
                 </div>
-                <button type='button' className='flex items-center justify-center w-full rounded-none text-2xl py-[9px] border-[1px] border-black'>
+                <button type='button' className='flex items-center justify-center w-full rounded-none text-2xl py-[7px] border-[1px] border-black'>
                     <FcGoogle />
                 </button>
                 <h5 className='mt-4 text-center'>New Customer? <Link href='/register' className='text-cyan-500'>Register</Link></h5>
