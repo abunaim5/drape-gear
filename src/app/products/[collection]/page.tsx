@@ -22,6 +22,7 @@ import {
 import { fetchProductCount, fetchProducts } from "@/lib/features/products/productsSlice";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 const Products = () => {
     const { products, productCount } = useAppSelector((state) => state.products);
@@ -56,6 +57,7 @@ const Products = () => {
 
     return (
         <div className='mb-16' id={`${currentPage}`}>
+            <Breadcrumb />
             <div className='container my-16'>
                 <div className='flex gap-4 items-center justify-between'>
                     <div onClick={handleFilterDrawer} className='flex items-center gap-[2px] text-xl hover:text-[#00BADB] cursor-pointer'>
