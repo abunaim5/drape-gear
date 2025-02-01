@@ -24,7 +24,7 @@ const Breadcrumb = () => {
             <div className='w-full h-full flex flex-col items-center gap-2 justify-center py-8 2xl:py-16 bg-black/20'>
                 <h1 className='text-xl'>{currentRoute}</h1>
                 <div className='flex items-center gap-1 text-sm'>
-                    <Link href='/'>Home</Link>
+                    <Link className='hover:text-gray-100' href='/'>Home</Link>
                     <MdArrowForwardIos />
                     <span>{currentRoute}</span>
                 </div>

@@ -21,7 +21,7 @@ const Login = () => {
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-268px)] flex items-center py-10 text-sm'>
                 <form className='flex flex-col w-full md:w-[410px] mx-auto' onSubmit={handleSubmit(onSubmit)}>
-                    <label htmlFor='email'>Email</label>
+                    <label htmlFor='email'>Email <span className='text-red-500'>*</span></label>
                     <input
                         id='email'
                         className={`${iClass} ${errors.email ? 'border-red-500' : ''} ${errors.email ? 'focus:border-red-500' : 'focus:border-black'}`}
@@ -43,7 +43,7 @@ const Login = () => {
                         <p className='text-red-500' role="alert">{errors.email.message}</p>
                     )}
 
-                    <label className='mt-4' htmlFor='pass'>Password</label>
+                    <label className='mt-4' htmlFor='pass'>Password <span className='text-red-500'>*</span></label>
                     <input
                         id='pass'
                         className={`${iClass} ${errors.password ? 'border-red-500' : ''} ${errors.password ? 'focus:border-red-500' : 'focus:border-black'}`}
