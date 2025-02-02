@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '@/lib/store'
 import { fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
 import { usePathname } from 'next/navigation'
+import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice'
 
 const StoreProvider = ({
     children
@@ -22,6 +23,7 @@ const StoreProvider = ({
         if (storeRef.current) {
             storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 10, collection: collection, sortPriceVal: 'default' }));
             storeRef.current.dispatch(fetchProductCount({collection: collection}));
+            storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
         }
     }, [collection]);
 

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productReducer from './features/products/productsSlice'
+import productReducer from './features/products/productsSlice';
+import searchReducer from './features/searchProducts/searchSlice';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            products: productReducer
+            products: productReducer,
+            searchProducts: searchReducer
         }
     });
 };
