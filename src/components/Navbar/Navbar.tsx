@@ -8,28 +8,46 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiShoppingCartSimple } from 'react-icons/pi';
 import { HiOutlineMenuAlt1 } from 'react-icons/hi';
 import SideDrawer from '../SideDrawer/SideDrawer';
-import { useState } from 'react';
-import { useAppSelector } from '@/lib/hooks';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import DrawerCard from '../DrawerCard/DrawerCard';
+import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice';
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
+  const [searchText, setSearchText] = useState('');
   const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
   console.log(searchProducts);
 
   const handleSearchDrawer = () => {
     setOpen(true)
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.target as HTMLInputElement;
+    setSearchText(text.value);
+  };
+
+  useEffect(() => {
+    dispatch(fetchSearchProducts({ searchText: searchText }));
+  }, [dispatch, searchText]);
+  console.log(searchText);
+
   const searchDrawerElem = <>
-    <input
-      name='search'
-      className='rounded-none w-full'
-      placeholder="Search"
-    // onChange={handleSearch}
-    />
-    <h1 className='mt-5 shadow-md text-base font-bold p-3'>Search results</h1>
-    <div>
+    <label htmlFor='search' className='flex items-center gap-2 px-[14px] py-[10px] my-5 mx-4 group border focus-within:border-black'>
+      <input
+        id='search'
+        name='search'
+        className='rounded-none w-full text-sm focus:outline-none'
+        placeholder="Search"
+        autoComplete='search'
+        onChange={handleSearch}
+      />
+      <IoSearchOutline className='text-lg' />
+    </label>
+    <h1 className='shadow-md text-base font-bold px-4 py-[9px]'>Search results</h1>
+    <div className='max-h-[74.813vh] overflow-y-auto custom-scrollbar'>
       <div className={`flex items-center justify-center h-96 ${searchProducts?.length ? 'hidden' : ''}`}>
         {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
         <p>Empty</p>
