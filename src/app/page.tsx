@@ -1,5 +1,5 @@
 import Banner from "@/components/Banner/Banner";
-import Collections from "@/components/Collections/Collections";
+import Collection from "@/components/Collection/Collection";
 import NewArrivals from "@/components/NewArrivals/NewArrivals";
 import Support from "@/components/Support/Support";
 
@@ -8,7 +8,7 @@ export default function Home() {
     <section>
       <Banner />
       <div className="container">
-          <Collections />
+          <Collection />
           <NewArrivals />
           <Support />
       </div>
