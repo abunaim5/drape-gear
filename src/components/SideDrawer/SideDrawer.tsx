@@ -24,7 +24,7 @@ const SideDrawer = ({ title, place, open, setOpen, drawerElem }: { title: string
                     {drawerElem}
                 </div>
                 <DrawerFooter className='border-t mt-0'>
-                    <Link href='/products' className='flex items-center gap-2 hover:text-cyan-500'>
+                    <Link href='/products/all' className='flex items-center gap-2 hover:text-cyan-500'>
                         View all
                         <IoMdArrowForward />
                     </Link>

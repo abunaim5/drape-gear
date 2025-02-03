@@ -21,7 +21,7 @@ const StoreProvider = ({
 
     useEffect(() => {
         if (storeRef.current) {
-            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 10, collection: collection, sortPriceVal: 'default' }));
+            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
             storeRef.current.dispatch(fetchProductCount({collection: collection}));
             storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
         }

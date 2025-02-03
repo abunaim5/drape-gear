@@ -8,12 +8,15 @@ import { useEffect } from "react";
 import { fetchProducts } from "@/lib/features/products/productsSlice";
 
 const NewArrivals = () => {
-    const { products } = useAppSelector((state) => state.products);
+    const { products, loading } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
+    console.log(products)
 
     useEffect(() => {
-        dispatch(fetchProducts({currentPage: 1, itemsPerPage: 10, collection: 'all', sortPriceVal: 'default'}));
+        dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', sortPriceVal: 'default' }));
     }, [dispatch]);
+
+    if (loading) return <h1>Loading...</h1>;
 
     return (
         <div className='mb-10 mt-16'>

@@ -26,9 +26,9 @@ import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 const Products = () => {
     const { products, productCount } = useAppSelector((state) => state.products);
-    const [sortPriceVal, setSortPriceVal] = useState('default');
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const [sortPriceVal, setSortPriceVal] = useState<string>('default');
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const itemsPerPage: number = 10;
     const totalPages = Math.ceil(productCount / itemsPerPage);
     const dispatch = useAppDispatch();
     const location = usePathname();

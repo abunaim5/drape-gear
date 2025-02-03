@@ -8,7 +8,7 @@ const ProductCard = ({name, image, price} : productListType) => {
     return (
         <div className='border-none rounded-none'>
             <div className='overflow-hidden border-[1px]' style={{ borderRadius: 0 }}>
-                <Image alt={`${name} image`} width={400} height={600} className='hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
+                <Image alt={`${name} image`} width={400} height={600} className='w-full h-full hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
             </div>
             <div className='flex items-center justify-between border-[1px] p-3 mt-4'>
                 <div>

@@ -15,8 +15,8 @@ import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice';
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
-  const [searchText, setSearchText] = useState('');
-  const [open, setOpen] = useState(false);
+  const [searchText, setSearchText] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   console.log(searchProducts);
 
