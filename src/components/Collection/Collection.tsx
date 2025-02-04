@@ -2,7 +2,7 @@
 import { collections } from "@/constants/constants";
 import Link from "next/link";
 
-const Collections = () => {
+const Collection = () => {
     return (
         <div className='min-h-screen grid grid-cols-6 grid-rows-1 md:grid-rows-2 gap-4 mt-16'>
             {
@@ -33,4 +33,4 @@ const Collections = () => {
     );
 };
 
-export default Collections;
+export default Collection;

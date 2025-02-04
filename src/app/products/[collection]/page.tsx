@@ -1,7 +1,7 @@
 'use client';
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { productListType } from "@/types/types";
+import { ProductListType } from "@/types/types";
 import { CiFilter } from "react-icons/ci";
 import {
     Select,
@@ -77,7 +77,7 @@ const Products = () => {
                 </div>
                 <div className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-12`}>
                     {
-                        products.map((product: productListType, idx) => <ProductCard key={idx} name={product.name} image={product.image} price={product.price} />)
+                        products.map((product: ProductListType, idx) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} price={product.price} />)
                     }
                 </div>
             </div>

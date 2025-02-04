@@ -6,7 +6,7 @@ const Breadcrumb = () => {
     const location = usePathname();
     const path = location.split('/');
     let route = ''
-    if (location === '/login' || location === '/register' || location === '/collections') {
+    if (location === '/login' || location === '/register' || location === '/collections' || location === '/wishlist') {
         route = path[1].charAt(0).toUpperCase() + path[1].slice(1);
     } else {
         route = path[2].charAt(0).toUpperCase() + path[2].slice(1);

@@ -18,7 +18,6 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  console.log(searchProducts);
 
   const handleSearchDrawer = () => {
     setOpen(true)
@@ -32,7 +31,6 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(fetchSearchProducts({ searchText: searchText }));
   }, [dispatch, searchText]);
-  console.log(searchText);
 
   const searchDrawerElem = <>
     <label htmlFor='search' className='flex items-center gap-2 px-[14px] py-[10px] my-5 mx-4 group border focus-within:border-black'>
@@ -84,7 +82,7 @@ const Navbar = () => {
           <IoSearchOutline onClick={handleSearchDrawer} className='cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
           <Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>
           <div className='relative hidden md:block cursor-pointer group'>
-            <IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' />
+            <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' /></Link>
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
           </div>
           <div className='relative cursor-pointer group'>

@@ -13,6 +13,7 @@ export type ProductType = {
 }[];
 
 export type ProductListType = {
+    _id: string,
     name: string,
     image: string,
     price: number
