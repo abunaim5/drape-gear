@@ -1,4 +1,4 @@
-import { productType } from "@/types/types";
+import { ProductType } from "@/types/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ export const fetchProductCount = createAsyncThunk('count/fetchProductCount', asy
 
 // create types
 interface ProductsState {
-    products: productType,
+    products: ProductType,
     productCount: number;
     loading: boolean,
     error: string | null | undefined
@@ -39,7 +39,7 @@ const productsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<productType>) => {
+            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ProductType>) => {
                 state.loading = false;
                 state.products = action.payload;
             })

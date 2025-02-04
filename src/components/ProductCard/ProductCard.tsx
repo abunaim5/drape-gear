@@ -1,14 +1,18 @@
 'use client';
-import { productListType } from "@/types/types";
+import { ProductListType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple } from "react-icons/pi";
+import { IoMdHeartEmpty } from "react-icons/io";
 
-const ProductCard = ({name, image, price} : productListType) => {
+const ProductCard = ({ name, image, price }: ProductListType) => {
 
     return (
         <div className='border-none rounded-none'>
-            <div className='overflow-hidden border-[1px]' style={{ borderRadius: 0 }}>
-                <Image alt={`${name} image`} width={400} height={600} className='w-full h-full hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
+            <div className='relative group overflow-hidden border-[1px]'>
+                <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
+                <div className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
+                    <IoMdHeartEmpty />
+                </div>
             </div>
             <div className='flex items-center justify-between border-[1px] p-3 mt-4'>
                 <div>

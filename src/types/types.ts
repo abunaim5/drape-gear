@@ -1,6 +1,6 @@
 import { IconType } from "react-icons"
 
-export type productType = {
+export type ProductType = {
     _id: string,
     name: string,
     image: string,
@@ -12,7 +12,7 @@ export type productType = {
     collection: string
 }[];
 
-export type productListType = {
+export type ProductListType = {
     name: string,
     image: string,
     price: number
