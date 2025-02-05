@@ -15,7 +15,7 @@ export const fetchProductCount = createAsyncThunk('count/fetchProductCount', asy
 // create types
 interface ProductsState {
     products: ProductType,
-    productCount: number;
+    productCount: number,
     loading: boolean,
     error: string | null | undefined
 };

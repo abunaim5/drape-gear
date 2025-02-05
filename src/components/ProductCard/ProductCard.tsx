@@ -1,25 +1,36 @@
 'use client';
 import { ProductListType } from "@/types/types";
 import Image from "next/image";
-import { PiShoppingCartSimple } from "react-icons/pi";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { useAppDispatch } from "@/lib/hooks";
-import { addToWishlist } from "@/lib/features/wishlist/wishlistSlice";
+import { PiShoppingCartSimple, PiTrashLight } from "react-icons/pi";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { addToWishlist, removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
+import { usePathname } from "next/navigation";
 
 const ProductCard = ({ _id, name, image, price }: ProductListType) => {
+    const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const dispatch = useAppDispatch();
-    console.log(_id);
+    const location = usePathname();
+
+    const isWished = wishlistItems.includes(_id);
 
     const handleAddToWishlist = (id: string) => {
         dispatch(addToWishlist(id));
     };
 
+    const handleRemoveFromWishlist = (id: string) => {
+        dispatch(removeFromWishlist(id));
+    }
+
     return (
         <div className='border-none rounded-none'>
             <div className='relative group overflow-hidden border-[1px]'>
                 <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
-                <div onClick={() => handleAddToWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
-                    <IoMdHeartEmpty />
+                <div onClick={() => location !== '/wishlist' ? handleAddToWishlist(_id) : handleRemoveFromWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
+                    {
+
+                        location === '/wishlist' ? <PiTrashLight /> : isWished ? <IoMdHeart className='text-red-500' /> : <IoMdHeartEmpty />
+                    }
                 </div>
             </div>
             <div className='flex items-center justify-between border-[1px] p-3 mt-4'>
