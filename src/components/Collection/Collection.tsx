@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Collection = () => {
     return (
-        <div className='min-h-screen grid grid-cols-6 grid-rows-1 md:grid-rows-2 gap-4 mt-16'>
+        <section className='min-h-screen grid grid-cols-6 grid-rows-1 md:grid-rows-2 gap-4 mt-16'>
             {
                 collections.map((collection, idx) => {
                     let colSpanClass = '';
@@ -29,7 +29,7 @@ const Collection = () => {
                     )
                 })
             }
-        </div>
+        </section>
     );
 };
 

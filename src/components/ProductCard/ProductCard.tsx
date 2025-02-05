@@ -23,7 +23,7 @@ const ProductCard = ({ _id, name, image, price }: ProductListType) => {
     }
 
     return (
-        <div className='border-none rounded-none'>
+        <div className=''>
             <div className='relative group overflow-hidden border-[1px]'>
                 <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
                 <div onClick={() => location !== '/wishlist' ? handleAddToWishlist(_id) : handleRemoveFromWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
@@ -33,12 +33,12 @@ const ProductCard = ({ _id, name, image, price }: ProductListType) => {
                     }
                 </div>
             </div>
-            <div className='flex items-center justify-between border-[1px] p-3 mt-4'>
+            <div className='flex items-center justify-between border-[1px] p-3 mt-[10px]'>
                 <div>
-                    <h1 className='text-lg hover:text-cyan-500 cursor-pointer'>{name}</h1>
+                    <h1 className='hover:text-cyan-500 cursor-pointer'>{name}</h1>
                     <div className='flex items-center gap-3'>
-                        <h3 className='text-base'>&#2547;{price}</h3>
-                        <h3 className='text-base text-gray-400 line-through'>&#2547;{price}</h3>
+                        <h3 className='text-sm text-[#F85712]'>&#2547;{price}</h3>
+                        <h3 className='text-sm text-gray-400 line-through'>&#2547;{price}</h3>
                     </div>
                 </div>
                 <div className='flex items-center gap-3 text-xl'>

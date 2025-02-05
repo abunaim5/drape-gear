@@ -11,10 +11,10 @@ const Footer = () => {
                 {
                     footContents.map((content, idx) => <div key={idx} className='flex-1'>
                         <h1 className='text-xl lg:text-2xl mb-4'>{content.name}</h1>
-                        <p className=''>{content.description}</p>
+                        <p className='text-gray-500'>{content.description}</p>
                         <div className={`flex gap-2 ${content.cls}`}>
                             {
-                                content.routes.map((route, idx) => <Link key={idx} href='/' className={`text-gray-500 w-fit transition-all duration-300 hover:text-cyan-500 ${route.name === FaFacebookSquare ? 'mt-2 text-2xl lg:text-3xl' : route.name === FaInstagramSquare ? 'mt-2 text-2xl lg:text-3xl' : ''}`}>{typeof route.name === 'function' ? <route.name /> : route.name}</Link>)
+                                content.routes.map((route, idx) => <Link key={idx} href={route.link} className={`text-gray-500 w-fit transition-all duration-300 hover:text-cyan-500 ${route.name === FaFacebookSquare ? 'mt-2 text-2xl lg:text-3xl' : route.name === FaInstagramSquare ? 'mt-2 text-2xl lg:text-3xl' : ''}`}>{typeof route.name === 'function' ? <route.name /> : route.name}</Link>)
                             }
                         </div>
                     </div>)

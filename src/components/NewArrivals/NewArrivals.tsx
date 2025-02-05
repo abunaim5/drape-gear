@@ -18,7 +18,7 @@ const NewArrivals = () => {
     if (loading) return <h1>Loading...</h1>;
 
     return (
-        <div className='mb-10 mt-16'>
+        <section className='mt-12 md:mt-28'>
             <SectionInfo
                 title='New Arrivals'
                 description='Here’s some of our most popular products people are in love with.'
@@ -28,7 +28,7 @@ const NewArrivals = () => {
                     products.map((product: ProductListType, idx: number) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} price={product.price} />)
                 }
             </div>
-        </div>
+        </section>
     );
 };
 

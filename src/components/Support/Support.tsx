@@ -10,7 +10,7 @@ import React from "react";
 
 const Support = () => {
     return (
-        <div className='py-20'>
+        <section className='my-12 md:my-28'>
             <Swiper
                 height={50}
                 slidesPerView={1}
@@ -50,12 +50,12 @@ const Support = () => {
                                 src={support.img}
                             />
                             <h1 className='text-lg font-semibold mt-2'>{support.title}</h1>
-                            <h5 className='text-base lg:text-lg mt-1'>{support.description}</h5>
+                            <h5 className='mt-1 text-gray-600'>{support.description}</h5>
                         </div>
                     </SwiperSlide>)
                 }
             </Swiper>
-        </div>
+        </section>
     );
 };
 

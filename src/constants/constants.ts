@@ -78,23 +78,23 @@ const footContents: FootContentType = [
         routes: [
             {
                 name: 'Men',
-                link: '/'
+                link: '/products/men'
             },
             {
                 name: 'Women',
-                link: '/'
+                link: '/products/women'
             },
             {
                 name: 'Kids',
-                link: '/'
+                link: '/products/kids'
             },
             {
                 name: 'Accessories',
-                link: '/'
+                link: '/products/accessories'
             },
             {
                 name: 'Home Decor',
-                link: '/'
+                link: '/products/decor'
             },
         ],
     },

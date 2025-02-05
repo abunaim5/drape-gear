@@ -15,6 +15,7 @@ import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice';
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
+  const { itemIds } = useAppSelector((state) => state.wishlist);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -64,7 +65,7 @@ const Navbar = () => {
       <SideDrawer title='Search Products' place='right' open={open} setOpen={setOpen} drawerElem={searchDrawerElem} />
       <div className='container flex items-center'>
         <div className='flex items-center gap-2 flex-1'>
-          <HiOutlineMenuAlt1 className='block lg:hidden text-3xl' />
+          <HiOutlineMenuAlt1 className='block lg:hidden text-2xl' />
           <div className='logo flex-1 text-2xl md:text-3xl font-semibold'>
             drapegear.
           </div>
@@ -83,7 +84,7 @@ const Navbar = () => {
           <Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>
           <div className='relative hidden md:block cursor-pointer group'>
             <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>1</div>
+            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{itemIds.length}</div>
           </div>
           <div className='relative cursor-pointer group'>
             <PiShoppingCartSimple className='transition-all duration-[400ms] group-hover:text-cyan-500' />
