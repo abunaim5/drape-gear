@@ -1,8 +1,7 @@
 'use client';
 import { ProductListType } from "@/types/types";
 import Image from "next/image";
-import { PiShoppingCartSimple, PiTrashLight } from "react-icons/pi";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addToWishlist, removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
 import { usePathname } from "next/navigation";
@@ -28,8 +27,7 @@ const ProductCard = ({ _id, name, image, price }: ProductListType) => {
                 <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
                 <div onClick={() => location !== '/wishlist' ? handleAddToWishlist(_id) : handleRemoveFromWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
                     {
-
-                        location === '/wishlist' ? <PiTrashLight /> : isWished ? <IoMdHeart className='text-red-500' /> : <IoMdHeartEmpty />
+                        location === '/wishlist' ? <PiTrashLight /> : isWished ? <PiHeartStraightFill className='text-red-500' /> : <PiHeartStraightLight />
                     }
                 </div>
             </div>
