@@ -1,13 +1,14 @@
 'use client';
-
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import { AutoPlay, Pagination } from "@egjs/flicking-plugins";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import "@egjs/flicking-plugins/dist/arrow.css";
 import "@egjs/flicking-plugins/dist/pagination.css";
 import { banners } from "@/constants/constants";
+import { useRouter } from "next/navigation";
 
 const Banner = () => {
+    const router = useRouter();
     const _plugins = [
         new AutoPlay({ duration: 4000 }),
         new Pagination({ type: 'scroll' })
@@ -22,7 +23,7 @@ const Banner = () => {
                             <div className='w-full'>
                                 <h3 className='text-xl md:text-2xl lg:text-3xl'>{banner.subtitle}</h3>
                                 <h1 className='text-3xl md:text-6xl lg:text-8xl mt-2 md:mt-4 mb-4 md:mb-7'>{banner.title}</h1>
-                                <button className='w-[119px] md:w-[145px] lg:w-[190px] text-sm md:text-base py-2 md:py-3 lg:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
+                                <button onClick={() => router.push('/collections')} className='w-[119px] md:w-[145px] lg:w-[190px] text-sm md:text-base py-2 md:py-3 lg:py-4 transition-all duration-500 bg-white text-black hover:bg-black hover:text-white'>
                                     Shop Now
                                 </button>
                             </div>
