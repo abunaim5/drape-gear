@@ -12,6 +12,6 @@ type userResponseType = {
     avatar: string;
     access_token: string;
     refresh_token: string;
-};
+}[];
 
 export type {UserType, userResponseType};
