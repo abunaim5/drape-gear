@@ -1,10 +1,11 @@
-"use client";
+'use client';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useAxiosPublic from '@/utils/useAxiosPublic';
+import { userInfoType } from '@/types/user';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -12,14 +13,6 @@ interface IFormInput {
     email: string;
     password: string;
 };
-
-type UserInfoType = {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-}
-
 
 const Register = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -30,7 +23,7 @@ const Register = () => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         setLoading(true);
         try {
-            const userInfo: UserInfoType = {
+            const userInfo: userInfoType = {
                 name: data.name,
                 email: data.email,
                 password: data.password,
@@ -41,9 +34,9 @@ const Register = () => {
                 alert('User registered successfully!');
                 router.push('/login');
             }
-        } catch (error: unknown) {
-            if(error instanceof Error) {
-                alert(error.message);
+        } catch (err: unknown) {
+            if(err instanceof Error) {
+                alert(err.message);
             } else {
                 alert('Registration failed');
             }
@@ -51,7 +44,7 @@ const Register = () => {
             setLoading(false);
         }
     };
-    
+
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
 
     return (

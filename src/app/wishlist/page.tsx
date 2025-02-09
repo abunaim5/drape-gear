@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { fetchWishlist } from "@/lib/features/wishlist/wishlistSlice";

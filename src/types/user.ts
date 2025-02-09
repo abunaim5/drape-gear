@@ -6,6 +6,13 @@ interface UserType {
     refreshToken: string;
 };
 
+type userInfoType = {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+}
+
 type userResponseType = {
     name: string;
     email: string;
@@ -14,4 +21,4 @@ type userResponseType = {
     refresh_token: string;
 }[];
 
-export type {UserType, userResponseType};
+export type { UserType, userInfoType, userResponseType };

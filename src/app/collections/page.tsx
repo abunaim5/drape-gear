@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import Collection from "@/components/Collection/Collection";
 

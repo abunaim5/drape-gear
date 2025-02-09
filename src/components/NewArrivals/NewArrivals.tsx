@@ -1,5 +1,4 @@
 'use client';
-
 import { ProductListType } from "@/types/types";
 import ProductCard from "../ProductCard/ProductCard";
 import SectionInfo from "../SectionInfo/SectionInfo";

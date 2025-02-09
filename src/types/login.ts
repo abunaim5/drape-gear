@@ -7,4 +7,4 @@ type SocialCredentialsType = {
     auth_code: string;
 };
 
-export type {CredentialsType, SocialCredentialsType};
+export type { CredentialsType, SocialCredentialsType };

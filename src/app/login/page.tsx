@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { SubmitHandler, useForm } from 'react-hook-form';

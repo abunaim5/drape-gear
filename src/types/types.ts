@@ -1,6 +1,12 @@
 import { IconType } from "react-icons"
 
-export type ProductType = {
+type BannerType = {
+    title: string,
+    subtitle: string,
+    img: string
+}[];
+
+type ProductType = {
     _id: string,
     name: string,
     image: string,
@@ -12,33 +18,27 @@ export type ProductType = {
     collection: string
 }[];
 
-export type ProductListType = {
+type ProductListType = {
     _id: string,
     name: string,
     image: string,
     price: number
 };
 
-export type BannerType = {
-    title: string,
-    subtitle: string,
-    img: string
-}[];
-
-export type CollectionType = {
+type CollectionType = {
     img: string,
     btnName: string,
     path: string,
     colSpan: number
 }[];
 
-export type SupportType = {
+type SupportType = {
     title: string,
     description: string,
     img: string
 }[];
 
-export type FootContentType = {
+type FootContentType = {
     name: string,
     cls: string,
     description?: string,
@@ -47,3 +47,5 @@ export type FootContentType = {
         link: string
     }[];
 }[];
+
+export type { BannerType, ProductType, ProductListType, CollectionType, SupportType, FootContentType };

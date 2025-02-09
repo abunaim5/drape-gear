@@ -6,7 +6,7 @@ export const fetchSearchProducts = createAsyncThunk('searchProducts/fetchSearchP
     if (searchText === '') {
         return [];
     } else {
-        const res = await axios.get(`http://localhost:5000/searchProducts?search=${searchText}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/searchProducts?search=${searchText}`);
         return res.data.searchResult;
     }
 });

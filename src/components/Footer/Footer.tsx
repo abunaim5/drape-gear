@@ -1,3 +1,4 @@
+'use client';
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
 import { footContents } from "@/constants/constants";
 import Link from "next/link";
