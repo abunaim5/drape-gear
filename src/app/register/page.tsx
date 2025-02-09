@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useAxiosPublic from '@/utils/useAxiosPublic';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -10,10 +13,45 @@ interface IFormInput {
     password: string;
 };
 
+type UserInfoType = {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+}
+
 
 const Register = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const axiosPublic = useAxiosPublic();
+    const router = useRouter();
+
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setLoading(true);
+        try {
+            const userInfo: UserInfoType = {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                role: 'user'
+            }
+            const res = await axiosPublic.post('/register', userInfo);
+            if (res.status === 201) {
+                alert('User registered successfully!');
+                router.push('/login');
+            }
+        } catch (error: unknown) {
+            if(error instanceof Error) {
+                alert(error.message);
+            } else {
+                alert('Registration failed');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+    
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
 
     return (
@@ -78,7 +116,7 @@ const Register = () => {
                         <p className='text-red-500' role="alert">{errors.password.message}</p>
                     )}
                     {/* <a className='py-4' href="">Forgot password?</a> */}
-                    <input className='cursor-pointer mt-8 py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value='Register' />
+                    <input className='cursor-pointer mt-8 py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value={loading ? 'Register...' : 'Register'} />
                     <h5 className='mt-4 text-center'>Already have an account? <Link href='/login' className='text-cyan-500'>Login</Link></h5>
                 </form>
             </div>
