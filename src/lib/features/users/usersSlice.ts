@@ -1,10 +1,10 @@
-import { userResponseType } from "@/types/user";
+import { userResponseType, UserType } from "@/types/user";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // fetch wishlist products from backend
-export const fetchUser = createAsyncThunk('user/fetchUser', async (userInfo: string[]) => {
-    const res = await axios.post('http://localhost:5000/user', { userInfo: userInfo });
+export const fetchUser = createAsyncThunk('user/fetchUser', async (userInfo: UserType) => {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/user`, { userInfo: userInfo });
     return res.data.user;
 });
 
