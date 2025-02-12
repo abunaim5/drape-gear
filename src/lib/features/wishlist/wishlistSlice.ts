@@ -13,7 +13,7 @@ const loadWishlist = (): string[] => {
 
 // fetch wishlist products from backend
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async (wishlistItems: string[]) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}`, { wishlist: wishlistItems });
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`, { wishlist: wishlistItems });
     return res.data.products;
 });
 

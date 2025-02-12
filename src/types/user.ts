@@ -1,9 +1,11 @@
 interface UserType {
+    id: string;
     name: string;
     email: string;
-    avatar: string;
-    accessToken: string;
-    refreshToken: string;
+    // avatar: string;
+    // accessToken: string;
+    // refreshToken: string;
+    role?: string;
 };
 
 type userInfoType = {
