@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useAxiosPublic from '@/utils/useAxiosPublic';
-import { userInfoType } from '@/types/user';
+import { UserInfoType } from '@/types/user';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -23,7 +23,7 @@ const Register = () => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         setLoading(true);
         try {
-            const userInfo: userInfoType = {
+            const userInfo: UserInfoType = {
                 name: data.name,
                 email: data.email,
                 password: data.password,
