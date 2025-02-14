@@ -3,8 +3,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import type { NextAuthConfig, Session, User } from "next-auth";
 import type { UserType, UserResponseType } from "./types/user";
 import { AdapterUser } from "next-auth/adapters";
-import { CredentialsType } from "./types/login";
 import { JWT } from "next-auth/jwt";
+import { fetchUser } from "./lib/api";
 
 declare module "next-auth" {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -85,28 +85,6 @@ const authOptions = {
         strategy: 'jwt'
     }
 } satisfies NextAuthConfig;
-
-// authenticate and fetch user details
-const fetchUser = async (url: string, body: CredentialsType) => {
-    try {
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-        const user = await res.json();
-        if (res.ok && user) {
-            return user;
-        } else {
-            console.error(`Failed to fetch user: ${res.status} ${res.statusText}`);
-            return null;
-        }
-    } catch (error) {
-        console.error(`Error during fetch: ${error}`);
-    }
-};
 
 // create user object
 const createUser = (user: UserResponseType) => {
