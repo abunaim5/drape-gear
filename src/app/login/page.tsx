@@ -4,6 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -14,13 +15,21 @@ interface IFormInput {
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const next = searchParams.get('next') || '/';
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
-            await signIn('credentials', {
+            const res = await signIn('credentials', {
                 email: data.email,
                 password: data.password,
                 redirect: false
             });
+            if (res?.error) {
+                console.error('Login failed:', res.error);
+            } else {
+                router.push(next);
+            }
             console.log('request sent');
         } catch (error) {
             console.error('Sign-in error:', error)
