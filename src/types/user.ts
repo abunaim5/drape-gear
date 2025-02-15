@@ -2,11 +2,11 @@ interface UserType {
     id: string;
     name: string;
     email: string;
-    avatar: string;
     accessToken: string;
     refreshToken: string;
     subId: string;
-    role?: string;
+    role: string;
+    createdAt: string
 };
 
 type UserInfoType = {
@@ -20,10 +20,11 @@ type UserResponseType = {
     _id: string;
     name: string;
     email: string;
-    avatar: string;
     access_token: string;
     refresh_token: string;
+    role: string;
     sub_id: string;
+    createdAt: string
 };
 
 export type { UserType, UserInfoType, UserResponseType };

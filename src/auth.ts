@@ -39,6 +39,7 @@ const authOptions = {
                         email: typeof credentials.email === 'string' ? credentials.email : '',
                         password: typeof credentials.password === 'string' ? credentials.password : ''
                     });
+                    console.log(user);
                     return user ? createUser(user) : null;
                 } catch (error) {
                     console.error('Error during authentication', error);
@@ -54,10 +55,11 @@ const authOptions = {
                 token.id = user.id as string;
                 token.name = user.name;
                 token.email = user.email;
-                token.avatar = user.avatar;
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
                 token.subId = user.subId;
+                token.role = user.role;
+                token.createdAt = user.createdAt;
             }
             return token;
         },
@@ -66,12 +68,13 @@ const authOptions = {
             const userObject: AdapterUser = {
                 id: token.id,
                 name: token.name,
-                avatar: token.avatar,
                 accessToken: token.accessToken,
                 refreshToken: token.refreshToken,
                 subId: token.subId,
                 email: token.email ? token.email : '',
-                emailVerified: null
+                emailVerified: null,
+                role: token.role,
+                createdAt: token.createdAt
             }
             // add user object to the session
             session.user = userObject;
@@ -92,10 +95,11 @@ const createUser = (user: UserResponseType) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        avatar: user.avatar,
         accessToken: user.access_token,
         refreshToken: user.refresh_token,
-        subId: ''
+        subId: '',
+        role: user.role,
+        createdAt: user.createdAt
     }
     return userObject;
 }

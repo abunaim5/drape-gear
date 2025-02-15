@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
+import { signIn } from 'next-auth/react';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -12,9 +13,19 @@ interface IFormInput {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
-
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        try {
+            await signIn('credentials', {
+                email: data.email,
+                password: data.password,
+                redirect: false
+            });
+            console.log('request sent');
+        } catch (error) {
+            console.error('Sign-in error:', error)
+        }
+    };
 
     return (
         <>

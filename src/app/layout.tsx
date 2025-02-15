@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import StoreProvider from "./StoreProvider";
+import { SessionProvider } from "next-auth/react";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -30,13 +31,15 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <StoreProvider>
-          <Navbar />
-          <main>
-            {children}
-          </main>
-          <Footer />
-        </StoreProvider>
+        <SessionProvider>
+          <StoreProvider>
+            <Navbar />
+            <main>
+              {children}
+            </main>
+            <Footer />
+          </StoreProvider>
+        </SessionProvider>
       </body>
     </html>
   );
