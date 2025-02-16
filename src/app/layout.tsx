@@ -31,15 +31,15 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <SessionProvider>
-          <StoreProvider>
+        <StoreProvider>
+          <SessionProvider>
             <Navbar />
             <main>
               {children}
             </main>
             <Footer />
-          </StoreProvider>
-        </SessionProvider>
+          </SessionProvider>
+        </StoreProvider>
       </body>
     </html>
   );

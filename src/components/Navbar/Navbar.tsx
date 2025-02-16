@@ -12,12 +12,30 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import DrawerCard from '../DrawerCard/DrawerCard';
 import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { signOut, useSession } from 'next-auth/react';
+import {
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  User,
+  MapPinHouse
+} from "lucide-react"
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
   const { itemIds } = useAppSelector((state) => state.wishlist);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
   const handleSearchDrawer = () => {
@@ -27,6 +45,10 @@ const Navbar = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target as HTMLInputElement;
     setSearchText(text.value);
+  };
+
+  const handleLogOut = async () => {
+    await signOut({redirect: true, callbackUrl: '/login'});
   };
 
   useEffect(() => {
@@ -81,7 +103,43 @@ const Navbar = () => {
         </div>
         <div className='flex items-center justify-end gap-2 md:gap-4 text-[22px] md:text-2xl flex-1'>
           <IoSearchOutline onClick={handleSearchDrawer} className='cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
-          <Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>
+          {
+            session?.user ? (<DropdownMenu>
+              <DropdownMenuTrigger>
+                <FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56 rounded-none mt-[26px]'>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <User />
+                  <span>Profile</span>
+                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LayoutDashboard />
+                  <span>Dashboard</span>
+                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <MapPinHouse />
+                  <span>Address</span>
+                  <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings />
+                  <span>Settings</span>
+                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogOut} className='cursor-pointer'>
+                  <LogOut />
+                  <span>Log out</span>
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>) : (<Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>)
+          }
           <div className='relative hidden md:block cursor-pointer group'>
             <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' /></Link>
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{itemIds.length}</div>
