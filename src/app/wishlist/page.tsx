@@ -22,7 +22,7 @@ const Wishlist = () => {
             <div className='container min-h-[calc(100vh-268px)] mb-20'>
                 <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-16'>
                     {
-                        wishlistItems.map((product: ProductListType, idx: number) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} price={product.price} />)
+                        wishlistItems.map((product: ProductListType, idx: number) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} price={product.price} availability={product.availability} />)
                     }
                 </div>
             </div>

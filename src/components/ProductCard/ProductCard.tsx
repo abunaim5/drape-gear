@@ -1,18 +1,44 @@
 'use client';
-import { ProductListType } from "@/types/types";
+import { CartProductListType, ProductListType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addToWishlist, removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
-import { usePathname } from "next/navigation";
+import { addToCart } from "@/lib/features/cart/cartSlice";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const ProductCard = ({ _id, name, image, price }: ProductListType) => {
+const ProductCard = ({ _id, name, image, price, availability }: ProductListType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
+    const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const location = usePathname();
+    const router = useRouter();
 
     const isWished = wishlistItems.includes(_id);
 
+    // handle cart items
+    const handleAddToCart = () => {
+        if (!session?.user) {
+            router.push('/login')
+        } else {
+            const cartProduct: CartProductListType = {
+                productId: _id,
+                email: session?.user.email ?? '',
+                name: name,
+                image: image,
+                price: price,
+                availability: availability
+            }
+            dispatch(addToCart(cartProduct))
+        }
+    };
+
+    const handleRemoveFromCart = () => {
+
+    };
+
+    // handle wishlist
     const handleAddToWishlist = (id: string) => {
         dispatch(addToWishlist(id));
     };
@@ -41,7 +67,11 @@ const ProductCard = ({ _id, name, image, price }: ProductListType) => {
                 </div>
                 <div className='flex items-center gap-3 text-xl'>
                     <div className='border-r-[1px] h-10' />
-                    <PiShoppingCartSimple className='cursor-pointer' />
+                    <div onClick={() => location !== '/cart' ? handleAddToCart() : handleRemoveFromCart()} className='cursor-pointer'>
+                        {
+                            location !== '/cart' ? <PiShoppingCartSimple /> : <PiTrashLight />
+                        }
+                    </div>
                 </div>
             </div>
         </div>

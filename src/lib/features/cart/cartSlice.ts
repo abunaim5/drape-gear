@@ -1,14 +1,19 @@
-import { ProductType } from "@/types/types";
+import { CartProductListType, CartProductType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchCartProducts = createAsyncThunk('cartProducts/fetchCartProducts', async ({ email }: { email: string }) => {
+export const fetchCartProducts = createAsyncThunk('cart/fetchCartProducts', async ({ email }: { email: string }) => {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/cart`, { email });
     return res.data.products;
 });
 
+export const addToCart = createAsyncThunk('addCart/addToCart', async (cartProduct: CartProductListType) => {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/addCart`, { cartProduct });
+    return res.data.product;
+});
+
 interface CartState {
-    cartItems: ProductType,
+    cartItems: CartProductType,
     loading: boolean,
     error: string | null | undefined
 }
@@ -22,19 +27,34 @@ const initialState: CartState = {
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers: {},
+    reducers: {
+
+    },
     extraReducers(builder) {
         builder
-            // fetch all products
+            // fetch cart products
             .addCase(fetchCartProducts.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchCartProducts.fulfilled, (state, action: PayloadAction<ProductType>) => {
+            .addCase(fetchCartProducts.fulfilled, (state, action: PayloadAction<CartProductType>) => {
                 state.loading = false;
                 state.cartItems = action.payload;
             })
             .addCase(fetchCartProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+            // add to cart products
+            .addCase(addToCart.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addToCart.fulfilled, (state, action: PayloadAction<CartProductType>) => {
+                state.loading = false;
+                state.cartItems = action.payload;
+            })
+            .addCase(addToCart.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })

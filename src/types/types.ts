@@ -22,8 +22,28 @@ type ProductListType = {
     _id: string,
     name: string,
     image: string,
-    price: number
+    price: number,
+    availability: boolean
 };
+
+type CartProductType = {
+    _id: string,
+    productId: string,
+    email: string,
+    name: string,
+    image: string,
+    price: number,
+    availability: boolean,
+}[];
+
+type CartProductListType = {
+    productId: string,
+    email: string,
+    name: string,
+    image: string,
+    price: number,
+    availability: boolean
+}
 
 type CollectionType = {
     img: string,
@@ -48,4 +68,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType, ProductType, ProductListType, CollectionType, SupportType, FootContentType };
+export type { BannerType, ProductType, ProductListType, CartProductType, CartProductListType, CollectionType, SupportType, FootContentType };
