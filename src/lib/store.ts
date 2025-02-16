@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import productReducer from './features/products/productsSlice';
+import cartReducer from './features/cart/cartSlice';
 import wishlistReducer from './features/wishlist/wishlistSlice';
 import searchReducer from './features/searchProducts/searchSlice';
 
@@ -7,6 +8,7 @@ export const makeStore = () => {
     return configureStore({
         reducer: {
             products: productReducer,
+            cart: cartReducer,
             wishlist: wishlistReducer,
             searchProducts: searchReducer
         }
