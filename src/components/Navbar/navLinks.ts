@@ -4,5 +4,4 @@ export const navLinks = [
   { label: 'Products', href: '/products/all' },
   { label: 'Sale', href: '/sale' },
   { label: 'Blog', href: '/blogs' },
-  { label: 'Dashboard', href: '/dashboard' },
 ];

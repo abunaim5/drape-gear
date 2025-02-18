@@ -7,7 +7,7 @@ import { ProductListType } from "@/types/types";
 import { useEffect } from "react";
 
 const Wishlist = () => {
-    const { itemIds, wishlistItems } = useAppSelector((state) => state.wishlist);
+    const { itemIds, wishlistItems, loading } = useAppSelector((state) => state.wishlist);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -15,6 +15,10 @@ const Wishlist = () => {
     }, [dispatch, itemIds]);
 
     console.log(wishlistItems);
+
+    if(loading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <>

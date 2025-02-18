@@ -8,14 +8,20 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const Cart = () => {
-    const { cartItems } = useAppSelector((state) => state.cart);
+    const { loading, cartItems } = useAppSelector((state) => state.cart);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    console.log(cartItems);
 
     useEffect(() => {
-        dispatch(fetchCartProducts({ email: session?.user.email ?? '' }))
-    }, [dispatch, session?.user.email]);
+        if (session?.user?.email) {
+            dispatch(fetchCartProducts({ email: session.user.email }));
+        }
+    }, [dispatch, session?.user?.email]);
+    console.log(cartItems);
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <>

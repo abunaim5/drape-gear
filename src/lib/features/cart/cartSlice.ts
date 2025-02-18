@@ -9,7 +9,12 @@ export const fetchCartProducts = createAsyncThunk('cart/fetchCartProducts', asyn
 
 export const addToCart = createAsyncThunk('addCart/addToCart', async (cartProduct: CartProductListType) => {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/addCart`, { cartProduct });
-    return res.data.product;
+    return res.data.updatedProducts;
+});
+
+export const removeFromCart = createAsyncThunk('removeCart/removeFromCart', async ({id, email}: {id: string, email: string}) => {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeCart`, { id, email });
+    return res.data.updatedProducts;
 });
 
 interface CartState {
@@ -45,6 +50,7 @@ const cartSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // add to cart products
             .addCase(addToCart.pending, (state) => {
                 state.loading = true;
@@ -55,6 +61,20 @@ const cartSlice = createSlice({
                 state.cartItems = action.payload;
             })
             .addCase(addToCart.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+            // remove products from cart
+            .addCase(removeFromCart.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(removeFromCart.fulfilled, (state, action: PayloadAction<CartProductType>) => {
+                state.loading = false;
+                state.cartItems = action.payload;
+            })
+            .addCase(removeFromCart.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })

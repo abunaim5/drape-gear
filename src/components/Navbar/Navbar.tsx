@@ -19,12 +19,13 @@ import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
-  const { cartItems } = useAppSelector((state) => state.cart);
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
   const { itemIds } = useAppSelector((state) => state.wishlist);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  console.log(cartItems);
 
   const handleSearchDrawer = () => {
     setOpen(true)
@@ -41,8 +42,10 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(fetchSearchProducts({ searchText: searchText }));
-    dispatch(fetchCartProducts({ email: session?.user.email ?? '' }))
-  }, [dispatch, searchText, session?.user.email, cartItems]);
+    if (session?.user?.email) {
+      dispatch(fetchCartProducts({ email: session.user.email }));
+    }
+  }, [dispatch, searchText, session?.user?.email]);
 
   const searchDrawerElem = <>
     <label htmlFor='search' className='flex items-center gap-2 px-[14px] py-[10px] my-5 mx-4 group border focus-within:border-black'>
