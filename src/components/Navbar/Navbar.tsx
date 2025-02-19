@@ -110,7 +110,7 @@ const Navbar = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <LayoutDashboard />
-                  <span>Dashboard</span>
+                  <Link href='/account'>Dashboard</Link>
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
