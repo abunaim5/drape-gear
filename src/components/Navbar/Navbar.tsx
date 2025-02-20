@@ -36,7 +36,7 @@ const Navbar = () => {
     setSearchText(text.value);
   };
 
-  const handleLogOut = async () => {
+  const handleLogout = async () => {
     await signOut({ redirect: true, callbackUrl: '/login' });
   };
 
@@ -124,7 +124,7 @@ const Navbar = () => {
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogOut} className='cursor-pointer'>
+                <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
                   <LogOut />
                   <span>Log out</span>
                   <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

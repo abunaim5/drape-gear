@@ -19,7 +19,8 @@ const Account = () => {
                         <h3 className='font-semibold mb-4'>Order History:</h3>
                         <div className='flex items-center gap-2'>
                             <IoIosCheckmarkCircle className='text-green-600' />
-                            <span><Link href='/shop' className='underline text-gray-500'>Make your first order</Link> You haven&apos;t placed any order yet.</span>
+                            <Link href='/shop' className='underline text-gray-500'>Make your first order</Link>
+                            <span>You haven&apos;t placed any order yet.</span>
                         </div>
                         <div className='mt-14'>
                             <h3 className='font-semibold mb-4'>Account details:</h3>
