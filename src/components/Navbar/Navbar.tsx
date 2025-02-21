@@ -16,6 +16,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { signOut, useSession } from 'next-auth/react';
 import { LayoutDashboard, LogOut, Settings, User, MapPinHouse } from "lucide-react"
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
@@ -24,8 +25,8 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const { data: session } = useSession();
+  const router = useRouter();
   const dispatch = useAppDispatch();
-  console.log(cartItems);
 
   const handleSearchDrawer = () => {
     setOpen(true)
@@ -100,25 +101,25 @@ const Navbar = () => {
               <DropdownMenuTrigger>
                 <FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className='w-56 rounded-none mt-[26px]'>
+              <DropdownMenuContent className='w-56 rounded-none mt-[26px] text-gray-500'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/account')} className='cursor-pointer'>
                   <User />
                   <span>Profile</span>
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/account')} className='cursor-pointer'>
                   <LayoutDashboard />
-                  <Link href='/account'>Dashboard</Link>
+                  <span>Dashboard</span>
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/addresses')} className='cursor-pointer'>
                   <MapPinHouse />
-                  <span>Address</span>
+                  <span>Addresses</span>
                   <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/addresses')} className='cursor-pointer'>
                   <Settings />
                   <span>Settings</span>
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>

@@ -3,7 +3,7 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiShoppingCartSimple } from 'react-icons/pi';
 export const dashboardLinks = [
     { label: 'Dashboard', href: '/account', icon: LayoutDashboard },
-    { label: 'Address', href: '/address', icon: MapPinHouse },
+    { label: 'Addresses', href: '/addresses', icon: MapPinHouse },
     { label: 'Wishlist', href: '/wishlist', icon: IoMdHeartEmpty },
     { label: 'Cart', href: '/cart', icon: PiShoppingCartSimple },
 ];

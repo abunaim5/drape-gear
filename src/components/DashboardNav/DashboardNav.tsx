@@ -7,14 +7,14 @@ import DashboardLink from "./DashboardLink";
 const DashboardNav = () => {
     const { cartItems } = useAppSelector((state) => state.cart);
     const { itemIds } = useAppSelector((state) => state.wishlist);
-    const linkCls = 'flex items-center gap-1 px-[15px] py-[10px] hover:text-black hover:bg-gray-50 transition-all duration-[400ms]'
+    const linkCls = 'flex items-center gap-[5px] px-[15px] py-[10px] hover:text-black hover:bg-[#F3F3F3] transition-all duration-[400ms]'
 
     const handleLogout = async () => {
         await signOut({ redirect: true, callbackUrl: '/login' });
     };
 
     return (
-        <div className='flex flex-col w-[412px] h-fit border text-sm text-gray-500'>
+        <div className='flex flex-col w-full md:w-[162px] lg:w-[226px] xl:w-[382px] h-fit border text-sm text-gray-500'>
             {
                 dashboardLinks.map((link, idx) => <DashboardLink key={idx} label={link.label} href={link.href} icon={link.icon} cartCount={cartItems.length} wishlistCount={itemIds.length} />)
             }

@@ -12,7 +12,7 @@ const Account = () => {
         <>
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-412px)] mb-20'>
-                <div className='flex gap-8 mt-16'>
+                <div className='flex flex-col md:flex-row gap-8 mt-16'>
                     <DashboardNav />
                     <div className='flex-1'>
                         <h4 className='text-sm mb-5 text-gray-500'>Hello <span className='font-semibold'>{session?.user.name}</span></h4>
@@ -28,7 +28,7 @@ const Account = () => {
                             <p className='text-sm text-gray-500'>United States</p>
                         </div>
                         <div className='flex text-sm mt-5 text-gray-500'>
-                            <div className='w-[500px] border font-semibold'>
+                            <div className='w-2/5 border font-semibold'>
                                 <h4 className='p-[10px]'>Name:</h4>
                                 <div className='border-b-[1px]' />
                                 <h4 className='p-[10px]'>Email:</h4>
