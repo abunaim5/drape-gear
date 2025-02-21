@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice'
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import { useSession } from 'next-auth/react';
+import { fetchUsers } from '@/lib/features/users/usersSlice';
 
 const StoreProvider = ({
     children
@@ -30,6 +31,7 @@ const StoreProvider = ({
                 storeRef.current.dispatch(fetchCartProducts({email: session.user.email}));
             }
             storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
+            storeRef.current.dispatch(fetchUsers());
         }
     }, [collection, session?.user.email]);
 

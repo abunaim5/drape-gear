@@ -7,7 +7,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
     return res.data.products;
 });
 
-export const fetchProductCount = createAsyncThunk('count/fetchProductCount', async ({collection}: {collection: string}) => {
+export const fetchProductCount = createAsyncThunk('count/fetchProductCount', async ({ collection }: { collection: string }) => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/productCount?filter=${collection}`);
     return res.data.count;
 });
