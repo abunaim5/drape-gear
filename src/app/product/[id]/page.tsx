@@ -2,13 +2,16 @@
 import { fetchSingleProduct } from "@/lib/features/products/productsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { use, useEffect } from "react";
+import ProductDetails from "@/components/ProductDetails/ProductDetails";
+import Link from "next/link";
+import { MdArrowForwardIos } from "react-icons/md";
 
 type ProductId = {
     params: Promise<{ id: string }>
 }
 
 const Product = ({ params }: ProductId) => {
-    const { product } = useAppSelector((state) => state.products)
+    const { product } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
     const { id } = use(params);
 
@@ -23,9 +26,28 @@ const Product = ({ params }: ProductId) => {
     }
 
     return (
-        <div className='container min-h-[calc(100vh-84px)] mb-20'>
-
-        </div>
+        <>
+            <div className='mb-8 py-5 bg-[#F6F6F6]'>
+                <div className='container flex items-center gap-1 text-sm'>
+                    <Link className='hover:text-cyan-500' href='/'>Home</Link>
+                    <MdArrowForwardIos />
+                    <span className='text-gray-500'>{product.name}</span>
+                </div>
+            </div>
+            <div className='container mb-20 mt-4'>
+                <ProductDetails
+                    _id={product._id}
+                    name={product.name}
+                    price={product.price}
+                    image={product.image}
+                    category={product.category}
+                    collection={product.collection}
+                    createdAt={product.createdAt}
+                    description={product.description}
+                    availability={product.availability}
+                />
+            </div>
+        </>
     )
 };
 
