@@ -7,6 +7,11 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
     return res.data.products;
 });
 
+export const fetchSingleProduct = createAsyncThunk('singleProduct/fetchSingleProduct', async (id: string) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/product/${id}`);
+    return res.data.product;
+});
+
 export const fetchProductCount = createAsyncThunk('count/fetchProductCount', async ({ collection }: { collection: string }) => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/productCount?filter=${collection}`);
     return res.data.count;
@@ -14,15 +19,17 @@ export const fetchProductCount = createAsyncThunk('count/fetchProductCount', asy
 
 // create types
 interface ProductsState {
-    products: ProductType,
-    productCount: number,
-    loading: boolean,
-    error: string | null | undefined
+    products: ProductType[];
+    product: ProductType | null;
+    productCount: number;
+    loading: boolean;
+    error: string | null | undefined;
 };
 
 // initial state for products
 const initialState: ProductsState = {
     products: [],
+    product: null,
     productCount: 0,
     loading: false,
     error: null
@@ -39,11 +46,24 @@ const productsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ProductType>) => {
+            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
                 state.loading = false;
                 state.products = action.payload;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+            // fetch single product
+            .addCase(fetchSingleProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchSingleProduct.fulfilled, (state, action: PayloadAction<ProductType>) => {
+                state.loading = false;
+                state.product = action.payload;
+            })
+            .addCase(fetchSingleProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })

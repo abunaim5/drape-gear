@@ -51,7 +51,7 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
 
     return (
         <div className=''>
-            <div className='relative group overflow-hidden border-[1px]'>
+            <div onClick={() => router.push(`/product/${_id}`)} className='relative group overflow-hidden border-[1px]'>
                 <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
                 <div onClick={() => location !== '/wishlist' ? handleAddToWishlist(_id) : handleRemoveFromWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
                     {

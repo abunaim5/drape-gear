@@ -16,7 +16,7 @@ type ProductType = {
     createdAt: string,
     availability: boolean,
     collection: string
-}[];
+};
 
 type ProductListType = {
     _id: string,
