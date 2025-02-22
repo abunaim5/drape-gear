@@ -2,14 +2,47 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaPinterestP, FaTelegramPlane, FaTumblr } from "react-icons/fa";
-import { IoMdHeartEmpty } from "react-icons/io";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
-import { ProductType } from "@/types/types";
+import { CartProductListType, ProductType } from "@/types/types";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { PiHeartStraightFill, PiHeartStraightLight } from "react-icons/pi";
+import { addToWishlist } from "@/lib/features/wishlist/wishlistSlice";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { addToCart } from "@/lib/features/cart/cartSlice";
 
-const ProductDetails = ({ name, image, price, description, availability, category, collection }: ProductType) => {
+const ProductDetails = ({ _id, name, image, price, description, availability, category, collection }: ProductType) => {
+    const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
+    const { data: session } = useSession();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
     const [count, setCount] = useState<number>(1);
+    const isWished = wishlistItems.includes(_id);
+
+    // handle cart items
+    const handleAddToCart = () => {
+        if (!session?.user) {
+            router.push('/login')
+        } else {
+            const cartProduct: CartProductListType = {
+                productId: _id,
+                email: session?.user.email ?? '',
+                name: name,
+                image: image,
+                price: price,
+                availability: availability,
+                quantity: count
+            }
+            dispatch(addToCart(cartProduct));
+        }
+    };
+
+    // handle wishlist
+    const handleAddToWishlist = (id: string) => {
+        dispatch(addToWishlist(id));
+    };
 
     return (
         <div>
@@ -28,13 +61,17 @@ const ProductDetails = ({ name, image, price, description, availability, categor
                             <span>{count}</span>
                             <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500'><Plus size={20} /></button>
                         </div>
-                        <button className='px-9 py-[10px] bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce hidden lg:block'>ADD TO CART</button>
-                        <button className='px-[10px] text-black rounded-full border border-black hover:border-cyan-500 hover:text-cyan-500 text-xl'><IoMdHeartEmpty /></button>
+                        <button onClick={handleAddToCart} className='px-9 py-[10px] bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce hidden lg:block'>ADD TO CART</button>
+                        <button onClick={() => isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`px-[10px] rounded-full border text-xl border-black ${isWished ? 'text-red-500 border-red-500 hover:text-red-500 hover:border-red-500' : 'text-black border-black hover:text-cyan-500 hover:border-cyan-500'}`}>
+                            {
+                                isWished ? <PiHeartStraightFill /> : <PiHeartStraightLight />
+                            }
+                        </button>
                     </div>
-                    <button className='w-full py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden'>ADD TO CART</button>
+                    <button onClick={handleAddToCart} className='w-full py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden'>ADD TO CART</button>
                     <div className='flex gap-5 text-sm font-semibold mt-10'>
-                        <Link href='/'>Delivery & Return</Link>
-                        <Link href='/'>Ask a Question</Link>
+                        <Link href='/' className='hover:text-cyan-500'>Delivery & Return</Link>
+                        <Link href='/' className='hover:text-cyan-500'>Ask a Question</Link>
                     </div>
                     <div className='flex flex-col gap-2 text-sm mt-5'>
                         <p><span className='text-gray-500'>SKU:</span> FS-26</p>

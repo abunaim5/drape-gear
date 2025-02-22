@@ -34,6 +34,7 @@ type CartProductType = {
     image: string,
     price: number,
     availability: boolean,
+    quantity?: number
 }[];
 
 type CartProductListType = {
@@ -42,7 +43,8 @@ type CartProductListType = {
     name: string,
     image: string,
     price: number,
-    availability: boolean
+    availability: boolean,
+    quantity?: number
 }
 
 type CollectionType = {

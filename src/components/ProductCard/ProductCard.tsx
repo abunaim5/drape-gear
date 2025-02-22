@@ -28,9 +28,10 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
                 name: name,
                 image: image,
                 price: price,
-                availability: availability
+                availability: availability,
+                quantity: 1
             }
-            dispatch(addToCart(cartProduct))
+            dispatch(addToCart(cartProduct));
         }
     };
 
@@ -51,13 +52,13 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
 
     return (
         <div className=''>
-            <div onClick={() => router.push(`/product/${_id}`)} className='relative group overflow-hidden border-[1px]'>
-                <Image alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
-                <div onClick={() => location !== '/wishlist' ? handleAddToWishlist(_id) : handleRemoveFromWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
+            <div className='relative group overflow-hidden border-[1px]'>
+                <Image onClick={() => router.push(`/product/${_id}`)} alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
+                <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
                     {
                         location === '/wishlist' ? <PiTrashLight /> : isWished ? <PiHeartStraightFill className='text-red-500' /> : <PiHeartStraightLight />
                     }
-                </div>
+                </button>
             </div>
             <div className='flex items-center justify-between border-[1px] p-3 mt-[10px]'>
                 <div>
