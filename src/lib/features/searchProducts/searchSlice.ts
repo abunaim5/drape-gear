@@ -13,7 +13,7 @@ export const fetchSearchProducts = createAsyncThunk('searchProducts/fetchSearchP
 
 // create types
 interface SearchState {
-    searchProducts: ProductType,
+    searchProducts: ProductType[],
     loading: boolean,
     error: string | null | undefined
 };
@@ -36,7 +36,7 @@ const searchSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchSearchProducts.fulfilled, (state, action: PayloadAction<ProductType>) => {
+            .addCase(fetchSearchProducts.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
                 state.loading = false;
                 state.searchProducts = action.payload;
             })
