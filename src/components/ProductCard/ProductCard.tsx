@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addToWishlist, removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
-import { addToCart, removeFromCart } from "@/lib/features/cart/cartSlice";
+import { addToCart } from "@/lib/features/cart/cartSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -32,12 +32,6 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
                 quantity: 1
             }
             dispatch(addToCart(cartProduct));
-        }
-    };
-
-    const handleRemoveFromCart = (id: string) => {
-        if(session?.user?.email){
-            dispatch(removeFromCart({id, email: session.user.email}));
         }
     };
 
@@ -70,7 +64,7 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
                 </div>
                 <div className='flex items-center gap-3 text-xl'>
                     <div className='border-r-[1px] h-10' />
-                    <div onClick={() => location !== '/cart' ? handleAddToCart() : handleRemoveFromCart(_id)} className='cursor-pointer'>
+                    <div onClick={handleAddToCart} className='cursor-pointer'>
                         {
                             location !== '/cart' ? <PiShoppingCartSimple /> : <PiTrashLight />
                         }
