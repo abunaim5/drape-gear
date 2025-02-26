@@ -12,8 +12,13 @@ export const addToCart = createAsyncThunk('addCart/addToCart', async (cartProduc
     return res.data.updatedProducts;
 });
 
-export const removeFromCart = createAsyncThunk('removeCart/removeFromCart', async ({id, email}: {id: string, email: string}) => {
+export const removeFromCart = createAsyncThunk('removeCart/removeFromCart', async ({ id, email }: { id: string, email: string }) => {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeCart`, { id, email });
+    return res.data.updatedProducts;
+});
+
+export const updateCartQuantity = createAsyncThunk('updateQuantity/updateCartQuantity', async ({ id, email, productQuantity }: { id: string, email: string, productQuantity: number }) => {
+    const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/cartQuantity/${id}`, { email, productQuantity });
     return res.data.updatedProducts;
 });
 
@@ -61,6 +66,20 @@ const cartSlice = createSlice({
                 state.cartItems = action.payload;
             })
             .addCase(addToCart.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
+            // update cart product quantity
+            .addCase(updateCartQuantity.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateCartQuantity.fulfilled, (state, action: PayloadAction<CartProductType>) => {
+                state.loading = false;
+                state.cartItems = action.payload;
+            })
+            .addCase(updateCartQuantity.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })

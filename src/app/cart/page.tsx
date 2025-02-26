@@ -1,10 +1,10 @@
 'use client'
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
-import { fetchCartProducts, removeFromCart } from "@/lib/features/cart/cartSlice";
+import { fetchCartProducts, removeFromCart, updateCartQuantity } from "@/lib/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { CartProductListType } from "@/types/types";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { TbTruckDelivery } from "react-icons/tb";
 import { Minus, Plus } from "lucide-react";
@@ -12,9 +12,10 @@ import { PiTrashLight } from "react-icons/pi";
 
 const Cart = () => {
     const { loading, cartItems } = useAppSelector((state) => state.cart);
-    const [count, setCount] = useState<number>(1);
+    // const [count, setCount] = useState<number>(1);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
+    const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     useEffect(() => {
         if (session?.user?.email) {
@@ -28,9 +29,15 @@ const Cart = () => {
         }
     };
 
-    if (loading) {
-        return <p>Loading...</p>
+    const handleUpdateProductQuantity = ({ id, email, productQuantity }: { id: string, email: string, productQuantity: number }) => {
+        if (session?.user?.email) {
+            dispatch(updateCartQuantity({ id, email, productQuantity }))
+        }
     }
+
+    // if (loading) {
+    //     return <p>Loading...</p>
+    // }
 
     return (
         <>
@@ -65,13 +72,13 @@ const Cart = () => {
                                     <div className='block md:hidden border-b border-dashed my-2' />
                                     <div className='flex-1'>
                                         <div className='flex items-center gap-6 xl:mx-auto max-w-max text-lg font-semibold px-3 py-[5px] border border-black'>
-                                            <button onClick={() => setCount(count - 1)} className={`hover:text-cyan-500 ${count === 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
-                                            <span>{product.quantity * count}</span>
-                                            <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500'><Plus size={20} /></button>
+                                            <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
+                                            <span>{product.quantity}</span>
+                                            <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
                                         </div>
                                     </div>
                                     <div className='block md:hidden border-b border-dashed my-2' />
-                                    <h5 className='text-sm flex-1 xl:text-right'>&#2547;{product.price * count}</h5>
+                                    <h5 className='text-sm flex-1 xl:text-right'>&#2547;{product.price * product.quantity}</h5>
                                 </div>
                             </div>
                         </div>
@@ -82,12 +89,12 @@ const Cart = () => {
                             </div>
                             <div className='flex-1 px-2'>
                                 <div className='flex items-center gap-6 mx-auto max-w-max text-lg font-semibold px-3 py-[5px] border border-black'>
-                                    <button onClick={() => setCount(count - 1)} className={`hover:text-cyan-500 ${count === 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
-                                    <span>{product?.quantity ? product.quantity : count}</span>
-                                    <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500'><Plus size={20} /></button>
+                                    <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
+                                    <span>{product.quantity}</span>
+                                    <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
                                 </div>
                             </div>
-                            <h5 className='flex-1 text-center text-sm'>&#2547;{product.price * count}</h5>
+                            <h5 className='flex-1 text-center text-sm'>&#2547;{product.price * product.quantity}</h5>
                         </div>
                     </div>)
                 }
@@ -99,8 +106,12 @@ const Cart = () => {
                             <div className='h-2 bg-striped bg-[length:40px_40px] animate-stripe-move rounded-lg' />
                         </div>
                     </div>
-                    <h1 className='text-lg font-semibold'>SUBTOTAL: $1400</h1>
-                    <p className='text-sm my-3'>Taxes and shipping calculated at checkout</p>
+                    <h1 className='text-xl font-semibold'><span className='mr-7 text-lg'>SUBTOTAL:</span> &#2547;{subtotalPrice}</h1>
+                    <p className='text-sm my-3 text-gray-500'>Taxes and shipping calculated at checkout</p>
+                    <form className='flex items-center gap-2 text-gray-500 text-sm'>
+                        <input type='checkbox' id='terms' name='terms' value='terms' />
+                        <label htmlFor='terms'> I agree with the terms and conditions.</label>
+                    </form>
                     <button className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-4 transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
                         Check Out
                     </button>
