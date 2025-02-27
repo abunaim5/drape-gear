@@ -43,7 +43,7 @@ const Cart = () => {
         <>
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-268px)] mt-16 mb-20'>
-                <div className='hidden xl:flex items-center justify-between text-sm font-semibold pb-3'>
+                <div className={`hidden items-center justify-between text-sm font-semibold pb-3 ${!cartItems.length ? 'hidden' : 'xl:flex'}`}>
                     <h3 className='w-1/4'>Product</h3>
                     <div className='flex items-center justify-between flex-1'>
                         <h3 className='flex-1 text-center'>Price</h3>
@@ -56,7 +56,7 @@ const Cart = () => {
                         <div className={`flex items-center gap-3 border xl:border-0 ${cartItems.length === 1 ? 'xl:border-b' : 'xl:border-b-0'} xl:border-t font-semibold py-5 md:py-0`}>
                             <Image className='block xl:hidden' alt={`${product.name} image`} src={product.image} width={120} height={200} />
                             <div className='xl:flex items-center justify-between flex-1'>
-                                <div className='w-1/4 block xl:flex items-center gap-3'>
+                                <div className='w-full md:w-1/4 block xl:flex items-center gap-3'>
                                     <Image className='hidden xl:block' alt={`${product.name} image`} src={product.image} width={120} height={200} />
                                     <div className='flex-1'>
                                         <h4 className='text-sm'>{product.name}</h4>
@@ -98,15 +98,15 @@ const Cart = () => {
                         </div>
                     </div>)
                 }
-                <div className='flex flex-col items-end mt-10'>
+                <div className={`flex flex-col items-center md:items-end mt-10 ${!cartItems.length ? 'hidden' : 'block'}`}>
                     <h6 className='text-[13px]'><span className='text-green-800'>Congratulations!</span> You&apos;ve got free shipping!</h6>
-                    <div className='relative my-4'>
-                        <TbTruckDelivery className='absolute right-0 -top-5 text-3xl text-[#4f772d]' />
-                        <div className='w-[420px] bg-gray-200 rounded-lg overflow-hidden'>
+                    <div className='relative my-4 w-full'>
+                        <TbTruckDelivery className='absolute right-0 -top-5 text-3xl z-30 text-[#4f772d]' />
+                        <div className='w-full md:w-[330px] lg:w-[420px] place-self-end bg-gray-200 rounded-lg overflow-hidden'>
                             <div className='h-2 bg-striped bg-[length:40px_40px] animate-stripe-move rounded-lg' />
                         </div>
                     </div>
-                    <h1 className='text-xl font-semibold'><span className='mr-7 text-lg'>SUBTOTAL:</span> &#2547;{subtotalPrice}</h1>
+                    <h1 className='text-xl font-semibold mt-6 md:mt-0'><span className='mr-7 text-lg'>SUBTOTAL:</span> &#2547;{subtotalPrice}</h1>
                     <p className='text-sm my-3 text-gray-500'>Taxes and shipping calculated at checkout</p>
                     <form className='flex items-center gap-2 text-gray-500 text-sm'>
                         <input type='checkbox' id='terms' name='terms' value='terms' />

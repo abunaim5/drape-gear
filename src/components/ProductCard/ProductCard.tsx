@@ -48,13 +48,17 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
         <div className=''>
             <div className='relative group overflow-hidden border-[1px]'>
                 <Image onClick={() => router.push(`/product/${_id}`)} alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
-                <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className='absolute left-3 top-3 text-xl cursor-pointer hover:animate-pulse'>
+                <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className='absolute right-4 top-4 text-xl cursor-pointer hidden group-hover:block group-hover:scale-110 transform transition-transform ease-in-out duration-1000 bg-gray-50 hover:bg-black hover:text-white p-2 rounded-sm'>
                     {
-                        location === '/wishlist' ? <PiTrashLight /> : isWished ? <PiHeartStraightFill className='text-red-500' /> : <PiHeartStraightLight />
+                        location === '/wishlist' ? <PiTrashLight className='hover:animate-pulse' /> : isWished ? <PiHeartStraightFill className='text-red-500 hover:animate-pulse' /> : <PiHeartStraightLight className='hover:animate-pulse' />
                     }
                 </button>
+                <button onClick={handleAddToCart} className='absolute left-1/2 bottom-4 transform -translate-x-1/2 text-xl hidden group-hover:flex items-center justify-center gap-2 group-hover:scale-110 transition-transform ease-in-out duration-1000 bg-gray-50 hover:bg-black hover:text-white px-4 py-2 rounded-sm'>
+                    <PiShoppingCartSimple />
+                    <span className='text-sm'>Add to cart</span>
+                </button>
             </div>
-            <div className='flex items-center justify-between border-[1px] p-3 mt-[10px]'>
+            {/* <div className='flex items-center justify-between border-[1px] p-3 mt-[10px]'>
                 <div>
                     <h1 className='hover:text-cyan-500 cursor-pointer'>{name}</h1>
                     <div className='flex items-center gap-3'>
@@ -69,6 +73,13 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
                             location !== '/cart' ? <PiShoppingCartSimple /> : <PiTrashLight />
                         }
                     </div>
+                </div>
+            </div> */}
+            <div className='text-center p-3'>
+                <h1 className='hover:text-cyan-500 cursor-pointer'>{name}</h1>
+                <div className='flex items-center justify-center gap-3'>
+                    <h3 className='text-sm text-[#F85712]'>&#2547;{price}</h3>
+                    <h3 className='text-sm text-gray-400 line-through'>&#2547;{price}</h3>
                 </div>
             </div>
         </div>
