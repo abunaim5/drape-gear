@@ -2,6 +2,7 @@
 import { CartProductListType, ProductListType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addToWishlist, removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
 import { addToCart } from "@/lib/features/cart/cartSlice";
@@ -45,15 +46,23 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
     }
 
     return (
-        <div className=''>
+        <div className='group'>
             <div className='relative group overflow-hidden border-[1px]'>
                 <Image onClick={() => router.push(`/product/${_id}`)} alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
-                <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className='absolute right-4 top-4 text-xl cursor-pointer hidden group-hover:block group-hover:scale-110 transform transition-transform ease-in-out duration-1000 bg-gray-50 hover:bg-black hover:text-white p-2 rounded-sm'>
-                    {
-                        location === '/wishlist' ? <PiTrashLight className='hover:animate-pulse' /> : isWished ? <PiHeartStraightFill className='text-red-500 hover:animate-pulse' /> : <PiHeartStraightLight className='hover:animate-pulse' />
-                    }
-                </button>
-                <button onClick={handleAddToCart} className='absolute left-1/2 bottom-4 transform -translate-x-1/2 text-xl hidden group-hover:flex items-center justify-center gap-2 group-hover:scale-110 transition-transform ease-in-out duration-1000 bg-gray-50 hover:bg-black hover:text-white px-4 py-2 rounded-sm'>
+                <div className='flex flex-col gap-1 absolute right-1 md:right-2 xl:right-4 bottom-1 md:bottom-2 xl:bottom-auto xl:top-4 text-xl xl:opacity-0 group-hover:opacity-100 group-hover:animate-in transform transition-transform ease-linear duration-1000'>
+                    <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className='bg-gray-50 hover:bg-black hover:text-white p-2 rounded-sm'>
+                        {
+                            location === '/wishlist' ? <PiTrashLight /> : isWished ? <PiHeartStraightFill className='text-red-500' /> : <PiHeartStraightLight />
+                        }
+                    </button>
+                    <button className='bg-gray-50 hover:bg-black hover:text-white p-2 rounded-sm'>
+                        <HiOutlineEye />
+                    </button>
+                    <button className='xl:hidden bg-gray-50 hover:bg-black hover:text-white p-2 rounded-sm'>
+                        <PiShoppingCartSimple />
+                    </button>
+                </div>
+                <button onClick={handleAddToCart} className='hidden absolute left-1/2 bottom-4 -translate-x-1/2 text-xl opacity-0 group-hover:opacity-100 xl:flex items-center justify-center gap-2 group-hover:animate-in transform transition-transform ease-linear duration-1000 bg-gray-50 hover:bg-black hover:text-white px-4 py-2 rounded-sm'>
                     <PiShoppingCartSimple />
                     <span className='text-sm'>Add to cart</span>
                 </button>
