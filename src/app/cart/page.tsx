@@ -9,12 +9,15 @@ import Image from "next/image";
 import { TbTruckDelivery } from "react-icons/tb";
 import { Minus, Plus } from "lucide-react";
 import { PiTrashLight } from "react-icons/pi";
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
-    const { loading, cartItems } = useAppSelector((state) => state.cart);
-    // const [count, setCount] = useState<number>(1);
+    const { cartItems } = useAppSelector((state) => state.cart);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
+    const router = useRouter();
     const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     useEffect(() => {
@@ -108,11 +111,11 @@ const Cart = () => {
                     </div>
                     <h1 className='text-xl font-semibold mt-6 md:mt-0'><span className='mr-7 text-lg'>SUBTOTAL:</span> &#2547;{subtotalPrice}</h1>
                     <p className='text-sm my-3 text-gray-500'>Taxes and shipping calculated at checkout</p>
-                    <form className='flex items-center gap-2 text-gray-500 text-sm'>
-                        <input type='checkbox' id='terms' name='terms' value='terms' />
-                        <label htmlFor='terms'> I agree with the terms and conditions.</label>
+                    <form className='flex items-center space-x-2 text-gray-500 text-sm'>
+                        <Checkbox id="terms" className='rounded-none' />
+                        <Label htmlFor="terms">I agree with the terms and conditions.</Label>
                     </form>
-                    <button className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-4 transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
+                    <button onClick={() => router.push('/payment')} className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-4 transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
                         Check Out
                     </button>
                 </div>
