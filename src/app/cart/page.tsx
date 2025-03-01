@@ -113,7 +113,7 @@ const Cart = () => {
                     <p className='text-sm my-3 text-gray-500'>Taxes and shipping calculated at checkout</p>
                     <form className='flex items-center space-x-2 text-gray-500 text-sm'>
                         <Checkbox id="terms" className='rounded-none' />
-                        <Label htmlFor="terms">I agree with the terms and conditions.</Label>
+                        <Label htmlFor="terms" className='text-sm font-normal text-gray-500'>I agree with the terms and conditions.</Label>
                     </form>
                     <button onClick={() => router.push('/payment')} className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-4 transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
                         Check Out

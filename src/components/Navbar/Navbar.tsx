@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation';
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
   const cartItems = useAppSelector((state) => state.cart.cartItems);
-  const { itemIds } = useAppSelector((state) => state.wishlist);
+  const itemIds = useAppSelector((state) => state.wishlist.itemIds);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const { data: session } = useSession();
@@ -98,11 +98,11 @@ const Navbar = () => {
           </ul>
         </div>
         <div className='flex items-center justify-end gap-2 md:gap-4 text-[22px] md:text-2xl flex-1'>
-          <IoSearchOutline onClick={handleSearchDrawer} className='cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
+          <IoSearchOutline onClick={handleSearchDrawer} className='cursor-pointer transition-all duration-300 hover:text-cyan-500' />
           {
             session?.user ? (<DropdownMenu>
               <DropdownMenuTrigger>
-                <FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' />
+                <FiUser className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' />
               </DropdownMenuTrigger>
               <DropdownMenuContent className='w-56 rounded-none mt-[26px] text-gray-500'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -134,14 +134,14 @@ const Navbar = () => {
                   <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>) : (<Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-[400ms] hover:text-cyan-500' /></Link>)
+            </DropdownMenu>) : (<Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' /></Link>)
           }
           <div className='relative hidden md:block cursor-pointer group'>
-            <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-[400ms] group-hover:text-cyan-500' /></Link>
+            <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{itemIds.length}</div>
           </div>
           <div className='relative cursor-pointer group'>
-            <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-[400ms] group-hover:text-cyan-500' /></Link>
+            <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
             <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{cartItems?.length}</div>
           </div>
         </div>
