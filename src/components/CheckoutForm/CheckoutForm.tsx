@@ -36,7 +36,7 @@ const CheckoutForm = () => {
                     className={`${iClass} ${errors.email ? 'border-red-500' : ''} ${errors.email ? 'focus:border-red-500' : 'focus:border-black'}`}
                     type='text'
                     {...register("email", {
-                        required: 'Please input your email!',
+                        required: 'Enter your email!',
                         maxLength: 20,
                         pattern: {
                             value: /^\S+@\S+$/i,
@@ -49,7 +49,7 @@ const CheckoutForm = () => {
                     autoComplete='email'
                 />
                 {errors.email && (
-                    <p className='text-red-500' role="alert">{errors.email.message}</p>
+                    <p className='text-red-500 text-sm' role="alert">{errors.email.message}</p>
                 )}
                 <div className='space-x-2 mt-4 mb-8'>
                     <Checkbox id="terms" className='rounded-sm border-gray-300' />
@@ -81,61 +81,66 @@ const CheckoutForm = () => {
                             }
                         </SelectContent>
                     </Select>
-                    <input
-                        id='name'
-                        className={`${iClass} ${errors.name ? 'border-red-500' : ''} ${errors.name ? 'focus:border-red-500' : 'focus:border-black'}`}
-                        type='text'
-                        {...register("name", { required: 'Please input your name!' }
+                    <div>
+                        <input
+                            id='name'
+                            className={`${iClass} ${errors.name ? 'border-red-500' : ''} ${errors.name ? 'focus:border-red-500' : 'focus:border-black'}`}
+                            type='text'
+                            {...register("name", { required: 'Enter your name!' }
+                            )}
+                            aria-invalid={errors.name ? 'true' : 'false'}
+                            placeholder='Full Name'
+                            autoComplete='name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-sm' role="alert">{errors.name.message}</p>
                         )}
-                        aria-invalid={errors.name ? 'true' : 'false'}
-                        placeholder='Full Name'
-                        autoComplete='name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500' role="alert">{errors.name.message}</p>
-                    )}
-                    <input
-                        id='address'
-                        className={`${iClass} ${errors.address ? 'border-red-500' : ''} ${errors.address ? 'focus:border-red-500' : 'focus:border-black'}`}
-                        type='text'
-                        {...register("address", { required: 'Please input your current address!' }
+                    </div>
+                    <div>
+                        <input
+                            id='address'
+                            className={`${iClass} ${errors.address ? 'border-red-500' : ''} ${errors.address ? 'focus:border-red-500' : 'focus:border-black'}`}
+                            type='text'
+                            {...register("address", { required: 'Enter your current address!' }
+                            )}
+                            aria-invalid={errors.address ? 'true' : 'false'}
+                            placeholder='Address'
+                            autoComplete='address'
+                        />
+                        {errors.address && (
+                            <p className='text-red-500 text-sm' role="alert">{errors.address.message}</p>
                         )}
-                        aria-invalid={errors.address ? 'true' : 'false'}
-                        placeholder='Address'
-                        autoComplete='address'
-                    />
-                    {errors.address && (
-                        <p className='text-red-500' role="alert">{errors.address.message}</p>
-                    )}
+                    </div>
                     <input
                         id='apartment'
                         className={`${iClass} ${errors.apartment ? 'border-red-500' : ''} ${errors.apartment ? 'focus:border-red-500' : 'focus:border-black'}`}
                         type='text'
-                        {...register("apartment", { required: 'Please input your current apartment!' }
-                        )}
-                        aria-invalid={errors.apartment ? 'true' : 'false'}
+                        {...register("apartment")}
+                        // aria-invalid={errors.apartment ? 'true' : 'false'}
                         placeholder='Apartment, suite, etc. (optional)'
                         autoComplete='apartment'
                     />
-                    {errors.apartment && (
+                    {/* {errors.apartment && (
                         <p className='text-red-500' role="alert">{errors.apartment.message}</p>
-                    )}
-                    <div className='flex items-center justify-between gap-3'>
-                        <input
-                            id='city'
-                            className={`${iClass} ${errors.city ? 'border-red-500' : ''} ${errors.city ? 'focus:border-red-500' : 'focus:border-black'}`}
-                            type='text'
-                            {...register("city", { required: 'Please input your current city!' }
+                    )} */}
+                    <div className='flex items-start justify-between gap-3'>
+                        <div className='flex-1'>
+                            <input
+                                id='city'
+                                className={`${iClass} ${errors.city ? 'border-red-500' : ''} ${errors.city ? 'focus:border-red-500' : 'focus:border-black'}`}
+                                type='text'
+                                {...register("city", { required: 'Enter a city!' }
+                                )}
+                                aria-invalid={errors.city ? 'true' : 'false'}
+                                placeholder='City'
+                                autoComplete='city'
+                            />
+                            {errors.city && (
+                                <p className='text-red-500 text-sm' role="alert">{errors.city.message}</p>
                             )}
-                            aria-invalid={errors.city ? 'true' : 'false'}
-                            placeholder='City'
-                            autoComplete='city'
-                        />
-                        {errors.city && (
-                            <p className='text-red-500' role="alert">{errors.city.message}</p>
-                        )}
+                        </div>
                         <Select>
-                            <SelectTrigger className="w-full px-[14px] h-[46px] rounded-sm">
+                            <SelectTrigger className="w-full flex-1 px-[14px] h-[46px] rounded-sm">
                                 <SelectValue placeholder="State" />
                             </SelectTrigger>
                             <SelectContent className=''>
@@ -144,19 +149,21 @@ const CheckoutForm = () => {
                                 }
                             </SelectContent>
                         </Select>
-                        <input
-                            id='zip'
-                            className={`${iClass} ${errors.zip ? 'border-red-500' : ''} ${errors.zip ? 'focus:border-red-500' : 'focus:border-black'}`}
-                            type='text'
-                            {...register("zip", { required: 'Please input your current zip!' }
+                        <div className='flex-1'>
+                            <input
+                                id='zip'
+                                className={`${iClass} ${errors.zip ? 'border-red-500' : ''} ${errors.zip ? 'focus:border-red-500' : 'focus:border-black'}`}
+                                type='text'
+                                {...register("zip", { required: 'Enter a ZIP / postal code' }
+                                )}
+                                aria-invalid={errors.zip ? 'true' : 'false'}
+                                placeholder='ZIP code'
+                                autoComplete='zip'
+                            />
+                            {errors.zip && (
+                                <p className='text-red-500 text-sm' role="alert">{errors.zip.message}</p>
                             )}
-                            aria-invalid={errors.zip ? 'true' : 'false'}
-                            placeholder='ZIP code'
-                            autoComplete='zip'
-                        />
-                        {errors.zip && (
-                            <p className='text-red-500' role="alert">{errors.zip.message}</p>
-                        )}
+                        </div>
                     </div>
                     <div className='space-x-2 mt-4'>
                         <Checkbox id="saveInfo" className='rounded-sm border-gray-300' />
