@@ -25,18 +25,18 @@ const Payment = () => {
     }, [dispatch, session?.user?.email]);
 
     return (
-        <>
+        <div className='min-h-screen'>
             <div className='py-6 border-b'>
                 <div className='max-w-[1180px] mx-auto px-4 md:px-10 flex items-center justify-between'>
                     <h3 className='text-base md:text-lg font-semibold'>Gear your payment and enjoy!</h3>
-                    <Link href='/cart' className='transition-all duration-300 text-blue-600 hover:text-blue-700'><ShoppingBag /></Link>
+                    <Link href='/cart' className='transition-all duration-300 text-[#1773B0] hover:text-blue-700'><ShoppingBag /></Link>
                 </div>
             </div>
             <div className='max-w-[1180px] mx-auto flex flex-col-reverse lg:flex-row'>
-                <div className='flex-1 lg:border-r md:p-10'>
+                <div className='flex-1 min-h-[calc(100vh-70px)] lg:border-r px-4 md:p-10'>
                     <CheckoutForm />
                 </div>
-                <div className='flex-1 space-y-3 md:p-10'>
+                <div className='flex-1 space-y-3 px-4 py-10 md:p-10'>
                     {
                         cartItems.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
                             <div className='flex items-center gap-3'>
@@ -53,7 +53,7 @@ const Payment = () => {
                     <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{totalItems} items <span>${subtotalPrice}.00</span></div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

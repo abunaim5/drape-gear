@@ -1,10 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc';
+// import { FcGoogle } from 'react-icons/fc';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -14,6 +15,7 @@ interface IFormInput {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const [adminAccess, setAdminAccess] = useState<boolean>(false);
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -55,6 +57,7 @@ const Login = () => {
                             }
                         }
                         )}
+                        defaultValue={adminAccess ? 'admin@mail.com' : ''}
                         aria-invalid={errors.email ? 'true' : 'false'}
                         placeholder='Email'
                         autoComplete='email'
@@ -76,6 +79,7 @@ const Login = () => {
                             },
                             // pattern: /^[A-Za-z]+$/i
                         })}
+                        defaultValue={adminAccess ? '123456' : ''}
                         aria-invalid={errors.password ? 'true' : 'false'}
                         placeholder='Password'
                         autoComplete='pass'
@@ -87,11 +91,12 @@ const Login = () => {
                     <input className='cursor-pointer py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value='Login' />
                     <div className='flex items-center justify-between gap-2 my-4'>
                         <div className='w-full h-[1px] bg-black' />
-                        <span className='text-nowrap'>Login with social account</span>
+                        <span className='text-nowrap'>Admin Access</span>
                         <div className='w-full h-[1px] bg-black' />
                     </div>
-                    <button type='button' className='flex items-center justify-center w-full rounded-none text-2xl py-[7px] border-[1px] border-black'>
-                        <FcGoogle />
+                    <button onClick={() => setAdminAccess(!adminAccess)} type='button' className='flex items-center justify-center w-full rounded-none py-[10px] border-[1px] border-black'>
+                        Admin
+                        {/* <FcGoogle /> */}
                     </button>
                     <h5 className='mt-4 text-center'>New Customer? <Link href='/register' className='text-cyan-500'>Register</Link></h5>
                 </form>

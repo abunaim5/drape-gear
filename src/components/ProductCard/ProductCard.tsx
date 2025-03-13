@@ -49,7 +49,7 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
     return (
         <div className='group'>
             <div className='relative group overflow-hidden'>
-                <div className='absolute z-40 w-full h-full bg-black/5 group-hover:bg-black/10 group-hover:animate-in transform transition-transform ease-in duration-1000 cursor-pointer' />
+                <div onClick={() => router.push(`/product/${_id}`)} className='absolute z-40 w-full h-full bg-black/5 group-hover:bg-black/10 group-hover:animate-in transform transition-transform ease-in duration-1000 cursor-pointer' />
                 <Image onClick={() => router.push(`/product/${_id}`)} alt={`${name} image`} width={400} height={600} className='w-full h-full group-hover:scale-110 transform transition-transform ease-in-out duration-1000 cursor-pointer' src={image} />
                 <div className='flex flex-col gap-1 absolute z-50 right-1 md:right-2 xl:right-4 bottom-1 md:bottom-2 xl:bottom-auto xl:top-4 text-xl'>
                     <button onClick={() => location === '/wishlist' ? handleRemoveFromWishlist(_id) : isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`group-hover:opacity-100 group-hover:animate-in transform transition-transform ease-linear duration-1000 ${location === '/wishlist' ? 'text-white' : 'text-black'} ${isWished ? 'bg-[#E81E63] hover:bg-[#E81E63] xl:opacity-100' : 'bg-white hover:bg-black xl:opacity-0'} hover:text-white p-2 rounded-sm`}>
