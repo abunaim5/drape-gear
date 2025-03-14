@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '@/lib/store'
-import { fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
+import { fetchAllProducts, fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
 import { usePathname } from 'next/navigation'
 import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice'
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
@@ -32,6 +32,7 @@ const StoreProvider = ({
             }
             storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
             storeRef.current.dispatch(fetchUsers());
+            storeRef.current.dispatch(fetchAllProducts());
         }
     }, [collection, session?.user.email]);
 
