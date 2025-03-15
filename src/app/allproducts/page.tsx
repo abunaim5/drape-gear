@@ -32,8 +32,9 @@ const AllProducts = () => {
                                 <TableHead>Name</TableHead>
                                 <TableHead>Collection</TableHead>
                                 <TableHead>Date</TableHead>
+                                <TableHead>Availability</TableHead>
                                 <TableHead>Price</TableHead>
-                                <TableHead className="text-right">Manage</TableHead>
+                                <TableHead className='text-right'>Manage</TableHead>
                                 <TableHead className="text-right">Action</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -46,8 +47,9 @@ const AllProducts = () => {
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell>{product.collection}</TableCell>
                                     <TableCell>{product.createdAt}</TableCell>
+                                    <TableCell>{product.availability ? 'In stock' : 'Out of stock'}</TableCell>
                                     <TableCell>${product.price}.00</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className='text-right'>
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`}><MdOutlineUpdate /></button>
                                     </TableCell>
                                     <TableCell className="text-right">

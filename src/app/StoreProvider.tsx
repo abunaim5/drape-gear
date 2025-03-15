@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '@/lib/store'
-import { fetchAllProducts, fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
+import { fetchAllProducts, fetchCategories, fetchProductCount, fetchProducts } from '@/lib/features/products/productsSlice'
 import { usePathname } from 'next/navigation'
 import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice'
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
@@ -27,6 +27,7 @@ const StoreProvider = ({
         if (storeRef.current) {
             storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
             storeRef.current.dispatch(fetchProductCount({collection: collection}));
+            storeRef.current.dispatch(fetchCategories({collection: collection}));
             if(session?.user?.email){
                 storeRef.current.dispatch(fetchCartProducts({email: session.user.email}));
             }

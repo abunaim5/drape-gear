@@ -26,6 +26,16 @@ type ProductListType = {
     availability: boolean
 };
 
+type CategoryType = {
+    category: string;
+    totalProducts: number;
+};
+
+type AvailabilityType = {
+    availability: boolean;
+    totalAvailability: number;
+};
+
 type CartProductType = {
     _id: string,
     productId: string,
@@ -70,4 +80,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType, ProductType, ProductListType, CartProductType, CartProductListType, CollectionType, SupportType, FootContentType };
+export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductListType, CollectionType, SupportType, FootContentType };

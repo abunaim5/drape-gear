@@ -1,7 +1,7 @@
 'use client';
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { ProductListType } from "@/types/types";
+import { AvailabilityType, CategoryType, ProductListType } from "@/types/types";
 import { CiFilter } from "react-icons/ci";
 import {
     Select,
@@ -19,24 +19,27 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-import { fetchProductCount, fetchProducts } from "@/lib/features/products/productsSlice";
+import { fetchCategories, fetchProductCount, fetchProducts } from "@/lib/features/products/productsSlice";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import { Checkbox } from "@/components/ui/checkbox";
+import SideDrawer from "@/components/SideDrawer/SideDrawer";
 
 const Products = () => {
-    const { products, productCount } = useAppSelector((state) => state.products);
+    const { products, productCount, categories, availabilityData } = useAppSelector((state) => state.products);
     const [sortPriceVal, setSortPriceVal] = useState<string>('default');
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [open, setOpen] = useState<boolean>(false);
     const itemsPerPage: number = 10;
     const totalPages = Math.ceil(productCount / itemsPerPage);
     const dispatch = useAppDispatch();
     const location = usePathname();
     const collection = location.split('/')[2];
-    // console.log(products, productCount);
+    console.log(availabilityData);
 
     const handleFilterDrawer = () => {
-
+        setOpen(true);
     };
 
     // handle pagination
@@ -52,12 +55,55 @@ const Products = () => {
 
     useEffect(() => {
         dispatch(fetchProducts({ currentPage, itemsPerPage, collection: collection, sortPriceVal }));
-        dispatch(fetchProductCount({collection: collection}));
+        dispatch(fetchProductCount({ collection: collection }));
+        dispatch(fetchCategories({ collection: collection }));
     }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
+
+    const filterDrawerElem = <>
+        <div className='px-4 py-5 shadow-md'>
+            <h1 className='text-base'>Availability</h1>
+            <div className='w-14 border-b-2 border-black mt-1' />
+            <div className='flex flex-col gap-3 mt-5'>
+                {
+                    availabilityData.map((available: AvailabilityType, idx) => <div key={idx} className="items-top flex space-x-2">
+                        <Checkbox id={available.availability ? 'inStock' : 'outStock'} />
+                        <div className="leading-none">
+                            <label
+                                htmlFor={available.availability ? 'inStock' : 'outStock'}
+                                className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                {available?.availability ? 'In Stock' : 'Out Of Stock'} ({available?.totalAvailability})
+                            </label>
+                        </div>
+                    </div>)
+                }
+            </div>
+        </div>
+        <div className='px-4 py-5 shadow-md'>
+            <h1 className='text-base'>Categories</h1>
+            <div className='w-14 border-b-2 border-black mt-1' />
+            <div className='flex flex-col gap-3 mt-5'>
+                {
+                    categories?.map((category: CategoryType, idx) => <div key={idx} className="items-top flex space-x-2">
+                        <Checkbox id={category.category} />
+                        <div className="leading-none">
+                            <label
+                                htmlFor={category.category}
+                                className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                {category?.category?.charAt(0).toUpperCase() + category?.category?.slice(1)} ({category?.totalProducts})
+                            </label>
+                        </div>
+                    </div>)
+                }
+            </div>
+        </div>
+    </>
 
     return (
         <div className='mb-16' id={`${currentPage}`}>
             <Breadcrumb />
+            <SideDrawer title='Filter Products' place='left' open={open} setOpen={setOpen} drawerElem={filterDrawerElem} />
             <div className='container my-16'>
                 <div className='flex gap-4 items-center justify-between'>
                     <div onClick={handleFilterDrawer} className='flex items-center gap-[2px] text-xl hover:text-[#00BADB] cursor-pointer'>

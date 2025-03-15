@@ -1,4 +1,4 @@
-import { ProductType } from "@/types/types";
+import { AvailabilityType, CategoryType, ProductType } from "@/types/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -22,10 +22,20 @@ export const fetchProductCount = createAsyncThunk('count/fetchProductCount', asy
     return res.data.count;
 });
 
+export const fetchCategories = createAsyncThunk('categories/fetchCategories', async ({ collection }: { collection: string }) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/categories?collection=${collection}`);
+    return {
+       categories: res.data.categories,
+       availabilityData: res.data.availabilityData
+    };
+});
+
 // create types
 interface ProductsState {
     products: ProductType[];
     allProducts: ProductType[];
+    categories: CategoryType[];
+    availabilityData: AvailabilityType[];
     product: ProductType | null;
     productCount: number;
     loading: boolean;
@@ -36,6 +46,8 @@ interface ProductsState {
 const initialState: ProductsState = {
     products: [],
     allProducts: [],
+    categories: [],
+    availabilityData: [],
     product: null,
     productCount: 0,
     loading: false,
@@ -99,6 +111,20 @@ const productsSlice = createSlice({
             .addCase(fetchProductCount.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
+            })
+            // fetch product categories
+            .addCase(fetchCategories.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchCategories.fulfilled, (state, action: PayloadAction<{categories: CategoryType[]; availabilityData: AvailabilityType[]}>) => {
+                state.loading = false;
+                state.categories = action.payload.categories;
+                state.availabilityData = action.payload.availabilityData;
+            })
+            .addCase(fetchCategories.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'failed to fetch categories'
             })
     },
 });

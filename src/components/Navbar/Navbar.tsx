@@ -29,7 +29,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
 
   const handleSearchDrawer = () => {
-    setOpen(true)
+    setOpen(true);
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +60,7 @@ const Navbar = () => {
       />
       <IoSearchOutline className='text-lg' />
     </label>
-    <h1 className='shadow-md text-base font-bold px-4 py-[9px]'>Search results</h1>
+    <h1 className='shadow-md text-base font-semibold px-4 py-[9px]'>Search results</h1>
     <div className='max-h-[74.813vh] overflow-y-auto custom-scrollbar'>
       <div className={`flex items-center justify-center h-96 ${searchProducts?.length ? 'hidden' : ''}`}>
         {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
