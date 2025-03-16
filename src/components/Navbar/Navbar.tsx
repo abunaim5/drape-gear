@@ -4,7 +4,7 @@ import NavLink from './NavLink';
 import { navLinks } from './navLinks';
 import Link from 'next/link';
 import { FiUser } from 'react-icons/fi';
-import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdClose, IoMdHeartEmpty } from 'react-icons/io';
 import { PiShoppingCartSimple } from 'react-icons/pi';
 import { VscMenu } from "react-icons/vsc";
 import SideDrawer from '../SideDrawer/SideDrawer';
@@ -17,6 +17,14 @@ import { signOut, useSession } from 'next-auth/react';
 import { LayoutDashboard, LogOut, Settings, User, MapPinHouse } from "lucide-react"
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import { useRouter } from 'next/navigation';
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+} from "@/components/ui/drawer"
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
@@ -24,6 +32,7 @@ const Navbar = () => {
   const itemIds = useAppSelector((state) => state.wishlist.itemIds);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -31,6 +40,10 @@ const Navbar = () => {
   const handleSearchDrawer = () => {
     setOpen(true);
   };
+
+  const handleNavMenu = () => {
+    setMenuOpen(true);
+  }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target as HTMLInputElement;
@@ -80,7 +93,26 @@ const Navbar = () => {
       <SideDrawer title='Search Products' place='right' open={open} setOpen={setOpen} drawerElem={searchDrawerElem} />
       <div className='container flex items-center'>
         <div className='flex items-center gap-2 flex-1'>
-          <VscMenu className='block lg:hidden text-2xl' />
+          <button onClick={handleNavMenu} className='block lg:hidden'><VscMenu className='text-2xl' /></button>
+          <Drawer direction='left' open={menuOpen} onOpenChange={() => setMenuOpen(!menuOpen)}>
+            <DrawerContent className='max-h-[100vh] rounded-none w-full md:w-[340px]' aria-describedby="">
+              <DrawerHeader className='border-b flex items-center justify-between'>
+                <DrawerTitle className='text-base tracking-normal'>MENU</DrawerTitle>
+                <DrawerClose>
+                  <IoMdClose className='text-2xl' />
+                </DrawerClose>
+              </DrawerHeader>
+              <div className='flex-1'>
+                
+              </div>
+              {/* <DrawerFooter className='border-t mt-0'>
+                <Link href='/products/all' className='flex items-center gap-2 hover:text-cyan-500'>
+                  View all
+                  <IoMdArrowForward />
+                </Link>
+              </DrawerFooter> */}
+            </DrawerContent>
+          </Drawer>
           <div className='logo flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
             drapegear.
           </div>

@@ -60,7 +60,7 @@ const Products = () => {
     }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
 
     const filterDrawerElem = <>
-        <div className='px-4 py-5 shadow-md'>
+        <div className='px-4 py-5 border-b'>
             <h1 className='text-base'>Availability</h1>
             <div className='w-14 border-b-2 border-black mt-1' />
             <div className='flex flex-col gap-3 mt-5'>
@@ -79,7 +79,7 @@ const Products = () => {
                 }
             </div>
         </div>
-        <div className='px-4 py-5 shadow-md'>
+        <div className='px-4 py-5 border-b'>
             <h1 className='text-base'>Categories</h1>
             <div className='w-14 border-b-2 border-black mt-1' />
             <div className='flex flex-col gap-3 mt-5'>
