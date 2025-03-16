@@ -15,7 +15,7 @@ const SideDrawer = ({ title, place, open, setOpen, drawerElem }: { title: string
         <Drawer direction={place} open={open} onOpenChange={() => setOpen(false)}>
             <DrawerContent className='max-h-[100vh] rounded-none w-full md:w-[340px]' aria-describedby="">
                 <DrawerHeader className='border-b flex items-center justify-between'>
-                    <DrawerTitle className='text-base tracking-normal'>{title}</DrawerTitle>
+                    <DrawerTitle className='text-base tracking-normal font-normal uppercase'>{title}</DrawerTitle>
                     <DrawerClose>
                         <IoMdClose className='text-2xl' />
                     </DrawerClose>
