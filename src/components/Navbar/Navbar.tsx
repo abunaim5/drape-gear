@@ -134,8 +134,8 @@ const Navbar = () => {
         </div>
         <div className='hidden lg:block'>
           <ul className='flex items-center justify-center gap-8'>
-            {navLinks.map((link) => (
-              <li key={link.href}>
+            {navLinks.map((link, idx) => (
+              <li key={idx}>
                 <NavLink href={link.href} label={link.label} />
               </li>
             ))}
