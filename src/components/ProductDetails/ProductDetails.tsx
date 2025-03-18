@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PiHeartStraightFill, PiHeartStraightLight } from "react-icons/pi";
 import { addToWishlist } from "@/lib/features/wishlist/wishlistSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addToCart } from "@/lib/features/cart/cartSlice";
 
@@ -17,6 +17,7 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
+    const pathname = usePathname();
     const router = useRouter();
     const [count, setCount] = useState<number>(1);
     const isWished = wishlistItems.includes(_id);
@@ -45,30 +46,34 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
     };
 
     return (
-        <div>
-            <div className='flex flex-col md:flex-row gap-8'>
-                <Image className='flex-1 border' alt={`${name} image`} src={image} width={400} height={500} />
-                <div className='flex-1'>
+        <>
+            <div className={`flex flex-col md:flex-row gap-8 ${pathname !== `/product/${_id}` ? 'p-4 md:p-0' : ''}`}>
+                <div className='relative flex-1'>
+                    <div className='absolute z-50 w-full h-full bg-black/5 cursor-grab' />
+                    <Image className='w-full' alt={`${name} image`} src={image} width={400} height={500} />
+                </div>
+                <div className={`flex-1 ${pathname !== `/product/${_id}` ? 'py-0 md:py-8 pr-0 md:pr-8' : ''}`}>
                     <h3 className='font-semibold'>{name}</h3>
                     <div className='flex items-center gap-3 text-xl mt-2'>
                         <h5 className='text-gray-400 line-through'>&#2547;{price}</h5>
                         <h5 className='text-[#F85712]'>&#2547;{price}</h5>
                     </div>
                     <p className='text-sm my-5 text-gray-500'>{description}</p>
-                    <div className='flex gap-3'>
-                        <div className='flex items-center gap-6 max-w-max text-lg font-semibold px-4 py-[6px] rounded-full border border-black'>
+                    <div className='flex gap-3 justify-normal lg:justify-between max-w-[342px]'>
+                        <div className='flex items-center gap-4 max-w-max text-lg font-semibold px-4 py-[7px] rounded-full border border-black'>
                             <button onClick={() => setCount(count - 1)} className={`hover:text-cyan-500 ${count === 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
-                            <span>{count}</span>
+                            <span className='text-base'>{count}</span>
                             <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500'><Plus size={20} /></button>
                         </div>
                         <button onClick={handleAddToCart} className='px-9 py-[10px] bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce hidden lg:block'>ADD TO CART</button>
-                        <button onClick={() => isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`px-[10px] rounded-full border text-xl border-black ${isWished ? 'text-red-500 border-red-500 hover:text-red-500 hover:border-red-500' : 'text-black border-black hover:text-cyan-500 hover:border-cyan-500'}`}>
+                        <button onClick={() => isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`w-10 h-10 flex items-center justify-center rounded-full border text-xl border-black ${isWished ? 'text-red-500 border-red-500 hover:text-red-500 hover:border-red-500' : 'text-black border-black hover:text-cyan-500 hover:border-cyan-500'}`}>
                             {
                                 isWished ? <PiHeartStraightFill /> : <PiHeartStraightLight />
                             }
                         </button>
                     </div>
-                    <button onClick={handleAddToCart} className='w-full py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden'>ADD TO CART</button>
+                    <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden'>ADD TO CART</button>
+                    <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-black hover:bg-cyan-500 text-white rounded-full text-sm'>BUY IT NOW</button>
                     <div className='flex gap-5 text-sm font-semibold mt-10'>
                         <Link href='/' className='hover:text-cyan-500'>Delivery & Return</Link>
                         <Link href='/' className='hover:text-cyan-500'>Ask a Question</Link>
@@ -89,7 +94,7 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

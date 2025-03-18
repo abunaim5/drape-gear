@@ -1,5 +1,5 @@
 'use client';
-import { CartProductListType, ProductListType } from "@/types/types";
+import { CartProductListType, ProductType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { HiOutlineEye } from "react-icons/hi2";
@@ -11,15 +11,12 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
     Dialog,
-    DialogClose,
     DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-  } from "@/components/ui/dialog"
+} from "@/components/ui/dialog"
 import { useState } from "react";
+import ProductDetails from "../ProductDetails/ProductDetails";
 
-const ProductCard = ({ _id, name, image, price, availability }: ProductListType) => {
+const ProductCard = ({ _id, name, image, price, availability, category, collection, description, createdAt }: ProductType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const [openQuick, setOpenQuick] = useState<boolean>(false);
     const { data: session } = useSession();
@@ -63,21 +60,20 @@ const ProductCard = ({ _id, name, image, price, availability }: ProductListType)
     return (
         <>
             <Dialog open={openQuick} onOpenChange={() => setOpenQuick(!openQuick)}>
-                <DialogContent className='sm:max-w-md sm:rounded-none p-0' aria-describedby=''>
-                    <DialogHeader>
-                        <DialogTitle>Share link</DialogTitle>
-                    </DialogHeader>
-                    <div className="flex items-center space-x-2">
-                        <div className="grid flex-1 gap-2">
-                            
-                        </div>
-                        
+                <DialogContent className='sm:max-w-max sm:rounded-none p-0 scroll-my-1' aria-describedby=''>
+                    <div>
+                        <ProductDetails
+                            _id={_id}
+                            name={name}
+                            price={price}
+                            image={image}
+                            category={category}
+                            collection={collection}
+                            createdAt={createdAt}
+                            description={description}
+                            availability={availability}
+                        />
                     </div>
-                    <DialogFooter className="sm:justify-start">
-                        <DialogClose asChild>
-                            
-                        </DialogClose>
-                    </DialogFooter>
                 </DialogContent>
             </Dialog>
             <div className='group'>
