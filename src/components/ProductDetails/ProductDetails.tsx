@@ -61,19 +61,19 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                     <p className='text-sm my-5 text-gray-500'>{description}</p>
                     <div className='flex gap-3 justify-normal lg:justify-between max-w-[342px]'>
                         <div className='flex items-center gap-4 max-w-max text-lg font-semibold px-4 py-[7px] rounded-full border border-black'>
-                            <button onClick={() => setCount(count - 1)} className={`hover:text-cyan-500 ${count === 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
+                            <button onClick={() => setCount(count - 1)} className={`hover:text-cyan-500 transition-all duration-500 ${count === 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
                             <span className='text-base'>{count}</span>
-                            <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500'><Plus size={20} /></button>
+                            <button onClick={() => setCount(count + 1)} className='hover:text-cyan-500 transition-all duration-500'><Plus size={20} /></button>
                         </div>
-                        <button onClick={handleAddToCart} className='px-9 py-[10px] bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce hidden lg:block'>ADD TO CART</button>
-                        <button onClick={() => isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`w-10 h-10 flex items-center justify-center rounded-full border text-xl border-black ${isWished ? 'text-red-500 border-red-500 hover:text-red-500 hover:border-red-500' : 'text-black border-black hover:text-cyan-500 hover:border-cyan-500'}`}>
+                        <button onClick={handleAddToCart} className='px-9 py-[10px] bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce hidden lg:block transition-all duration-500'>ADD TO CART</button>
+                        <button onClick={() => isWished ? router.push('/wishlist') : handleAddToWishlist(_id)} className={`w-10 h-10 flex items-center justify-center rounded-full border text-xl border-black transition-all duration-500 ${isWished ? 'text-red-500 border-red-500 hover:text-red-500 hover:border-red-500' : 'text-black border-black hover:text-cyan-500 hover:border-cyan-500'}`}>
                             {
                                 isWished ? <PiHeartStraightFill /> : <PiHeartStraightLight />
                             }
                         </button>
                     </div>
-                    <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden'>ADD TO CART</button>
-                    <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-black hover:bg-cyan-500 text-white rounded-full text-sm'>BUY IT NOW</button>
+                    <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden transition-all duration-500'>ADD TO CART</button>
+                    <button onClick={() => router.push('/payment')} className='w-full lg:w-[342px] py-[10px] mt-5 bg-black hover:bg-cyan-500 text-white rounded-full text-sm transition-all duration-500'>BUY IT NOW</button>
                     <div className='flex gap-5 text-sm font-semibold mt-10'>
                         <Link href='/' className='hover:text-cyan-500'>Delivery & Return</Link>
                         <Link href='/' className='hover:text-cyan-500'>Ask a Question</Link>
