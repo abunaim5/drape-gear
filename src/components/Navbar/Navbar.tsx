@@ -125,13 +125,13 @@ const Navbar = () => {
               </DrawerFooter> */}
             </DrawerContent>
           </Drawer>
-          <div className='logo flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
+          <Link href='/' className='logo flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
             drapegear.
-          </div>
+          </Link>
         </div>
-        <div className='logo flex-1 text-2xl md:text-3xl text-center font-semibold lg:hidden'>
+        <Link href='/' className='logo flex-1 text-2xl md:text-3xl text-center font-semibold lg:hidden'>
           drapegear.
-        </div>
+        </Link>
         <div className='hidden lg:block'>
           <ul className='flex items-center justify-center gap-8'>
             {navLinks.map((link, idx) => (
