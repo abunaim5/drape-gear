@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { CircleAlert, Store, Truck } from "lucide-react";
 import React, { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import Link from "next/link";
 
 interface IFormInput {
     name: string,
@@ -194,7 +195,11 @@ const CheckoutForm = () => {
                 <p className='text-sm text-gray-500 mb-8'>All transactions are secure and encrypted.</p>
                 <input className={`cursor-pointer w-full py-[11px] rounded-sm bg-black hover:bg-gray-900 text-white ${deliveryStatus !== 'ship' ? 'pointer-events-none bg-gray-500' : ''}`} type="submit" value='Pay Now' />
             </form>
-            
+            <div className='space-x-4'>
+                <Link href='/'>Terms</Link>
+                <Link href='/'>Refund policy</Link>
+                <Link href='/'>contact</Link>
+            </div>
         </>
     );
 };
