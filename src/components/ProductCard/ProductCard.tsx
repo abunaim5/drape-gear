@@ -12,6 +12,7 @@ import Link from "next/link";
 import {
     Dialog,
     DialogContent,
+    DialogTitle,
 } from "@/components/ui/dialog"
 import { useState } from "react";
 import ProductDetails from "../ProductDetails/ProductDetails";
@@ -61,6 +62,7 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
         <>
             <Dialog open={openQuick} onOpenChange={() => setOpenQuick(!openQuick)}>
                 <DialogContent className='sm:max-w-max sm:rounded-none p-0 scroll-my-1' aria-describedby=''>
+                <DialogTitle className='sr-only'>Product Quick Details</DialogTitle>
                     <div>
                         <ProductDetails
                             _id={_id}
