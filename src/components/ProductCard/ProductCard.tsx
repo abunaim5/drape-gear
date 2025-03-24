@@ -61,7 +61,7 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
     return (
         <>
             <Dialog open={openQuick} onOpenChange={() => setOpenQuick(!openQuick)}>
-                <DialogContent className='sm:max-w-max sm:rounded-none p-0 scroll-my-1' aria-describedby=''>
+                <DialogContent className='sm:max-w-max max-h-[80vh] md:max-h-max overflow-auto sm:rounded-none p-0' aria-describedby=''>
                 <DialogTitle className='sr-only'>Product Quick Details</DialogTitle>
                     <div>
                         <ProductDetails

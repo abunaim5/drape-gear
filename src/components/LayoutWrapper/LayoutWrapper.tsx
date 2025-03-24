@@ -5,14 +5,16 @@ import Footer from "../Footer/Footer";
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     const location = usePathname();
+    const isQuickPay = location.startsWith('/quickpay/');
+    const isPayment = location === '/payment';
 
     return (
         <>
-            {location !== '/payment' ? <Navbar /> : ''}
+            {!isPayment && !isQuickPay && <Navbar />}
             <main>
                 {children}
             </main>
-            {location !== '/payment' ? <Footer /> : ''}
+            {!isPayment && !isQuickPay && <Footer />}
         </>
     );
 };
