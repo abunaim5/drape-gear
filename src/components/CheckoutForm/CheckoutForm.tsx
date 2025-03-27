@@ -14,12 +14,14 @@ interface IFormInput {
     zip: number,
     address: string,
     apartment: string,
+    country: string,
+    state: string
 };
 
-const countries = ['Canada', 'France', 'Germany', 'United States', 'United Kingdom'];
+const countries = ['Bangladesh', 'Canada', 'France', 'Germany', 'United States', 'United Kingdom'];
 
 const CheckoutForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const iClass = `w-full rounded-sm px-[14px] py-[10px] border focus:outline-none focus:border-[#1773B0]`
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
     const onSubmit: SubmitHandler<IFormInput> = async (data) => console.log(data);
@@ -82,16 +84,21 @@ const CheckoutForm = () => {
                         </div>
                     </div>) : (<>
                         <div className='mt-8 space-y-3'>
-                            <Select>
-                                <SelectTrigger className="w-full px-[14px] h-[46px] rounded-sm">
-                                    <SelectValue placeholder="Country/Region" />
-                                </SelectTrigger>
-                                <SelectContent className=''>
-                                    {
-                                        countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
-                                    }
-                                </SelectContent>
-                            </Select>
+                            <div>
+                                <Select onValueChange={(value) => setValue('country', value, {shouldValidate: true})}>
+                                    <SelectTrigger className={`w-full px-[14px] h-[46px] rounded-sm ${errors.country ? 'border-red-500' : ''} ${errors.country ? 'focus:border-red-500' : 'focus:border-black'}`}>
+                                        <SelectValue placeholder="Country/Region" />
+                                    </SelectTrigger>
+                                    <SelectContent className='' {...register("country", { required: 'Select a country!' })}>
+                                        {
+                                            countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
+                                        }
+                                    </SelectContent>
+                                </Select>
+                                {errors.country && (
+                                    <p className='text-red-500 text-sm' role="alert">{errors.country.message}</p>
+                                )}
+                            </div>
                             <div>
                                 <input
                                     id='name'
@@ -131,9 +138,6 @@ const CheckoutForm = () => {
                                 placeholder='Apartment, suite, etc. (optional)'
                                 autoComplete='apartment'
                             />
-                            {/* {errors.apartment && (
-                            <p className='text-red-500' role="alert">{errors.apartment.message}</p>
-                        )} */}
                             <div className='flex flex-col md:flex-row items-start justify-between gap-3'>
                                 <div className='flex-1 w-full'>
                                     <input
@@ -150,21 +154,26 @@ const CheckoutForm = () => {
                                         <p className='text-red-500 text-sm' role="alert">{errors.city.message}</p>
                                     )}
                                 </div>
-                                <Select>
-                                    <SelectTrigger className="w-full flex-1 px-[14px] py-3 h-[46px] rounded-sm">
-                                        <SelectValue placeholder="State" />
-                                    </SelectTrigger>
-                                    <SelectContent className=''>
-                                        {
-                                            countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
-                                        }
-                                    </SelectContent>
-                                </Select>
+                                <div className='flex-1 w-full'>
+                                    <Select onValueChange={(value) => setValue('state', value, {shouldValidate: true})}>
+                                        <SelectTrigger className={`px-[14px] py-3 h-[46px] rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
+                                            <SelectValue placeholder="State" />
+                                        </SelectTrigger>
+                                        <SelectContent {...register("state", { required: 'Select a country!' })}>
+                                            {
+                                                countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
+                                            }
+                                        </SelectContent>
+                                    </Select>
+                                    {errors.state && (
+                                        <p className='text-red-500 text-sm' role="alert">{errors.state.message}</p>
+                                    )}
+                                </div>
                                 <div className='flex-1 w-full'>
                                     <input
                                         id='zip'
                                         className={`${iClass} ${errors.zip ? 'border-red-500' : ''} ${errors.zip ? 'focus:border-red-500' : 'focus:border-black'}`}
-                                        type='text'
+                                        type='number'
                                         {...register("zip", { required: 'Enter a ZIP / postal code' }
                                         )}
                                         aria-invalid={errors.zip ? 'true' : 'false'}
