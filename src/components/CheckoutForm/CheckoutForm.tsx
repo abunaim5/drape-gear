@@ -32,7 +32,7 @@ const CheckoutForm = () => {
 
     return (
         <>
-            <form className='mb-10' onSubmit={handleSubmit(onSubmit)}>
+            <form className='mb-10 text-sm' onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor='email' className='text-lg font-semibold block mb-2'>Contact</label>
                 <input
                     id='email'

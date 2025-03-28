@@ -73,7 +73,7 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                         </button>
                     </div>
                     <button onClick={handleAddToCart} className='w-full lg:w-[342px] py-[10px] mt-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full text-sm animate-bounce lg:hidden transition-all duration-500'>ADD TO CART</button>
-                    <button onClick={() => router.push(`/quickpay/${_id}`)} className='w-full lg:w-[342px] py-[10px] mt-5 bg-black hover:bg-cyan-500 text-white rounded-full text-sm transition-all duration-500'>BUY IT NOW</button>
+                    <button onClick={() => router.push(`/payment?id=${_id}`)} className='w-full lg:w-[342px] py-[10px] mt-5 bg-black hover:bg-cyan-500 text-white rounded-full text-sm transition-all duration-500'>BUY IT NOW</button>
                     <div className='flex gap-5 text-sm font-semibold mt-10'>
                         <Link href='/' className='hover:text-cyan-500'>Delivery & Return</Link>
                         <Link href='/' className='hover:text-cyan-500'>Ask a Question</Link>

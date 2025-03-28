@@ -1,28 +1,33 @@
-'use client'
-import CheckoutForm from '@/components/CheckoutForm/CheckoutForm';
+'use client';
+import { fetchSingleProduct } from '@/lib/features/products/productsSlice';
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
+import CheckoutForm from '@/components/CheckoutForm/CheckoutForm';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { CartProductListType } from '@/types/types';
-import { ShoppingBag } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { ShoppingBag } from 'lucide-react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 const Payment = () => {
+    const { product } = useAppSelector((state) => state.products);
     const { cartItems } = useAppSelector((state) => state.cart);
+    const searchParams = useSearchParams();
+    const productId = searchParams.get('id') as string;
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    // const router = useRouter();
     const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     useEffect(() => {
-        if (session?.user?.email) {
+        if (session?.user?.email && !productId) {
             dispatch(fetchCartProducts({ email: session.user.email }));
+        } else {
+            dispatch(fetchSingleProduct(productId));
         }
-    }, [dispatch, session?.user?.email]);
+    }, [dispatch, session?.user?.email, productId]);
 
     return (
         <div className='min-h-screen'>
@@ -38,7 +43,16 @@ const Payment = () => {
                 </div>
                 <div className='flex-1 space-y-3 px-4 py-10 md:p-10'>
                     {
-                        cartItems.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
+                        productId ? !product ? <h1>product not found</h1> : (<div className='flex items-center justify-between gap-2 text-sm'>
+                            <div className='flex items-center gap-3'>
+                                <div className='relative'>
+                                    <Image className='border rounded-sm' width={80} height={80} src={product.image} alt={`${product.name} image`} />
+                                    <div className='absolute -top-1 -right-1.5 min-w-5 min-h-5 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-gray-600'>1</div>
+                                </div>
+                                <span>{product.name}</span>
+                            </div>
+                            <p>${product.price}.00</p>
+                        </div>) : (cartItems.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
                             <div className='flex items-center gap-3'>
                                 <div className='relative'>
                                     <Image className='border rounded-sm' width={80} height={80} src={product.image} alt={`${product.name} image`} />
@@ -47,7 +61,7 @@ const Payment = () => {
                                 <span>{product.name}</span>
                             </div>
                             <p>${product.price}.00</p>
-                        </div>)
+                        </div>))
                     }
                     <div className='border-b bg-black' />
                     <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{totalItems} items <span>${subtotalPrice}.00</span></div>
