@@ -5,11 +5,15 @@ import CheckoutForm from '@/components/CheckoutForm/CheckoutForm';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { CartProductListType } from '@/types/types';
 import { useSearchParams } from 'next/navigation';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useSession } from 'next-auth/react';
 import { ShoppingBag } from 'lucide-react';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const Payment = () => {
     const { product } = useAppSelector((state) => state.products);
@@ -39,7 +43,9 @@ const Payment = () => {
             </div>
             <div className='max-w-[1180px] mx-auto flex flex-col-reverse lg:flex-row'>
                 <div className='flex-1 min-h-[calc(100vh-70px)] lg:border-r px-4 md:p-10'>
-                    <CheckoutForm />
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm />
+                    </Elements>
                 </div>
                 <div className='flex-1 space-y-3 px-4 py-10 md:p-10'>
                     {

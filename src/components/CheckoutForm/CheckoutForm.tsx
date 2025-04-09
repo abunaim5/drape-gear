@@ -6,6 +6,7 @@ import { CircleAlert, Store, Truck } from "lucide-react";
 import React, { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import Link from "next/link";
+import { CardElement } from "@stripe/react-stripe-js";
 
 interface IFormInput {
     name: string,
@@ -85,7 +86,7 @@ const CheckoutForm = () => {
                     </div>) : (<>
                         <div className='mt-8 space-y-3'>
                             <div>
-                                <Select onValueChange={(value) => setValue('country', value, {shouldValidate: true})}>
+                                <Select onValueChange={(value) => setValue('country', value, { shouldValidate: true })}>
                                     <SelectTrigger className={`w-full px-[14px] h-[46px] rounded-sm ${errors.country ? 'border-red-500' : ''} ${errors.country ? 'focus:border-red-500' : 'focus:border-black'}`}>
                                         <SelectValue placeholder="Country/Region" />
                                     </SelectTrigger>
@@ -155,8 +156,8 @@ const CheckoutForm = () => {
                                     )}
                                 </div>
                                 <div className='flex-1 w-full'>
-                                    <Select onValueChange={(value) => setValue('state', value, {shouldValidate: true})}>
-                                        <SelectTrigger className={`px-[14px] py-3 h-[46px] rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
+                                    <Select onValueChange={(value) => setValue('state', value, { shouldValidate: true })}>
+                                        <SelectTrigger className={`px-[14px] py-3  rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
                                             <SelectValue placeholder="State" />
                                         </SelectTrigger>
                                         <SelectContent {...register("state", { required: 'Select a country!' })}>
@@ -201,8 +202,24 @@ const CheckoutForm = () => {
 
                 {/* payment method */}
                 <h3 className='text-lg font-semibold mb-1 mt-8'>Payment</h3>
-                <p className='text-sm text-gray-500 mb-8'>All transactions are secure and encrypted.</p>
-                <input className={`cursor-pointer w-full py-[11px] rounded-sm bg-black hover:bg-gray-900 text-white ${deliveryStatus !== 'ship' ? 'pointer-events-none bg-gray-500' : ''}`} type="submit" value='Pay Now' />
+                <p className='text-sm text-gray-500 mb-2'>All transactions are secure and encrypted.</p>
+                <CardElement
+                    className='border rounded-sm px-[14px] py-[13px]'
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '14px',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
+                            },
+                        },
+                    }}
+                />
+                <input className={`cursor-pointer w-full mt-8 py-[11px] rounded-sm bg-black hover:bg-gray-900 text-white ${deliveryStatus !== 'ship' ? 'pointer-events-none bg-gray-500' : ''}`} type="submit" value='Pay Now' />
             </form>
             <div className='border-b' />
             <div className='space-x-4 my-4 text-sm text-[#1773B0] underline'>
