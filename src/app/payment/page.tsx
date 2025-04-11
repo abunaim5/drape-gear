@@ -70,7 +70,7 @@ const Payment = () => {
                         </div>))
                     }
                     <div className='border-b bg-black' />
-                    <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{totalItems} items <span>${subtotalPrice}.00</span></div>
+                    <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{productId ? 1 : totalItems} items <span>${productId ? product?.price : subtotalPrice}.00</span></div>
                 </div>
             </div>
         </div>

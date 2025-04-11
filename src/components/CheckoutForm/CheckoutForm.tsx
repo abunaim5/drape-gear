@@ -3,10 +3,12 @@ import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { CircleAlert, Store, Truck } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import Link from "next/link";
-import { CardElement } from "@stripe/react-stripe-js";
+import { CardElement, useStripe } from "@stripe/react-stripe-js";
+import { useSession } from "next-auth/react";
+import useAxiosPublic from "@/utils/useAxiosPublic";
 
 interface IFormInput {
     name: string,
@@ -25,7 +27,18 @@ const CheckoutForm = () => {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const iClass = `w-full rounded-sm px-[14px] py-[10px] border focus:outline-none focus:border-[#1773B0]`
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
+    const [clientSecret, setClientSecret] = useState<string>('');
+    const { data: session } = useSession();
+    const axiosPublic = useAxiosPublic();
+    const stripe = useStripe();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => console.log(data);
+
+    useEffect(() => {
+        axiosPublic.post('/create-payment-intent', { })
+            .then(res => {
+                setClientSecret(res.data.clientSecret);
+            })
+    }, [axiosPublic])
 
     const handleDeliveryStatus = (value: string) => {
         setDeliveryStatus(value);
@@ -48,6 +61,8 @@ const CheckoutForm = () => {
                         }
                     }
                     )}
+                    readOnly
+                    defaultValue={session?.user.email ?? ''}
                     aria-invalid={errors.email ? 'true' : 'false'}
                     placeholder='Email'
                     autoComplete='email'
@@ -157,7 +172,7 @@ const CheckoutForm = () => {
                                 </div>
                                 <div className='flex-1 w-full'>
                                     <Select onValueChange={(value) => setValue('state', value, { shouldValidate: true })}>
-                                        <SelectTrigger className={`px-[14px] py-3  rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
+                                        <SelectTrigger className={`px-[14px] h-[42px] rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
                                             <SelectValue placeholder="State" />
                                         </SelectTrigger>
                                         <SelectContent {...register("state", { required: 'Select a country!' })}>
@@ -204,17 +219,18 @@ const CheckoutForm = () => {
                 <h3 className='text-lg font-semibold mb-1 mt-8'>Payment</h3>
                 <p className='text-sm text-gray-500 mb-2'>All transactions are secure and encrypted.</p>
                 <CardElement
-                    className='border rounded-sm px-[14px] py-[13px]'
+                    className='border rounded-sm px-[14px] py-[12px]'
                     options={{
                         style: {
                             base: {
                                 fontSize: '14px',
+                                fontFamily: 'Futura, sans-serif',
                                 '::placeholder': {
-                                    color: '#aab7c4',
+                                    color: '#6B7280',
                                 },
                             },
                             invalid: {
-                                color: '#9e2146',
+                                color: '#EF4444',
                             },
                         },
                     }}

@@ -55,7 +55,7 @@ type CartProductListType = {
     price: number,
     availability: boolean,
     quantity: number
-}
+};
 
 type CollectionType = {
     img: string,
