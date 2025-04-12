@@ -24,6 +24,12 @@ const Payment = () => {
     const dispatch = useAppDispatch();
     const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const orderedProducts = cartItems.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        priceAtPurchase: item.price
+    }));
+    console.log(orderedProducts);
 
     useEffect(() => {
         if (session?.user?.email && !productId) {

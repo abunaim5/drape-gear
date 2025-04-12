@@ -12,7 +12,7 @@ import useAxiosPublic from "@/utils/useAxiosPublic";
 
 interface IFormInput {
     name: string,
-    email: string,
+    phone: number,
     city: string,
     zip: number,
     address: string,
@@ -47,28 +47,26 @@ const CheckoutForm = () => {
     return (
         <>
             <form className='mb-10 text-sm' onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor='email' className='text-lg font-semibold block mb-2'>Contact</label>
+                <label htmlFor='phone' className='text-lg font-semibold block mb-2'>Contact</label>
                 <input
-                    id='email'
-                    className={`${iClass} ${errors.email ? 'border-red-500' : ''} ${errors.email ? 'focus:border-red-500' : 'focus:border-black'}`}
-                    type='text'
-                    {...register("email", {
-                        required: 'Enter your email!',
-                        maxLength: 20,
-                        pattern: {
-                            value: /^\S+@\S+$/i,
-                            message: 'Invalid email format.'
-                        }
+                    id='phone'
+                    className={`${iClass} ${errors.phone ? 'border-red-500' : ''} ${errors.phone ? 'focus:border-red-500' : 'focus:border-black'}`}
+                    type='number'
+                    {...register("phone", {
+                        required: 'Enter your phone number!',
+                        minLength: 11,
+                        // pattern: {
+                        //     value: /^\S+@\S+$/i,
+                        //     message: 'Invalid email format.'
+                        // }
                     }
                     )}
-                    readOnly
-                    defaultValue={session?.user.email ?? ''}
-                    aria-invalid={errors.email ? 'true' : 'false'}
-                    placeholder='Email'
-                    autoComplete='email'
+                    aria-invalid={errors.phone ? 'true' : 'false'}
+                    placeholder='Phone'
+                    autoComplete='phone'
                 />
-                {errors.email && (
-                    <p className='text-red-500 text-sm' role="alert">{errors.email.message}</p>
+                {errors.phone && (
+                    <p className='text-red-500 text-sm' role="alert">{errors.phone.message}</p>
                 )}
                 <div className='space-x-2 mt-4 mb-8'>
                     <Checkbox id="terms" className='rounded-sm border-gray-300' />
