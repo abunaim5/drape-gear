@@ -3,7 +3,7 @@ import { fetchSingleProduct } from '@/lib/features/products/productsSlice';
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import CheckoutForm from '@/components/CheckoutForm/CheckoutForm';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { CartProductListType } from '@/types/types';
+import { CartProductListType, OrderedProductsType } from '@/types/types';
 import { useSearchParams } from 'next/navigation';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -16,7 +16,7 @@ import Link from 'next/link';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const Payment = () => {
-    const { product } = useAppSelector((state) => state.products);
+    const { product, loading } = useAppSelector((state) => state.products);
     const { cartItems } = useAppSelector((state) => state.cart);
     const searchParams = useSearchParams();
     const productId = searchParams.get('id') as string;
@@ -24,12 +24,25 @@ const Payment = () => {
     const dispatch = useAppDispatch();
     const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const orderedProducts = cartItems.map(item => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        priceAtPurchase: item.price
-    }));
-    console.log(orderedProducts);
+    const totalAmount = !productId ? subtotalPrice : product?.price ?? 0;
+    let orderedProducts: OrderedProductsType[];
+    // console.log(subtotalPrice)
+
+    if (!productId) {
+        orderedProducts = cartItems.map(item => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            priceAtPurchase: item.price
+        }));
+    } else {
+        orderedProducts = [
+            {
+                productId: product?._id ?? '',
+                quantity: 1,
+                priceAtPurchase: product?.price ?? 0
+            }
+        ];
+    }
 
     useEffect(() => {
         if (session?.user?.email && !productId) {
@@ -38,6 +51,8 @@ const Payment = () => {
             dispatch(fetchSingleProduct(productId));
         }
     }, [dispatch, session?.user?.email, productId]);
+
+    if (loading) return
 
     return (
         <div className='min-h-screen'>
@@ -50,7 +65,7 @@ const Payment = () => {
             <div className='max-w-[1180px] mx-auto flex flex-col-reverse lg:flex-row'>
                 <div className='flex-1 min-h-[calc(100vh-70px)] lg:border-r px-4 md:p-10'>
                     <Elements stripe={stripePromise}>
-                        <CheckoutForm />
+                        <CheckoutForm orderedProducts={orderedProducts} totalAmount={totalAmount} />
                     </Elements>
                 </div>
                 <div className='flex-1 space-y-3 px-4 py-10 md:p-10'>

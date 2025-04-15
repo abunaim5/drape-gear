@@ -9,6 +9,7 @@ import Link from "next/link";
 import { CardElement, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import useAxiosPublic from "@/utils/useAxiosPublic";
+import { OrderedProductsType } from "@/types/types";
 
 interface IFormInput {
     name: string,
@@ -23,7 +24,7 @@ interface IFormInput {
 
 const countries = ['Bangladesh', 'Canada', 'France', 'Germany', 'United States', 'United Kingdom'];
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: OrderedProductsType[], totalAmount: number }) => {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const iClass = `w-full rounded-sm px-[14px] py-[10px] border focus:outline-none focus:border-[#1773B0]`
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
@@ -32,13 +33,15 @@ const CheckoutForm = () => {
     const axiosPublic = useAxiosPublic();
     const stripe = useStripe();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => console.log(data);
+    console.log(orderedProducts, totalAmount)
 
     useEffect(() => {
-        axiosPublic.post('/create-payment-intent', { })
-            .then(res => {
-                setClientSecret(res.data.clientSecret);
-            })
-    }, [axiosPublic])
+        // axiosPublic.post('/create-payment-intent', { price: totalAmount })
+        //     .then(res => {
+        //         setClientSecret(res.data.clientSecret);
+        //     })
+    }, [axiosPublic]);
+    console.log(clientSecret);
 
     const handleDeliveryStatus = (value: string) => {
         setDeliveryStatus(value);
