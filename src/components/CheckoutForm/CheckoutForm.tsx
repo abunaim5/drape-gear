@@ -6,10 +6,10 @@ import { CircleAlert, Store, Truck } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import Link from "next/link";
-import { CardElement, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import useAxiosPublic from "@/utils/useAxiosPublic";
-import { OrderedProductsType } from "@/types/types";
+import { OrderedProductsInfoType, OrderedProductsType } from "@/types/types";
 
 interface IFormInput {
     name: string,
@@ -27,13 +27,82 @@ const countries = ['Bangladesh', 'Canada', 'France', 'Germany', 'United States',
 const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: OrderedProductsType[], totalAmount: number }) => {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const iClass = `w-full rounded-sm px-[14px] py-[10px] border focus:outline-none focus:border-[#1773B0]`
+    const [paymentSuccessStatus, setPaymentSuccessStatus] = useState<string>('');
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
     const [clientSecret, setClientSecret] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const { data: session } = useSession();
     const axiosPublic = useAxiosPublic();
+    const elements = useElements();
     const stripe = useStripe();
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => console.log(data);
-    console.log(orderedProducts, totalAmount)
+    const date = Date();
+    console.log(date);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        if (!stripe || !elements) {
+            return;
+        }
+
+        const card = elements.getElement(CardElement);
+
+        if (!card) {
+            return;
+        }
+
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card
+        });
+
+        if (error?.message) {
+            console.error('[Payment error]', error);
+            setError(error.message);
+        } else {
+            console.log('[PaymentMethod]', paymentMethod);
+            setError('');
+        }
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: session?.user.name || 'anonymous',
+                    email: session?.user.email || 'anonymous'
+                }
+            }
+        });
+
+        if (confirmError) {
+            console.error('[Payment Intent Error]', error);
+        } else {
+            console.log('[PaymentIntent]', paymentIntent);
+            if (paymentIntent.status === 'succeeded') {
+                // Swal.fire({
+                //     position: "top-end",
+                //     icon: "success",
+                //     title: "Payment successful",
+                //     showConfirmButton: false,
+                //     timer: 2000
+                // });
+                setPaymentSuccessStatus(paymentIntent.status);
+                const fullAddress = [data.address, data.apartment, data.city, data.state, data.country, data.zip].filter(Boolean).join(', ');
+                const orderedProductsInfo: OrderedProductsInfoType[] = [{
+                    username: session?.user.name ?? '',
+                    userEmail: session?.user.email ?? '',
+                    items: orderedProducts,
+                    totalAmount: totalAmount,
+                    createdAt: '',
+                    shippingAddress: {
+                        name: data.name,
+                        address: fullAddress,
+                        phone: data.phone
+                    },
+                    transactionId: paymentIntent.id
+                }];
+                
+            }
+        }
+    };
+    // console.log(orderedProducts, totalAmount)
 
     useEffect(() => {
         // axiosPublic.post('/create-payment-intent', { price: totalAmount })

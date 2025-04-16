@@ -57,8 +57,24 @@ type CartProductListType = {
     quantity: number
 };
 
+type OrderedProductsInfoType = {
+    username: string,
+    userEmail: string,
+    items: OrderedProductsType[],
+    totalAmount: number,
+    createdAt: string,
+    shippingAddress: {
+        name: string,
+        address: string,
+        phone: number
+    },
+    transactionId: string
+};
+
 type OrderedProductsType = {
     productId: string,
+    name: string,
+    image: string,
     quantity: number,
     priceAtPurchase: number
 };
@@ -86,4 +102,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductListType, OrderedProductsType, CollectionType, SupportType, FootContentType };
+export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductListType, OrderedProductsInfoType, OrderedProductsType, CollectionType, SupportType, FootContentType };

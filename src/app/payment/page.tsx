@@ -26,11 +26,12 @@ const Payment = () => {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const totalAmount = !productId ? subtotalPrice : product?.price ?? 0;
     let orderedProducts: OrderedProductsType[];
-    // console.log(subtotalPrice)
 
     if (!productId) {
         orderedProducts = cartItems.map(item => ({
             productId: item.productId,
+            name: item.name,
+            image: item.image,
             quantity: item.quantity,
             priceAtPurchase: item.price
         }));
@@ -38,11 +39,13 @@ const Payment = () => {
         orderedProducts = [
             {
                 productId: product?._id ?? '',
+                name: product?.name ?? '',
+                image: product?.image ?? '',
                 quantity: 1,
                 priceAtPurchase: product?.price ?? 0
             }
         ];
-    }
+    };
 
     useEffect(() => {
         if (session?.user?.email && !productId) {
