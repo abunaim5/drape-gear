@@ -10,6 +10,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import { OrderedProductsInfoType, OrderedProductsType } from "@/types/types";
+import toast from "react-hot-toast";
 
 interface IFormInput {
     name: string,
@@ -30,87 +31,88 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
     const [paymentSuccessStatus, setPaymentSuccessStatus] = useState<string>('');
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
     const [clientSecret, setClientSecret] = useState<string>('');
-    const [error, setError] = useState<string>('');
+    // const [error, setError] = useState<string>('');
     const { data: session } = useSession();
     const axiosPublic = useAxiosPublic();
     const elements = useElements();
     const stripe = useStripe();
-    const date = Date();
-    console.log(date);
+    const isDisabled = deliveryStatus !== 'ship' || !stripe || !clientSecret || paymentSuccessStatus;
+    // const date = Date();
+    // console.log(date);
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        if (!stripe || !elements) {
-            return;
-        }
+        try {
+            if (!stripe || !elements) {
+                return;
+            }
 
-        const card = elements.getElement(CardElement);
+            const card = elements.getElement(CardElement);
 
-        if (!card) {
-            return;
-        }
+            if (!card) {
+                return;
+            }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card
-        });
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card
+            });
 
-        if (error?.message) {
-            console.error('[Payment error]', error);
-            setError(error.message);
-        } else {
-            console.log('[PaymentMethod]', paymentMethod);
-            setError('');
-        }
+            if (error?.message) {
+                console.error('[Payment error]', error);
+                toast.error(error.message);
+                // setError(error.message);
+            } else {
+                console.log('[PaymentMethod]', paymentMethod);
+                // setError('');
+            }
 
-        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card,
-                billing_details: {
-                    name: session?.user.name || 'anonymous',
-                    email: session?.user.email || 'anonymous'
+            const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: session?.user.name || 'anonymous',
+                        email: session?.user.email || 'anonymous'
+                    }
+                }
+            });
+
+            if (confirmError) {
+                console.error('[Payment Intent Error]', error);
+            } else {
+                console.log('[PaymentIntent]', paymentIntent);
+                if (paymentIntent.status === 'succeeded') {
+                    toast.success('Payment successful');
+                    setPaymentSuccessStatus(paymentIntent.status);
+                    const fullAddress = [data.address, data.apartment, data.city, data.state, data.country, data.zip].filter(Boolean).join(', ');
+                    const orderedProductsInfo: OrderedProductsInfoType[] = [{
+                        username: session?.user.name ?? '',
+                        userEmail: session?.user.email ?? '',
+                        items: orderedProducts,
+                        totalAmount: totalAmount,
+                        createdAt: '',
+                        shippingAddress: {
+                            name: data.name,
+                            address: fullAddress,
+                            phone: data.phone
+                        },
+                        transactionId: paymentIntent.id
+                    }];
+                    await axiosPublic.post('/orderedProducts', orderedProductsInfo);
+                    // navigate('/dashboard/my-enroll-class');
                 }
             }
-        });
-
-        if (confirmError) {
-            console.error('[Payment Intent Error]', error);
-        } else {
-            console.log('[PaymentIntent]', paymentIntent);
-            if (paymentIntent.status === 'succeeded') {
-                // Swal.fire({
-                //     position: "top-end",
-                //     icon: "success",
-                //     title: "Payment successful",
-                //     showConfirmButton: false,
-                //     timer: 2000
-                // });
-                setPaymentSuccessStatus(paymentIntent.status);
-                const fullAddress = [data.address, data.apartment, data.city, data.state, data.country, data.zip].filter(Boolean).join(', ');
-                const orderedProductsInfo: OrderedProductsInfoType[] = [{
-                    username: session?.user.name ?? '',
-                    userEmail: session?.user.email ?? '',
-                    items: orderedProducts,
-                    totalAmount: totalAmount,
-                    createdAt: '',
-                    shippingAddress: {
-                        name: data.name,
-                        address: fullAddress,
-                        phone: data.phone
-                    },
-                    transactionId: paymentIntent.id
-                }];
-                
-            }
+        } catch (error) {
+            console.error('Payment error:', error);
         }
     };
     // console.log(orderedProducts, totalAmount)
 
     useEffect(() => {
-        // axiosPublic.post('/create-payment-intent', { price: totalAmount })
-        //     .then(res => {
-        //         setClientSecret(res.data.clientSecret);
-        //     })
-    }, [axiosPublic]);
-    console.log(clientSecret);
+        axiosPublic.post('/create-payment-intent', { price: totalAmount })
+            .then(res => {
+                setClientSecret(res.data.clientSecret);
+            })
+    }, [axiosPublic, totalAmount]);
+    // console.log(clientSecret);
 
     const handleDeliveryStatus = (value: string) => {
         setDeliveryStatus(value);
@@ -305,7 +307,7 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                         },
                     }}
                 />
-                <input className={`cursor-pointer w-full mt-8 py-[11px] rounded-sm bg-black hover:bg-gray-900 text-white ${deliveryStatus !== 'ship' ? 'pointer-events-none bg-gray-500' : ''}`} type="submit" value='Pay Now' />
+                <input className={`cursor-pointer w-full mt-8 py-[11px] rounded-sm bg-black hover:bg-gray-900 text-white ${isDisabled ? 'pointer-events-none bg-gray-500' : ''}`} type="submit" value='Pay Now' />
             </form>
             <div className='border-b' />
             <div className='space-x-4 my-4 text-sm text-[#1773B0] underline'>

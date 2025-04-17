@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from 'react-hot-toast';
 import LayoutWrapper from "@/components/LayoutWrapper/LayoutWrapper";
 
 // const geistSans = Geist({
@@ -35,6 +36,7 @@ export default function RootLayout({
           <StoreProvider>
             <LayoutWrapper>
               {children}
+              <Toaster />
             </LayoutWrapper>
           </StoreProvider>
         </SessionProvider>
