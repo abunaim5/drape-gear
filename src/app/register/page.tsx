@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useAxiosPublic from '@/utils/useAxiosPublic';
 import { UserInfoType } from '@/types/user';
+import toast from 'react-hot-toast';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -31,14 +32,14 @@ const Register = () => {
             }
             const res = await axiosPublic.post('/register', userInfo);
             if (res.status === 201) {
-                alert('User registered successfully!');
+                toast.success('Successfully registered!');
                 router.push('/login');
             }
         } catch (err: unknown) {
             if(err instanceof Error) {
-                alert(err.message);
+                toast.error(err.message);
             } else {
-                alert('Registration failed');
+                toast.error('Registration failed');
             }
         } finally {
             setLoading(false);

@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import { OrderedProductsInfoType, OrderedProductsType } from "@/types/types";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface IFormInput {
     name: string,
@@ -24,6 +25,7 @@ interface IFormInput {
 };
 
 const countries = ['Bangladesh', 'Canada', 'France', 'Germany', 'United States', 'United Kingdom'];
+const states = ['Dhaka', 'Chattogram', 'Barishal', 'Khulna', 'Rajshahi', 'Rangpur', 'Mymensingh', 'Sylhet']
 
 const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: OrderedProductsType[], totalAmount: number }) => {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<IFormInput>();
@@ -34,11 +36,12 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
     // const [error, setError] = useState<string>('');
     const { data: session } = useSession();
     const axiosPublic = useAxiosPublic();
+    const router = useRouter();
     const elements = useElements();
     const stripe = useStripe();
     const isDisabled = deliveryStatus !== 'ship' || !stripe || !clientSecret || paymentSuccessStatus;
-    // const date = Date();
-    // console.log(date);
+    const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' }
+    const currentDate = new Date().toLocaleDateString('en-us', options);
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             if (!stripe || !elements) {
@@ -83,21 +86,21 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                     toast.success('Payment successful');
                     setPaymentSuccessStatus(paymentIntent.status);
                     const fullAddress = [data.address, data.apartment, data.city, data.state, data.country, data.zip].filter(Boolean).join(', ');
-                    const orderedProductsInfo: OrderedProductsInfoType[] = [{
-                        username: session?.user.name ?? '',
-                        userEmail: session?.user.email ?? '',
+                    const orderedProductsInfo: OrderedProductsInfoType = {
+                        user_name: session?.user.name ?? '',
+                        user_email: session?.user.email ?? '',
                         items: orderedProducts,
                         totalAmount: totalAmount,
-                        createdAt: '',
+                        createdAt: currentDate,
                         shippingAddress: {
                             name: data.name,
                             address: fullAddress,
                             phone: data.phone
                         },
                         transactionId: paymentIntent.id
-                    }];
+                    };
                     await axiosPublic.post('/orderedProducts', orderedProductsInfo);
-                    // navigate('/dashboard/my-enroll-class');
+                    router.push('/orders');
                 }
             }
         } catch (error) {
@@ -179,7 +182,7 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                                     </SelectTrigger>
                                     <SelectContent className='' {...register("country", { required: 'Select a country!' })}>
                                         {
-                                            countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
+                                            countries.map((country, idx) => <SelectItem key={idx} value={country}>{country}</SelectItem>)
                                         }
                                     </SelectContent>
                                 </Select>
@@ -247,9 +250,9 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                                         <SelectTrigger className={`px-[14px] h-[42px] rounded-sm ${errors.state ? 'border-red-500' : ''} ${errors.state ? 'focus:border-red-500' : 'focus:border-black'}`}>
                                             <SelectValue placeholder="State" />
                                         </SelectTrigger>
-                                        <SelectContent {...register("state", { required: 'Select a country!' })}>
+                                        <SelectContent {...register("state", { required: 'Select a state!' })}>
                                             {
-                                                countries.map((country, idx) => <SelectItem key={idx} value={`${country.toLowerCase()}`}>{country}</SelectItem>)
+                                                states.map((state, idx) => <SelectItem key={idx} value={state}>{state}</SelectItem>)
                                             }
                                         </SelectContent>
                                     </Select>

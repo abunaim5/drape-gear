@@ -8,6 +8,7 @@ import { fetchSearchProducts } from '@/lib/features/searchProducts/searchSlice'
 import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import { useSession } from 'next-auth/react';
 import { fetchUsers } from '@/lib/features/users/usersSlice';
+import { fetchOrders } from '@/lib/features/orders/ordersSlice';
 
 const StoreProvider = ({
     children
@@ -29,11 +30,12 @@ const StoreProvider = ({
             storeRef.current.dispatch(fetchProductCount({collection: collection}));
             storeRef.current.dispatch(fetchCategories({collection: collection}));
             if(session?.user?.email){
+                storeRef.current.dispatch(fetchOrders({email: session.user.email}));
                 storeRef.current.dispatch(fetchCartProducts({email: session.user.email}));
             }
-            storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
             storeRef.current.dispatch(fetchUsers());
             storeRef.current.dispatch(fetchAllProducts());
+            storeRef.current.dispatch(fetchSearchProducts({searchText: ''}));
         }
     }, [collection, session?.user.email]);
 

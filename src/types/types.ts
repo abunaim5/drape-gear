@@ -58,8 +58,8 @@ type CartProductListType = {
 };
 
 type OrderedProductsInfoType = {
-    username: string,
-    userEmail: string,
+    user_name: string,
+    user_email: string,
     items: OrderedProductsType[],
     totalAmount: number,
     createdAt: string,
