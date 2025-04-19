@@ -1,4 +1,4 @@
-import { OrderedProductsInfoType } from "@/types/types";
+import { OrderedProductsInfoResponseType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async ({ email
 
 // create types
 interface OrdersState {
-    orders: OrderedProductsInfoType[],
+    orders: OrderedProductsInfoResponseType[],
     loading: boolean,
     error: string | null | undefined
 };
@@ -33,7 +33,7 @@ const ordersSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchOrders.fulfilled, (state, action: PayloadAction<OrderedProductsInfoType[]>) => {
+            .addCase(fetchOrders.fulfilled, (state, action: PayloadAction<OrderedProductsInfoResponseType[]>) => {
                 state.loading = false;
                 state.orders = action.payload;
             })

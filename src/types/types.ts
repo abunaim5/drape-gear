@@ -74,7 +74,24 @@ type OrderedProductsInfoType = {
         phone: number
     },
     transactionId: string
+    status: string,
 };
+
+type OrderedProductsInfoResponseType = {
+    _id: string,
+    user_name: string,
+    user_email: string,
+    items: OrderedProductsType[],
+    totalAmount: number,
+    createdAt: string,
+    shippingAddress: {
+        name: string,
+        address: string,
+        phone: number
+    },
+    transactionId: string,
+    status: string
+}
 
 type OrderedProductsType = {
     productId: string,
@@ -107,4 +124,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsType, CollectionType, SupportType, FootContentType };
+export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsInfoResponseType, OrderedProductsType, CollectionType, SupportType, FootContentType };

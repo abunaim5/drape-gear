@@ -97,7 +97,8 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                             address: fullAddress,
                             phone: data.phone
                         },
-                        transactionId: paymentIntent.id
+                        transactionId: paymentIntent.id,
+                        status: 'Pending'
                     };
                     await axiosPublic.post('/orderedProducts', orderedProductsInfo);
                     router.push('/orders');
