@@ -47,6 +47,11 @@ type CartProductType = {
     quantity: number
 }[];
 
+type CartProductResponseType = {
+    success: boolean;
+    products: CartProductType
+}
+
 type CartProductListType = {
     productId: string,
     email: string,
@@ -102,4 +107,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductListType, OrderedProductsInfoType, OrderedProductsType, CollectionType, SupportType, FootContentType };
+export type { BannerType, ProductType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsType, CollectionType, SupportType, FootContentType };

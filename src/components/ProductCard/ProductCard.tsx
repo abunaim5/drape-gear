@@ -16,9 +16,11 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react";
 import ProductDetails from "../ProductDetails/ProductDetails";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ _id, name, image, price, availability, category, collection, description, createdAt }: ProductType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
+    const { cart } = useAppSelector((state) => state.cart);
     const [openQuick, setOpenQuick] = useState<boolean>(false);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
@@ -42,6 +44,9 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
                 quantity: 1
             }
             dispatch(addToCart(cartProduct));
+            if(cart.success){
+                toast.success('Nice pick! It’s in your cart now.');
+            }
         }
     };
 
@@ -62,7 +67,7 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
         <>
             <Dialog open={openQuick} onOpenChange={() => setOpenQuick(!openQuick)}>
                 <DialogContent className='sm:max-w-max max-h-[80vh] md:max-h-max overflow-auto sm:rounded-none p-0' aria-describedby=''>
-                <DialogTitle className='sr-only'>Product Quick Details</DialogTitle>
+                    <DialogTitle className='sr-only'>Product Quick Details</DialogTitle>
                     <div>
                         <ProductDetails
                             _id={_id}

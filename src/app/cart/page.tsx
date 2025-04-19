@@ -12,13 +12,15 @@ import { PiTrashLight } from "react-icons/pi";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Cart = () => {
-    const { cartItems } = useAppSelector((state) => state.cart);
+    const { cart } = useAppSelector((state) => state.cart);
+    console.log(cart)
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    const subtotalPrice = cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
 
     useEffect(() => {
         if (session?.user?.email) {
@@ -29,12 +31,15 @@ const Cart = () => {
     const handleRemoveFromCart = (id: string) => {
         if (session?.user?.email) {
             dispatch(removeFromCart({ id, email: session.user.email }));
+            if(cart.success){
+                toast.success('Item removed from cart.');
+            }
         }
     };
 
     const handleUpdateProductQuantity = ({ id, email, productQuantity }: { id: string, email: string, productQuantity: number }) => {
         if (session?.user?.email) {
-            dispatch(updateCartQuantity({ id, email, productQuantity }))
+            dispatch(updateCartQuantity({ id, email, productQuantity }));
         }
     }
 
@@ -46,7 +51,7 @@ const Cart = () => {
         <>
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-268px)] mt-16 mb-20'>
-                <div className={`hidden items-center justify-between text-sm font-semibold pb-3 ${!cartItems.length ? 'hidden' : 'xl:flex'}`}>
+                <div className={`hidden items-center justify-between text-sm font-semibold pb-3 ${!cart.products.length ? 'hidden' : 'xl:flex'}`}>
                     <h3 className='w-1/4'>Product</h3>
                     <div className='flex items-center justify-between flex-1'>
                         <h3 className='flex-1 text-center'>Price</h3>
@@ -55,8 +60,8 @@ const Cart = () => {
                     </div>
                 </div>
                 {
-                    cartItems.map((product: CartProductListType, idx) => <div key={idx} className='mt-5 xl:mt-0'>
-                        <div className={`flex items-center gap-3 border xl:border-0 ${cartItems.length === 1 ? 'xl:border-b' : 'xl:border-b-0'} xl:border-t font-semibold py-5 md:py-0`}>
+                    cart.products.map((product: CartProductListType, idx) => <div key={idx} className='mt-5 xl:mt-0'>
+                        <div className={`flex items-center gap-3 border xl:border-0 ${cart.products.length === 1 ? 'xl:border-b' : 'xl:border-b-0'} xl:border-t font-semibold py-5 md:py-0`}>
                             <Image className='block xl:hidden' alt={`${product.name} image`} src={product.image} width={120} height={200} />
                             <div className='xl:flex items-center justify-between flex-1'>
                                 <div className='w-full md:w-1/4 block xl:flex items-center gap-3'>
@@ -101,7 +106,7 @@ const Cart = () => {
                         </div>
                     </div>)
                 }
-                <div className={`flex flex-col items-center md:items-end mt-10 ${!cartItems.length ? 'hidden' : 'block'}`}>
+                <div className={`flex flex-col items-center md:items-end mt-10 ${!cart.products.length ? 'hidden' : 'block'}`}>
                     <h6 className='text-[13px]'><span className='text-green-800'>Congratulations!</span> You&apos;ve got free shipping!</h6>
                     <div className='relative my-4 w-full'>
                         <TbTruckDelivery className='absolute right-0 -top-5 text-3xl z-30 text-[#4f772d]' />

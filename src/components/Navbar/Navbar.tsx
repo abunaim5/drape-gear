@@ -28,7 +28,7 @@ import {
 
 const Navbar = () => {
   const { searchProducts } = useAppSelector((state) => state.searchProducts);
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const { cart } = useAppSelector((state) => state.cart);
   const itemIds = useAppSelector((state) => state.wishlist.itemIds);
   const [searchText, setSearchText] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
@@ -186,7 +186,7 @@ const Navbar = () => {
           </div>
           <div className='relative cursor-pointer group'>
             <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{cartItems?.length}</div>
+            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{cart?.products.length}</div>
           </div>
         </div>
       </div>

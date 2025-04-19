@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 // import Link from 'next/link';
 
 interface IFormInput {
@@ -30,9 +31,9 @@ const Login = () => {
             if (res?.error) {
                 console.error('Login failed:', res.error);
             } else {
+                toast.success('Great to see you again!');
                 router.push(next);
             }
-            console.log('request sent');
         } catch (error) {
             console.error('Sign-in error:', error)
         }

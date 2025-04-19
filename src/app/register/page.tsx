@@ -32,14 +32,14 @@ const Register = () => {
             }
             const res = await axiosPublic.post('/register', userInfo);
             if (res.status === 201) {
-                toast.success('Successfully registered!');
+                toast.success('Registration successful!');
                 router.push('/login');
             }
         } catch (err: unknown) {
             if(err instanceof Error) {
                 toast.error(err.message);
             } else {
-                toast.error('Registration failed');
+                toast.error('Registration failed!');
             }
         } finally {
             setLoading(false);

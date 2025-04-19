@@ -17,18 +17,18 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const Payment = () => {
     const { product, loading } = useAppSelector((state) => state.products);
-    const { cartItems } = useAppSelector((state) => state.cart);
+    const { cart } = useAppSelector((state) => state.cart);
     const searchParams = useSearchParams();
     const productId = searchParams.get('id') as string;
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    const subtotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const subtotalPrice = cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalItems = cart.products.reduce((total, item) => total + item.quantity, 0);
     const totalAmount = !productId ? subtotalPrice : product?.price ?? 0;
     let orderedProducts: OrderedProductsType[];
 
     if (!productId) {
-        orderedProducts = cartItems.map(item => ({
+        orderedProducts = cart.products.map(item => ({
             productId: item.productId,
             name: item.name,
             image: item.image,
@@ -82,7 +82,7 @@ const Payment = () => {
                                 <span>{product.name}</span>
                             </div>
                             <p>${product.price}.00</p>
-                        </div>) : (cartItems.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
+                        </div>) : (cart.products.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
                             <div className='flex items-center gap-3'>
                                 <div className='relative'>
                                     <Image className='border rounded-sm' width={80} height={80} src={product.image} alt={`${product.name} image`} />
