@@ -50,7 +50,7 @@ const Orders = () => {
                                         </div>
                                     </div>
                                     <div className='text-right text-sm'>
-                                        <p>Total: <span className='font-semibold'>৳{order.totalAmount}</span></p>
+                                        <p>Total: <span className='font-semibold'>${order.totalAmount}</span></p>
                                         <p className='text-xs text-muted-foreground'>{order.createdAt}</p>
                                     </div>
                                 </AccordionTrigger>
@@ -76,7 +76,7 @@ const Orders = () => {
                                             {order.items.map((item, idx) => (
                                                 <TableRow key={idx}>
                                                     <TableCell>{item.name}</TableCell>
-                                                    <TableCell>৳{item.priceAtPurchase}</TableCell>
+                                                    <TableCell>${item.priceAtPurchase}</TableCell>
                                                     <TableCell>{item.quantity}</TableCell>
                                                     <TableCell>
                                                         <Image

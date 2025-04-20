@@ -43,14 +43,14 @@ const InvoiceModal = ({ open, setOpen, order }: InvoiceModalPropsType) => {
                                         <p className='font-medium'>{item.name}</p>
                                         <p className='text-xs text-gray-500'>Qty: {item.quantity}</p>
                                     </div>
-                                    <p className='font-semibold'>৳{item.priceAtPurchase * item.quantity}</p>
+                                    <p className='font-semibold'>${item.priceAtPurchase * item.quantity}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     <div className='flex justify-end mt-4 text-base font-semibold'>
-                        <span>Total: ৳{order.totalAmount}</span>
+                        <span>Total: ${order.totalAmount}</span>
                     </div>
                 </div>
 
