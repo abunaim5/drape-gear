@@ -22,9 +22,9 @@ const Payment = () => {
     const productId = searchParams.get('id') as string;
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    const subtotalPrice = cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
+    const subtotalPrice = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
     const totalItems = cart.products.reduce((total, item) => total + item.quantity, 0);
-    const totalAmount = !productId ? subtotalPrice : product?.price ?? 0;
+    const totalAmount = !productId ? subtotalPrice : product?.sale_price ?? 0;
     let orderedProducts: OrderedProductsType[];
 
     if (!productId) {
@@ -33,7 +33,7 @@ const Payment = () => {
             name: item.name,
             image: item.image,
             quantity: item.quantity,
-            priceAtPurchase: item.price
+            priceAtPurchase: item.sale_price
         }));
     } else {
         orderedProducts = [
@@ -42,7 +42,7 @@ const Payment = () => {
                 name: product?.name ?? '',
                 image: product?.image ?? '',
                 quantity: 1,
-                priceAtPurchase: product?.price ?? 0
+                priceAtPurchase: product?.sale_price ?? 0
             }
         ];
     };
@@ -81,7 +81,7 @@ const Payment = () => {
                                 </div>
                                 <span>{product.name}</span>
                             </div>
-                            <p>${product.price}.00</p>
+                            <p>${product.sale_price}</p>
                         </div>) : (cart.products.map((product: CartProductListType, idx) => <div key={idx} className='flex items-center justify-between gap-2 text-sm'>
                             <div className='flex items-center gap-3'>
                                 <div className='relative'>
@@ -90,11 +90,11 @@ const Payment = () => {
                                 </div>
                                 <span>{product.name}</span>
                             </div>
-                            <p>${product.price}.00</p>
+                            <p>${product.sale_price}</p>
                         </div>))
                     }
                     <div className='border-b bg-black' />
-                    <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{productId ? 1 : totalItems} items <span>${productId ? product?.price : subtotalPrice}.00</span></div>
+                    <div className='flex items-center justify-between gap-2 text-sm font-semibold'>Subtotal.{productId ? 1 : totalItems} items <span>${productId ? product?.sale_price : subtotalPrice}</span></div>
                 </div>
             </div>
         </div>

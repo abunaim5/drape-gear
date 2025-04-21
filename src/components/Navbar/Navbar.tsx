@@ -83,7 +83,7 @@ const Navbar = () => {
       </div>
       <div className='flex flex-col gap-6 mt-6'>
         {
-          searchProducts?.map(product => <DrawerCard key={product._id} name={product.name} image={product.image} price={product.price} />)
+          searchProducts?.map(product => <DrawerCard key={product._id} name={product.name} image={product.image} sale_price={product.sale_price} />)
         }
       </div>
     </div>

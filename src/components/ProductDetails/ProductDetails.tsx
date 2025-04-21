@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaFacebookF, FaPinterestP, FaTelegramPlane, FaTumblr } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
-import { CartProductListType, ProductType } from "@/types/types";
+import { CartProductListType, ProductResponseType } from "@/types/types";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PiHeartStraightFill, PiHeartStraightLight } from "react-icons/pi";
@@ -13,7 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addToCart } from "@/lib/features/cart/cartSlice";
 
-const ProductDetails = ({ _id, name, image, price, description, availability, category, collection }: ProductType) => {
+const ProductDetails = ({ _id, name, image, old_price, sale_price, description, availability, category, collection }: ProductResponseType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
@@ -32,7 +32,8 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                 email: session?.user.email ?? '',
                 name: name,
                 image: image,
-                price: price,
+                old_price: old_price,
+                sale_price: sale_price,
                 availability: availability,
                 quantity: count
             }
@@ -55,8 +56,8 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                 <div className={`flex-1 ${pathname !== `/product/${_id}` ? 'py-0 md:py-8 pr-0 md:pr-8' : ''}`}>
                     <h3 className='font-semibold'>{name}</h3>
                     <div className='flex items-center gap-3 text-xl mt-2'>
-                        <h5 className='text-gray-400 line-through'>${price}</h5>
-                        <h5 className='text-[#F85712]'>${price}</h5>
+                        <h5 className='text-gray-400 line-through'>${old_price}</h5>
+                        <h5 className='text-[#F85712]'>${sale_price}</h5>
                     </div>
                     <p className='text-sm my-5 text-gray-500'>{description}</p>
                     <div className='flex gap-3 justify-normal lg:justify-between max-w-[342px]'>

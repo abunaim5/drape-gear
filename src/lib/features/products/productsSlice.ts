@@ -1,6 +1,11 @@
-import { AvailabilityType, CategoryType, ProductType } from "@/types/types";
+import { AvailabilityType, CategoryType, ProductResponseType } from "@/types/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+
+export const addProduct = createAsyncThunk('add/addProduct', async({}) => {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/addProduct`);
+    return res.data.products;
+});
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ currentPage, itemsPerPage, collection, sortPriceVal }: { currentPage: number, itemsPerPage: number, collection: string, sortPriceVal: string }) => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}`);
@@ -32,11 +37,11 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
 // create types
 interface ProductsState {
-    products: ProductType[];
-    allProducts: ProductType[];
+    products: ProductResponseType[];
+    allProducts: ProductResponseType[];
     categories: CategoryType[];
     availabilityData: AvailabilityType[];
-    product: ProductType | null;
+    product: ProductResponseType | null;
     productCount: number;
     loading: boolean;
     error: string | null | undefined;
@@ -65,7 +70,7 @@ const productsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
+            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ProductResponseType[]>) => {
                 state.loading = false;
                 state.products = action.payload;
             })
@@ -78,7 +83,7 @@ const productsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchAllProducts.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
+            .addCase(fetchAllProducts.fulfilled, (state, action: PayloadAction<ProductResponseType[]>) => {
                 state.loading = false;
                 state.allProducts = action.payload;
             })
@@ -91,7 +96,7 @@ const productsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchSingleProduct.fulfilled, (state, action: PayloadAction<ProductType>) => {
+            .addCase(fetchSingleProduct.fulfilled, (state, action: PayloadAction<ProductResponseType>) => {
                 state.loading = false;
                 state.product = action.payload;
             })

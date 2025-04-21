@@ -1,4 +1,4 @@
-import { ProductType } from "@/types/types";
+import { ProductResponseType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export const fetchSearchProducts = createAsyncThunk('searchProducts/fetchSearchP
 
 // create types
 interface SearchState {
-    searchProducts: ProductType[],
+    searchProducts: ProductResponseType[],
     loading: boolean,
     error: string | null | undefined
 };
@@ -36,7 +36,7 @@ const searchSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchSearchProducts.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
+            .addCase(fetchSearchProducts.fulfilled, (state, action: PayloadAction<ProductResponseType[]>) => {
                 state.loading = false;
                 state.searchProducts = action.payload;
             })

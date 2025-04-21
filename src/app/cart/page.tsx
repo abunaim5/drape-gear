@@ -20,7 +20,7 @@ const Cart = () => {
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const subtotalPrice = cart.products.reduce((total, item) => total + item.price * item.quantity, 0);
+    const subtotalPrice = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
 
     useEffect(() => {
         if (session?.user?.email) {
@@ -31,7 +31,7 @@ const Cart = () => {
     const handleRemoveFromCart = (id: string) => {
         if (session?.user?.email) {
             dispatch(removeFromCart({ id, email: session.user.email }));
-            if(cart.success){
+            if (cart.success) {
                 toast.success('Item removed from cart.');
             }
         }
@@ -74,8 +74,8 @@ const Cart = () => {
                                 <div className='block md:hidden border-b border-dashed my-2' />
                                 <div className='xl:flex items-center justify-between flex-1 font-normal block md:hidden'>
                                     <div className='flex items-center xl:justify-center gap-3 flex-1'>
-                                        <h3 className='text-sm text-gray-400 line-through'>${product.price}</h3>
-                                        <h3 className='text-sm text-[#F85712]'>${product.price}</h3>
+                                        <h3 className='text-sm text-gray-400 line-through'>${product.old_price}</h3>
+                                        <h3 className='text-sm text-[#F85712]'>${product.sale_price}</h3>
                                     </div>
                                     <div className='block md:hidden border-b border-dashed my-2' />
                                     <div className='flex-1'>
@@ -86,14 +86,14 @@ const Cart = () => {
                                         </div>
                                     </div>
                                     <div className='block md:hidden border-b border-dashed my-2' />
-                                    <h5 className='text-sm flex-1 xl:text-right'>${product.price * product.quantity}</h5>
+                                    <h5 className='text-sm flex-1 xl:text-right'>${product.sale_price * product.quantity}</h5>
                                 </div>
                             </div>
                         </div>
                         <div className='hidden md:flex xl:hidden items-center justify-between border border-t-0 px-2 py-4'>
                             <div className='flex items-center justify-center gap-3 flex-1'>
-                                <h3 className='text-sm text-gray-400 line-through'>${product.price}</h3>
-                                <h3 className='text-sm text-[#F85712]'>${product.price}</h3>
+                                <h3 className='text-sm text-gray-400 line-through'>${product.old_price}</h3>
+                                <h3 className='text-sm text-[#F85712]'>${product.sale_price}</h3>
                             </div>
                             <div className='flex-1 px-2'>
                                 <div className='flex items-center gap-6 mx-auto max-w-max text-lg font-semibold px-3 py-[5px] border border-black'>
@@ -102,7 +102,7 @@ const Cart = () => {
                                     <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
                                 </div>
                             </div>
-                            <h5 className='flex-1 text-center text-sm'>${product.price * product.quantity}</h5>
+                            <h5 className='flex-1 text-center text-sm'>${product.sale_price * product.quantity}</h5>
                         </div>
                     </div>)
                 }
@@ -114,13 +114,13 @@ const Cart = () => {
                             <div className='h-2 bg-striped bg-[length:40px_40px] animate-stripe-move rounded-lg' />
                         </div>
                     </div>
-                    <h1 className='text-xl font-semibold mt-6 md:mt-0'><span className='mr-7 text-lg'>SUBTOTAL:</span> ${subtotalPrice}</h1>
+                    <h1 className='text-lg font-semibold mt-6 md:mt-0'><span className='mr-5 text-lg'>SUBTOTAL:</span> ${subtotalPrice}</h1>
                     <p className='text-sm my-3 text-gray-500'>Taxes and shipping calculated at checkout</p>
                     <form className='flex items-center space-x-2 text-gray-500 text-sm'>
                         <Checkbox id="terms" className='rounded-none' />
                         <Label htmlFor="terms" className='text-sm font-normal text-gray-500'>I agree with the terms and conditions.</Label>
                     </form>
-                    <button onClick={() => router.push('/payment')} className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-4 transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
+                    <button onClick={() => router.push('/payment')} className='w-full md:w-[152px] text-sm mt-5 py-2 md:py-3 lg:py-[14px] transition-all duration-500 bg-cyan-500 text-white hover:bg-cyan-600'>
                         Check Out
                     </button>
                 </div>

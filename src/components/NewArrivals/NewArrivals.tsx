@@ -1,5 +1,5 @@
 'use client';
-import { ProductType } from "@/types/types";
+import { ProductResponseType } from "@/types/types";
 import ProductCard from "../ProductCard/ProductCard";
 import SectionInfo from "../SectionInfo/SectionInfo";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -24,7 +24,7 @@ const NewArrivals = () => {
             />
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-2 md:gap-4 mt-12'>
                 {
-                    products.map((product: ProductType, idx: number) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} price={product.price} availability={product.availability} category={product.category} collection={product.collection} description={product.description} createdAt={product.createdAt} />)
+                    products.map((product: ProductResponseType, idx: number) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} old_price={product.old_price} sale_price={product.sale_price} availability={product.availability} category={product.category} collection={product.collection} description={product.description} createdAt={product.createdAt} />)
                 }
             </div>
         </section>

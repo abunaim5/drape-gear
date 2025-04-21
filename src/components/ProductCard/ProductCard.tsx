@@ -1,5 +1,5 @@
 'use client';
-import { CartProductListType, ProductType } from "@/types/types";
+import { CartProductListType, ProductResponseType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { HiOutlineEye } from "react-icons/hi2";
@@ -18,7 +18,7 @@ import { useState } from "react";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import toast from "react-hot-toast";
 
-const ProductCard = ({ _id, name, image, price, availability, category, collection, description, createdAt }: ProductType) => {
+const ProductCard = ({ _id, name, image, old_price, sale_price, availability, category, collection, description, createdAt }: ProductResponseType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const { cart } = useAppSelector((state) => state.cart);
     const [openQuick, setOpenQuick] = useState<boolean>(false);
@@ -39,12 +39,13 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
                 email: session?.user.email ?? '',
                 name: name,
                 image: image,
-                price: price,
+                old_price: old_price,
+                sale_price: sale_price,
                 availability: availability,
                 quantity: 1
             }
             dispatch(addToCart(cartProduct));
-            if(cart.success){
+            if (cart.success) {
                 toast.success('Nice pick! It’s in your cart now.');
             }
         }
@@ -72,7 +73,8 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
                         <ProductDetails
                             _id={_id}
                             name={name}
-                            price={price}
+                            old_price={old_price}
+                            sale_price={sale_price}
                             image={image}
                             category={category}
                             collection={collection}
@@ -108,8 +110,8 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
                 <div className='text-center p-3'>
                     <Link href={`/product/${_id}`} className='transition-all duration-300 hover:text-cyan-500'>{name}</Link>
                     <div className='flex items-center justify-center gap-3'>
-                        <h3 className='text-sm text-[#F85712]'>${price}</h3>
-                        <h3 className='text-sm text-gray-400 line-through'>${price}</h3>
+                        <h3 className='text-sm text-[#F85712]'>${sale_price}</h3>
+                        <h3 className='text-sm text-gray-400 line-through'>${old_price}</h3>
                     </div>
                 </div>
             </div>

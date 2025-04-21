@@ -48,7 +48,7 @@ const AllProducts = () => {
                                     <TableCell>{product.collection}</TableCell>
                                     <TableCell>{new Date(product.createdAt).toLocaleString()}</TableCell>
                                     <TableCell>{product.availability ? 'In stock' : 'Out of stock'}</TableCell>
-                                    <TableCell>${product.price}.00</TableCell>
+                                    <TableCell>${product.sale_price}</TableCell>
                                     <TableCell className='text-right'>
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`}><MdOutlineUpdate /></button>
                                     </TableCell>

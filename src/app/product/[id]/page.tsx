@@ -38,7 +38,8 @@ const Product = ({ params }: ProductId) => {
                 <ProductDetails
                     _id={product._id}
                     name={product.name}
-                    price={product.price}
+                    old_price={product.old_price}
+                    sale_price={product.sale_price}
                     image={product.image}
                     category={product.category}
                     collection={product.collection}
