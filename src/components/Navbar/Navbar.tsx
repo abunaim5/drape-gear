@@ -126,11 +126,11 @@ const Navbar = () => {
             </DrawerContent>
           </Drawer>
           <Link href='/' className='logo flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
-            drapegear.
+            drapegear<span className='text-cyan-500'>.</span>
           </Link>
         </div>
         <Link href='/' className='logo flex-1 text-2xl md:text-3xl text-center font-semibold lg:hidden'>
-          drapegear.
+          drapegear<span className='text-cyan-500'>.</span>
         </Link>
         <div className='hidden lg:block'>
           <ul className='flex items-center justify-center gap-8'>

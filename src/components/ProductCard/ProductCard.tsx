@@ -108,8 +108,8 @@ const ProductCard = ({ _id, name, image, price, availability, category, collecti
                 <div className='text-center p-3'>
                     <Link href={`/product/${_id}`} className='transition-all duration-300 hover:text-cyan-500'>{name}</Link>
                     <div className='flex items-center justify-center gap-3'>
-                        <h3 className='text-sm text-[#F85712]'>&#2547;{price}</h3>
-                        <h3 className='text-sm text-gray-400 line-through'>&#2547;{price}</h3>
+                        <h3 className='text-sm text-[#F85712]'>${price}</h3>
+                        <h3 className='text-sm text-gray-400 line-through'>${price}</h3>
                     </div>
                 </div>
             </div>

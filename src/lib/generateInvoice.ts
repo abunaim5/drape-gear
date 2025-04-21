@@ -25,16 +25,16 @@ const generateInvoice = (order: OrderedProductsInfoResponseType) => {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
-    doc.text(`Date: ${order.createdAt}`, 15, 48);
-    doc.text(`Order ID: ${order._id}`, 15, 56);
-    doc.text(`Transaction ID: ${order.transactionId}`, 15, 64);
-    doc.text(`Name: ${order.user_name}`, 15, 72);
-    doc.text(`Email: ${order.user_email}`, 15, 80);
-    doc.text(`Phone: ${order.shippingAddress.phone}`, 15, 88);
-    doc.text(`Address: ${order.shippingAddress.address}`, 15, 96);
+    doc.text(`Date: ${order.createdAt}`, 15, 50);
+    doc.text(`Order ID: ${order._id}`, 15, 58);
+    doc.text(`Transaction ID: ${order.transactionId}`, 15, 66);
+    doc.text(`Name: ${order.user_name}`, 15, 74);
+    doc.text(`Email: ${order.user_email}`, 15, 82);
+    doc.text(`Phone: ${order.shippingAddress.phone}`, 15, 90);
+    doc.text(`Address: ${order.shippingAddress.address}`, 15, 98);
 
     autoTable(doc, {
-        startY: 106,
+        startY: 108,
         head: [['#', 'Product Name', 'Quantity', 'Price', 'Subtotal']],
         body: order.items.map((item, index) => [
             index + 1,

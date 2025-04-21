@@ -55,8 +55,8 @@ const ProductDetails = ({ _id, name, image, price, description, availability, ca
                 <div className={`flex-1 ${pathname !== `/product/${_id}` ? 'py-0 md:py-8 pr-0 md:pr-8' : ''}`}>
                     <h3 className='font-semibold'>{name}</h3>
                     <div className='flex items-center gap-3 text-xl mt-2'>
-                        <h5 className='text-gray-400 line-through'>&#2547;{price}</h5>
-                        <h5 className='text-[#F85712]'>&#2547;{price}</h5>
+                        <h5 className='text-gray-400 line-through'>${price}</h5>
+                        <h5 className='text-[#F85712]'>${price}</h5>
                     </div>
                     <p className='text-sm my-5 text-gray-500'>{description}</p>
                     <div className='flex gap-3 justify-normal lg:justify-between max-w-[342px]'>

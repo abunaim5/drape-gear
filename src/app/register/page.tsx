@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import useAxiosPublic from '@/utils/useAxiosPublic';
 import { UserInfoType } from '@/types/user';
 import toast from 'react-hot-toast';
-// import Link from 'next/link';
 
 interface IFormInput {
     name: string;

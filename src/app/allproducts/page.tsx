@@ -46,7 +46,7 @@ const AllProducts = () => {
                                     </TableCell>
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell>{product.collection}</TableCell>
-                                    <TableCell>{product.createdAt}</TableCell>
+                                    <TableCell>{new Date(product.createdAt).toLocaleString()}</TableCell>
                                     <TableCell>{product.availability ? 'In stock' : 'Out of stock'}</TableCell>
                                     <TableCell>${product.price}.00</TableCell>
                                     <TableCell className='text-right'>
