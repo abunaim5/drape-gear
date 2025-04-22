@@ -1,7 +1,7 @@
 'use client'
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import DashboardNav from "@/components/DashboardNav/DashboardNav";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
     Table,
     TableBody,
@@ -14,9 +14,19 @@ import {
 import { PiTrashLight } from "react-icons/pi";
 import { MdOutlineUpdate } from "react-icons/md";
 import Image from "next/image";
+import { removeProduct } from "@/lib/features/products/productsSlice";
+import toast from "react-hot-toast";
 
 const AllProducts = () => {
     const { allProducts } = useAppSelector((state) => state.products);
+    const dispatch = useAppDispatch();
+
+    const handleRemoveProduct = (id: string) => {
+        dispatch(removeProduct(id));
+        if (allProducts.success) {
+            toast.success('Item has been deleted.');
+        }
+    }
 
     return (
         <>
@@ -53,7 +63,7 @@ const AllProducts = () => {
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`}><MdOutlineUpdate /></button>
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-red-500 $`}><PiTrashLight /></button>
+                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-red-500 $`} onClick={() => handleRemoveProduct(product._id)}><PiTrashLight /></button>
                                     </TableCell>
                                 </TableRow>
                             ))}

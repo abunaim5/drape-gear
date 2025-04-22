@@ -7,6 +7,11 @@ export const addProduct = createAsyncThunk('add/addProduct', async (newProduct: 
     return res.data;
 });
 
+export const removeProduct = createAsyncThunk('remove/removeProduct', async (id: string) => {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeProduct`, { id });
+    return res.data;
+});
+
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ currentPage, itemsPerPage, collection, sortPriceVal }: { currentPage: number, itemsPerPage: number, collection: string, sortPriceVal: string }) => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}`);
     return res.data;
@@ -82,6 +87,20 @@ const productsSlice = createSlice({
                 state.allProducts = action.payload;
             })
             .addCase(addProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+            // remove product
+            .addCase(removeProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(removeProduct.fulfilled, (state, action: PayloadAction<ProductResponseType>) => {
+                state.loading = false;
+                state.queryProducts = action.payload;
+                state.allProducts = action.payload;
+            })
+            .addCase(removeProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })
