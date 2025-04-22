@@ -16,7 +16,7 @@ import { MdOutlineUpdate } from "react-icons/md";
 import Image from "next/image";
 
 const AllProducts = () => {
-    const { allProducts } = useAppSelector((state) => state.products)
+    const { allProducts } = useAppSelector((state) => state.products);
 
     return (
         <>
@@ -39,7 +39,7 @@ const AllProducts = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {allProducts.map((product) => (
+                            {allProducts.products.map((product) => (
                                 <TableRow key={product._id}>
                                     <TableCell>
                                         <Image width={50} height={50} src={product.image} alt={`${product.name} image`} />

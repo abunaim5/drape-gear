@@ -1,7 +1,11 @@
 'use client';
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import DashboardNav from "@/components/DashboardNav/DashboardNav";
+import { addProduct } from "@/lib/features/products/productsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { ProductListType } from "@/types/types";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 interface IFormInput {
     name: string;
@@ -17,8 +21,10 @@ interface IFormInput {
 const AddProduct = () => {
     const iClass = `w-full rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { allProducts } = useAppSelector((state) => state.products);
+    const dispatch = useAppDispatch();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const newProduct = {
+        const newProduct: ProductListType = {
             name: data.name,
             image: data.image,
             category: data.category,
@@ -28,12 +34,12 @@ const AddProduct = () => {
             old_price: parseFloat(data.oldPrice),
             sale_price: parseFloat(data.salePrice),
             availability: data.availability.trim().toLowerCase() === 'true',
-
         }
-        console.log(newProduct)
+        dispatch(addProduct(newProduct));
+        if(allProducts.success){
+            toast.success('New product added to the list!');
+        }
     };
-    
-
 
     return (
         <>

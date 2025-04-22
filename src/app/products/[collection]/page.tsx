@@ -1,7 +1,7 @@
 'use client';
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { AvailabilityType, CategoryType, ProductResponseType } from "@/types/types";
+import { AvailabilityType, CategoryType, ProductType } from "@/types/types";
 import { CiFilter } from "react-icons/ci";
 import {
     Select,
@@ -27,7 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import SideDrawer from "@/components/SideDrawer/SideDrawer";
 
 const Products = () => {
-    const { products, productCount, categories, availabilityData } = useAppSelector((state) => state.products);
+    const { queryProducts, productCount, categories, availabilityData } = useAppSelector((state) => state.products);
     const [sortPriceVal, setSortPriceVal] = useState<string>('default');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [open, setOpen] = useState<boolean>(false);
@@ -123,7 +123,7 @@ const Products = () => {
                 </div>
                 <div className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-12`}>
                     {
-                        products.map((product: ProductResponseType, idx) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} old_price={product.old_price} sale_price={product.sale_price} availability={product.availability} category={product.category} collection={product.collection} description={product.description} createdAt={product.createdAt} />)
+                        queryProducts.products.map((product: ProductType, idx) => <ProductCard key={idx} _id={product._id} name={product.name} image={product.image} old_price={product.old_price} sale_price={product.sale_price} availability={product.availability} category={product.category} collection={product.collection} description={product.description} createdAt={product.createdAt} />)
                     }
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { ProductResponseType } from "@/types/types";
+import { ProductType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -19,7 +19,7 @@ export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async (w
 
 interface WishlistState {
     itemIds: string[],
-    wishlistItems: ProductResponseType[],
+    wishlistItems: ProductType[],
     loading: boolean,
     error: string | null | undefined
 }
@@ -53,7 +53,7 @@ const wishlistSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchWishlist.fulfilled, (state, action: PayloadAction<ProductResponseType[]>) => {
+            .addCase(fetchWishlist.fulfilled, (state, action: PayloadAction<ProductType[]>) => {
                 state.loading = false;
                 state.wishlistItems = action.payload;
             })

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaFacebookF, FaPinterestP, FaTelegramPlane, FaTumblr } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
-import { CartProductListType, ProductResponseType } from "@/types/types";
+import { CartProductListType, ProductType } from "@/types/types";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PiHeartStraightFill, PiHeartStraightLight } from "react-icons/pi";
@@ -13,7 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addToCart } from "@/lib/features/cart/cartSlice";
 
-const ProductDetails = ({ _id, name, image, old_price, sale_price, description, availability, category, collection }: ProductResponseType) => {
+const ProductDetails = ({ _id, name, image, old_price, sale_price, description, availability, category, collection }: ProductType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const { data: session } = useSession();
     const dispatch = useAppDispatch();

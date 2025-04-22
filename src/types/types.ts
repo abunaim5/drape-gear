@@ -6,18 +6,7 @@ type BannerType = {
     img: string
 }[];
 
-// type ProductType = {
-//     name: string;
-//     image: string;
-//     description: string;
-//     category: string;
-//     price: number;
-//     createdAt: string;
-//     availability: boolean;
-//     collection: string
-// };
-
-type ProductResponseType = {
+type ProductType = {
     _id: string;
     name: string;
     image: string;
@@ -30,12 +19,21 @@ type ProductResponseType = {
     collection: string
 };
 
+type ProductResponseType = {
+    success: boolean;
+    products: ProductType[];
+};
+
 type ProductListType = {
-    _id: string;
     name: string;
     image: string;
-    price: number;
-    availability: boolean
+    description: string;
+    category: string;
+    old_price: number;
+    sale_price: number;
+    createdAt: Date;
+    availability: boolean;
+    collection: string;
 };
 
 type CategoryType = {
@@ -138,4 +136,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType,  ProductResponseType, ProductListType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsInfoResponseType, OrderedProductsType, CollectionType, SupportType, FootContentType };
+export type { BannerType,ProductType, ProductListType, ProductResponseType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsInfoResponseType, OrderedProductsType, CollectionType, SupportType, FootContentType };

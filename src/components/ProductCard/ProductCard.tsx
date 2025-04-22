@@ -1,5 +1,5 @@
 'use client';
-import { CartProductListType, ProductResponseType } from "@/types/types";
+import { CartProductListType, ProductType } from "@/types/types";
 import Image from "next/image";
 import { PiShoppingCartSimple, PiTrashLight, PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { HiOutlineEye } from "react-icons/hi2";
@@ -18,7 +18,7 @@ import { useState } from "react";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import toast from "react-hot-toast";
 
-const ProductCard = ({ _id, name, image, old_price, sale_price, availability, category, collection, description, createdAt }: ProductResponseType) => {
+const ProductCard = ({ _id, name, image, old_price, sale_price, availability, category, collection, description, createdAt }: ProductType) => {
     const wishlistItems = useAppSelector((state) => state.wishlist.itemIds);
     const { cart } = useAppSelector((state) => state.cart);
     const [openQuick, setOpenQuick] = useState<boolean>(false);
