@@ -8,7 +8,7 @@ import { fetchProductCount } from "@/lib/features/products/productsSlice";
 
 const DashboardNav = () => {
     const { cart } = useAppSelector((state) => state.cart);
-    const productCount = useAppSelector((state) => state.products.productCount);
+    const { productCount} = useAppSelector((state) => state.products);
     const { users } = useAppSelector((state) => state.users);
     const { itemIds } = useAppSelector((state) => state.wishlist);
     const dispatch = useAppDispatch();

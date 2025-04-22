@@ -14,7 +14,7 @@ import {
 import { PiTrashLight } from "react-icons/pi";
 import { MdOutlineUpdate } from "react-icons/md";
 import Image from "next/image";
-import { removeProduct } from "@/lib/features/products/productsSlice";
+import { fetchProductCount, removeProduct } from "@/lib/features/products/productsSlice";
 import toast from "react-hot-toast";
 
 const AllProducts = () => {
@@ -24,9 +24,10 @@ const AllProducts = () => {
     const handleRemoveProduct = (id: string) => {
         dispatch(removeProduct(id));
         if (allProducts.success) {
+            dispatch(fetchProductCount({collection: 'all'}));
             toast.success('Item has been deleted.');
         }
-    }
+    };
 
     return (
         <>
@@ -38,6 +39,7 @@ const AllProducts = () => {
                         <TableCaption>A list of your recent products.</TableCaption>
                         <TableHeader>
                             <TableRow>
+                                <TableHead className="">#</TableHead>
                                 <TableHead className="w-[100px]">Image</TableHead>
                                 <TableHead>Name</TableHead>
                                 <TableHead>Collection</TableHead>
@@ -49,8 +51,9 @@ const AllProducts = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {allProducts.products.map((product) => (
+                            {allProducts.products.map((product, idx) => (
                                 <TableRow key={product._id}>
+                                    <TableCell>{idx + 1}</TableCell>
                                     <TableCell>
                                         <Image width={50} height={50} src={product.image} alt={`${product.name} image`} />
                                     </TableCell>
@@ -63,7 +66,7 @@ const AllProducts = () => {
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`}><MdOutlineUpdate /></button>
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-red-500 $`} onClick={() => handleRemoveProduct(product._id)}><PiTrashLight /></button>
+                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-red-500 text-white hover:bg-red-600`} onClick={() => handleRemoveProduct(product._id)}><PiTrashLight /></button>
                                     </TableCell>
                                 </TableRow>
                             ))}

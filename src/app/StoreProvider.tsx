@@ -27,7 +27,7 @@ const StoreProvider = ({
     useEffect(() => {
         if (storeRef.current) {
             storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
-            storeRef.current.dispatch(fetchProductCount({collection: collection}));
+            storeRef.current.dispatch(fetchProductCount({collection: collection ? collection : 'all'}));
             storeRef.current.dispatch(fetchCategories({collection: collection}));
             if(session?.user?.email){
                 storeRef.current.dispatch(fetchOrders({email: session.user.email}));
