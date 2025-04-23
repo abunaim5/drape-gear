@@ -7,6 +7,11 @@ export const addProduct = createAsyncThunk('add/addProduct', async (newProduct: 
     return res.data;
 });
 
+export const updateProduct = createAsyncThunk('update/updateProduct', async ({ updatedData, id }: { updatedData: ProductListType, id: string }) => {
+    const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/products/${id}`, { updatedData });
+    return res.data;
+});
+
 export const removeProduct = createAsyncThunk('remove/removeProduct', async (id: string) => {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeProduct`, { id });
     return res.data;
@@ -90,6 +95,22 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
+            // update product
+            .addCase(updateProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateProduct.fulfilled, (state, action: PayloadAction<ProductResponseType>) => {
+                state.loading = false;
+                state.queryProducts = action.payload;
+                state.allProducts = action.payload;
+            })
+            .addCase(updateProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+
             // remove product
             .addCase(removeProduct.pending, (state) => {
                 state.loading = true;
@@ -104,6 +125,7 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // fetch products
             .addCase(fetchProducts.pending, (state) => {
                 state.loading = true;
@@ -117,6 +139,7 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // fetch all products
             .addCase(fetchAllProducts.pending, (state) => {
                 state.loading = true;
@@ -130,6 +153,7 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // fetch single product
             .addCase(fetchSingleProduct.pending, (state) => {
                 state.loading = true;
@@ -143,6 +167,7 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // fetch product count
             .addCase(fetchProductCount.pending, (state) => {
                 state.loading = true;
@@ -156,6 +181,7 @@ const productsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message
             })
+
             // fetch product categories
             .addCase(fetchCategories.pending, (state) => {
                 state.loading = true;

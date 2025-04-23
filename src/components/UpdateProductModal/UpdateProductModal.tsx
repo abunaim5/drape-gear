@@ -1,7 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { ProductType } from "@/types/types";
+import { ProductListType, ProductType } from "@/types/types";
 import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { updateProduct } from "@/lib/features/products/productsSlice";
+import toast from "react-hot-toast";
 
 interface IFormInput {
     name: string;
@@ -21,7 +24,9 @@ type UpdateProductModalPropsType = {
 }
 
 const UpdateProductModal = ({ open, setOpen, product }: UpdateProductModalPropsType) => {
-    const iClass = `w-full rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
+    const iClass = `w-full rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`;
+    const { allProducts } = useAppSelector((state) => state.products);
+    const dispatch = useAppDispatch();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>({
         defaultValues: {
             name: product.name,
@@ -48,7 +53,23 @@ const UpdateProductModal = ({ open, setOpen, product }: UpdateProductModalPropsT
         });
     }, [product, reset]);
 
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => console.log(data);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        const updatedData: ProductListType = {
+            name: data.name,
+            image: data.image,
+            category: data.category,
+            collection: data.collection,
+            description: data.description,
+            createdAt: new Date(product.createdAt),
+            old_price: parseFloat(data.oldPrice),
+            sale_price: parseFloat(data.salePrice),
+            availability: data.availability.trim().toLowerCase() === 'true'
+        };
+        dispatch(updateProduct({ id: product._id, updatedData }));
+        if (allProducts.success) {
+            toast.success('All set! Your product is up to date.');
+        };
+    };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

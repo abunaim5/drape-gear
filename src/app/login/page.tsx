@@ -1,13 +1,11 @@
 'use client';
 import Link from 'next/link';
-// import { FcGoogle } from 'react-icons/fc';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-// import Link from 'next/link';
 
 interface IFormInput {
     email: string,
@@ -15,12 +13,12 @@ interface IFormInput {
 };
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [adminAccess, setAdminAccess] = useState<boolean>(false);
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
     const searchParams = useSearchParams();
     const router = useRouter();
     const next = searchParams.get('next') || '/';
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             const res = await signIn('credentials', {
@@ -38,6 +36,13 @@ const Login = () => {
             console.error('Sign-in error:', error)
         }
     };
+
+    const handleResetDefaultVal = () => {
+        reset({
+            email: 'admin@mail.com',
+            password: '123456'
+        })
+    }
 
     return (
         <>
@@ -95,7 +100,7 @@ const Login = () => {
                         <span className='text-nowrap'>Admin Access</span>
                         <div className='w-full h-[1px] bg-black' />
                     </div>
-                    <button onClick={() => setAdminAccess(!adminAccess)} type='button' className='flex items-center justify-center w-full rounded-none py-[10px] border-[1px] border-black'>
+                    <button onClick={() => { setAdminAccess(!adminAccess); handleResetDefaultVal() }} type='button' className='flex items-center justify-center w-full rounded-none py-[10px] border-[1px] border-black'>
                         Admin
                         {/* <FcGoogle /> */}
                     </button>

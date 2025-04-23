@@ -59,7 +59,7 @@ const AllProducts = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {allProducts.products.map((product, idx) => (
+                            {allProducts?.products?.map((product, idx) => (
                                 <TableRow key={product._id}>
                                     <TableCell>{idx + 1}</TableCell>
                                     <TableCell>
