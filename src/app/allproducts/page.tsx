@@ -16,15 +16,20 @@ import { MdOutlineUpdate } from "react-icons/md";
 import Image from "next/image";
 import { fetchProductCount, removeProduct } from "@/lib/features/products/productsSlice";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { ProductType } from "@/types/types";
+import UpdateProductModal from "@/components/UpdateProductModal/UpdateProductModal";
 
 const AllProducts = () => {
+    const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
+    const [open, setOpen] = useState<boolean>(false);
     const { allProducts } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
 
     const handleRemoveProduct = (id: string) => {
         dispatch(removeProduct(id));
         if (allProducts.success) {
-            dispatch(fetchProductCount({collection: 'all'}));
+            dispatch(fetchProductCount({ collection: 'all' }));
             toast.success('Item has been deleted.');
         }
     };
@@ -35,6 +40,9 @@ const AllProducts = () => {
             <div className='container min-h-[calc(100vh-412px)] mb-20'>
                 <div className='flex flex-col md:flex-row gap-8 mt-16'>
                     <DashboardNav />
+                    {
+                        selectedProduct !== null && <UpdateProductModal product={selectedProduct} open={open} setOpen={setOpen} />
+                    }
                     <Table className='border'>
                         <TableCaption>A list of your recent products.</TableCaption>
                         <TableHeader>
@@ -63,7 +71,7 @@ const AllProducts = () => {
                                     <TableCell>{product.availability ? 'In stock' : 'Out of stock'}</TableCell>
                                     <TableCell>${product.sale_price}</TableCell>
                                     <TableCell className='text-right'>
-                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`}><MdOutlineUpdate /></button>
+                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`} onClick={() => { setSelectedProduct(product); setOpen(!open) }}><MdOutlineUpdate /></button>
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-red-500 text-white hover:bg-red-600`} onClick={() => handleRemoveProduct(product._id)}><PiTrashLight /></button>

@@ -26,6 +26,7 @@ const Users = () => {
                         <TableCaption>A list of your recent users.</TableCaption>
                         <TableHeader>
                             <TableRow>
+                                <TableHead>#</TableHead>
                                 <TableHead className="w-[100px]">Name</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Address</TableHead>
@@ -35,8 +36,9 @@ const Users = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.map((user) => (
+                            {users.map((user, idx) => (
                                 <TableRow key={user._id}>
+                                    <TableCell>{idx + 1}</TableCell>
                                     <TableCell className="font-medium">{user.name}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>United States</TableCell>
