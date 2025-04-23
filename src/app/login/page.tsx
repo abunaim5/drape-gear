@@ -17,23 +17,24 @@ const Login = () => {
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
     const searchParams = useSearchParams();
     const router = useRouter();
-    const next = searchParams.get('next') || '/';
+    const callbackUrl = searchParams.get('next') || '/';
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             const res = await signIn('credentials', {
                 email: data.email,
                 password: data.password,
+                callbackUrl,
                 redirect: false
             });
-            if (res?.error) {
-                console.error('Login failed:', res.error);
-            } else {
+            if (res?.ok && res.url) {
                 toast.success('Great to see you again!');
-                router.push(next);
+                router.push(res.url);
+            } else {
+               toast.error('Invalid email or password');
             }
         } catch (error) {
-            console.error('Sign-in error:', error)
+            console.error('Sign-in error:', error);
         }
     };
 
