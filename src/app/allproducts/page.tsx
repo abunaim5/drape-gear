@@ -26,10 +26,10 @@ const AllProducts = () => {
     const { allProducts } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
 
-    const handleRemoveProduct = (id: string) => {
-        dispatch(removeProduct(id));
+    const handleRemoveProduct = async (id: string) => {
+        await dispatch(removeProduct(id));
         if (allProducts.success) {
-            dispatch(fetchProductCount({ collection: 'all' }));
+            await dispatch(fetchProductCount({ collection: 'all' }));
             toast.success('Item has been deleted.');
         }
     };

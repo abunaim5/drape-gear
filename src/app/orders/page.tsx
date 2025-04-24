@@ -24,8 +24,6 @@ const Orders = () => {
             dispatch(fetchOrders({ email: session.user.email }));
         }
     }, [dispatch, session?.user.email]);
-    console.log(orders);
-
 
     return (
         <>

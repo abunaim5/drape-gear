@@ -1,7 +1,7 @@
 'use client';
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import DashboardNav from "@/components/DashboardNav/DashboardNav";
-import { addProduct } from "@/lib/features/products/productsSlice";
+import { addProduct, fetchProductCount } from "@/lib/features/products/productsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { ProductListType } from "@/types/types";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -35,8 +35,9 @@ const AddProduct = () => {
             sale_price: parseFloat(data.salePrice),
             availability: data.availability.trim().toLowerCase() === 'true',
         }
-        dispatch(addProduct(newProduct));
+        await dispatch(addProduct(newProduct));
         if(allProducts.success){
+            await dispatch(fetchProductCount({collection: 'all'}));
             toast.success('New product added to the list!');
         }
     };
