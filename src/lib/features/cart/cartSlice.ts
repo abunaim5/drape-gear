@@ -1,24 +1,28 @@
+import { getAxiosSecure } from "@/lib/axiosSecure";
 import { CartProductListType, CartProductResponseType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const fetchCartProducts = createAsyncThunk('cart/fetchCartProducts', async ({ email }: { email: string }) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/cart`, { email });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/cart', { email });
     return res.data;
 });
 
 export const addToCart = createAsyncThunk('addCart/addToCart', async (cartProduct: CartProductListType) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/addCart`, { cartProduct });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/addCart', { cartProduct });
     return res.data;
 });
 
 export const removeFromCart = createAsyncThunk('removeCart/removeFromCart', async ({ id, email }: { id: string, email: string }) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeCart`, { id, email });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/removeCart', { id, email });
     return res.data;
 });
 
 export const updateCartQuantity = createAsyncThunk('updateQuantity/updateCartQuantity', async ({ id, email, productQuantity }: { id: string, email: string, productQuantity: number }) => {
-    const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/cartQuantity/${id}`, { email, productQuantity });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.patch(`/cartQuantity/${id}`, { email, productQuantity });
     return res.data;
 });
 

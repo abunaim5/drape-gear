@@ -1,19 +1,23 @@
+import { getAxiosSecure } from "@/lib/axiosSecure";
 import { AvailabilityType, CategoryType, ProductListType, ProductResponseType, ProductType } from "@/types/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const addProduct = createAsyncThunk('add/addProduct', async (newProduct: ProductListType) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/addProduct`, { newProduct });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/addProduct', { newProduct });
     return res.data;
 });
 
 export const updateProduct = createAsyncThunk('update/updateProduct', async ({ updatedData, id }: { updatedData: ProductListType, id: string }) => {
-    const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/products/${id}`, { updatedData });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.patch(`/products/${id}`, { updatedData });
     return res.data;
 });
 
 export const removeProduct = createAsyncThunk('remove/removeProduct', async (id: string) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/removeProduct`, { id });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/removeProduct', { id });
     return res.data;
 });
 
@@ -23,7 +27,8 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
 });
 
 export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts', async () => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/allProducts`);
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.get('/allProducts');
     return res.data;
 });
 

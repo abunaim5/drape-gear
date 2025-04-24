@@ -1,10 +1,11 @@
+import { getAxiosSecure } from "@/lib/axiosSecure";
 import { UserResponseType } from "@/types/user";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 // fetch all users
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async() => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/users`);
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.get('/users');
     return res.data.users;
 });
 

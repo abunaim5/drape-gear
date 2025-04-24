@@ -8,10 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import Link from "next/link";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
-import useAxiosPublic from "@/utils/useAxiosPublic";
 import { OrderedProductsInfoType, OrderedProductsType } from "@/types/types";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getAxiosSecure } from "@/lib/axiosSecure";
 
 interface IFormInput {
     name: string,
@@ -33,9 +33,7 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
     const [paymentSuccessStatus, setPaymentSuccessStatus] = useState<string>('');
     const [deliveryStatus, setDeliveryStatus] = useState<string>('ship');
     const [clientSecret, setClientSecret] = useState<string>('');
-    // const [error, setError] = useState<string>('');
     const { data: session } = useSession();
-    const axiosPublic = useAxiosPublic();
     const router = useRouter();
     const elements = useElements();
     const stripe = useStripe();
@@ -81,7 +79,8 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
             if (confirmError) {
                 console.error('[Payment Intent Error]', error);
             } else {
-                console.log('[PaymentIntent]', paymentIntent);
+                // console.log('[PaymentIntent]', paymentIntent);
+                const axiosSecure = await getAxiosSecure();
                 if (paymentIntent.status === 'succeeded') {
                     toast.success('Payment successful');
                     setPaymentSuccessStatus(paymentIntent.status);
@@ -100,7 +99,7 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
                         transactionId: paymentIntent.id,
                         status: 'Pending'
                     };
-                    await axiosPublic.post('/orderedProducts', orderedProductsInfo);
+                    await axiosSecure.post('/orderedProducts', orderedProductsInfo);
                     router.push('/orders');
                 }
             }
@@ -111,11 +110,15 @@ const CheckoutForm = ({ orderedProducts, totalAmount }: { orderedProducts: Order
     // console.log(orderedProducts, totalAmount)
 
     useEffect(() => {
-        axiosPublic.post('/create-payment-intent', { price: totalAmount })
-            .then(res => {
-                setClientSecret(res.data.clientSecret);
-            })
-    }, [axiosPublic, totalAmount]);
+        const createPaymentIntent = async () => {
+            const axiosSecure = await getAxiosSecure();
+            axiosSecure.post('/create-payment-intent', { price: totalAmount })
+                .then(res => {
+                    setClientSecret(res.data.clientSecret);
+                })
+        }
+        createPaymentIntent();
+    }, [totalAmount]);
     // console.log(clientSecret);
 
     const handleDeliveryStatus = (value: string) => {

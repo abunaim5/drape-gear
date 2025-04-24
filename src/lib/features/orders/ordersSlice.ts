@@ -1,10 +1,11 @@
+import { getAxiosSecure } from "@/lib/axiosSecure";
 import { OrderedProductsInfoResponseType } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 // fetch all orders
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async ({ email }: { email: string }) => {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/orders`, { email });
+    const axiosSecure = await getAxiosSecure();
+    const res = await axiosSecure.post('/orders', { email });
     return res.data.orders;
 });
 
