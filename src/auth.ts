@@ -36,38 +36,20 @@ const authOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             authorize: async (credentials) => {
-                if (!credentials) return null
-                console.log("🔥 authorize() called"); // << test log
-                if (credentials) console.log("📨 Credentials:", credentials);
                 try {
-                    // const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                    //     email: credentials?.email,
-                    //     password: credentials?.password
-                    // });
-                    // console.log("✅ Response:", res.data);
-                    // if (res.data) {
-                    //     const user = res.data
-                    //     return createUser(user)
-                    // }
-                    // return null;
-
-                    // return user ? createUser(user) : null
-                    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
+                    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
                     const res = await axios.post(`${baseUrl}/login`, {
                         email: credentials.email,
                         password: credentials.password,
                     });
 
                     const user = res?.data;
-                    console.log("✅ [IN AXIOS RESPONSE]:", user);
-
                     if (!user) {
                         console.error("❌ No user returned from backend");
                         return null;
                     }
 
                     return createUser(user);
-
                 } catch (error) {
                     console.error('❌ Error during authentication', error);
                     return null;
@@ -79,6 +61,7 @@ const authOptions = {
         jwt: async ({ token, user }: { token: JWT; user: User }) => {
             // add user properties to the token after signing in
             if (user) {
+                console.log('[IN JWT CALLBACK: ]', 'TOKEN:', token, 'USER:', user)
                 token.id = user.id as string;
                 token.name = user.name;
                 token.email = user.email;
@@ -91,7 +74,6 @@ const authOptions = {
             return token;
         },
         session: async ({ session, token }: { session: Session; token: JWT }) => {
-            console.log(session);
             // create a user object with token properties
             const userObject: AdapterUser = {
                 id: token.id,
