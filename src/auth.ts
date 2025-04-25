@@ -52,7 +52,8 @@ const authOptions = {
                     // return null;
 
                     // return user ? createUser(user) : null
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+                    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
+                    const res = await axios.post(`${baseUrl}/login`, {
                         email: credentials.email,
                         password: credentials.password,
                     });
