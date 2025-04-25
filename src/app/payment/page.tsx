@@ -105,7 +105,7 @@ const PaymentComponent = () => {
 
 const Payment = () => {
     return (
-        <Suspense>
+        <Suspense fallback={<></>}>
             <PaymentComponent />
         </Suspense>
     )

@@ -36,8 +36,14 @@ const authOptions = {
             authorize: async (credentials) => {
                 try {
                     const user = await fetchUser(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                        email: typeof credentials.email === 'string' ? credentials.email : '',
-                        password: typeof credentials.password === 'string' ? credentials.password : ''
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: typeof credentials.email === 'string' ? credentials.email : '',
+                            password: typeof credentials.password === 'string' ? credentials.password : ''
+                        })
                     });
                     console.log(user);
                     return user ? createUser(user) : null;
@@ -64,6 +70,7 @@ const authOptions = {
             return token;
         },
         session: async ({ session, token }: { session: Session; token: JWT }) => {
+            console.log(session);
             // create a user object with token properties
             const userObject: AdapterUser = {
                 id: token.id,
