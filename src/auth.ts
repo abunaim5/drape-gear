@@ -31,10 +31,10 @@ const authOptions = {
         CredentialsProvider({
             id: 'credentials',
             name: 'Credentials',
-            // credentials: {
-            //     email: { label: 'Email', type: 'email' },
-            //     password: { label: 'Password', type: 'password' }
-            // },
+            credentials: {
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' }
+            },
             authorize: async (credentials) => {
                 if (!credentials) return null
                 console.log("🔥 authorize() called"); // << test log
@@ -52,21 +52,20 @@ const authOptions = {
                     // return null;
 
                     // return user ? createUser(user) : null
-                    console.log('[CREDENTIALS]: ', credentials);
-                    return axios
-                        .post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                            email: credentials?.email,
-                            password: credentials?.password
-                        })
-                        .then((res) => {
-                            const user = res.data;
-                            console.log('[IN AXIOS RESPONSE]: ', user);
-                            return createUser(user)
-                        })
-                        .catch((err) => {
-                            console.log(err.response);
-                            throw new Error(err.response.data.message);
-                        }) || null;
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+                        email: credentials.email,
+                        password: credentials.password,
+                    });
+
+                    const user = res?.data;
+                    console.log("✅ [IN AXIOS RESPONSE]:", user);
+
+                    if (!user) {
+                        console.error("❌ No user returned from backend");
+                        return null;
+                    }
+
+                    return createUser(user);
 
                 } catch (error) {
                     console.error('❌ Error during authentication', error);
