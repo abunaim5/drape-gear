@@ -40,19 +40,33 @@ const authOptions = {
                 console.log("🔥 authorize() called"); // << test log
                 if (credentials) console.log("📨 Credentials:", credentials);
                 try {
-                    console.log(process.env.NEXT_PUBLIC_BASE_URL);
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                        email: credentials?.email,
-                        password: credentials?.password
-                    });
-                    console.log("✅ Response:", res.data);
-                    if (res.data) {
-                        const user = res.data
-                        return createUser(user)
-                    }
-                    return null;
+                    // const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+                    //     email: credentials?.email,
+                    //     password: credentials?.password
+                    // });
+                    // console.log("✅ Response:", res.data);
+                    // if (res.data) {
+                    //     const user = res.data
+                    //     return createUser(user)
+                    // }
+                    // return null;
 
                     // return user ? createUser(user) : null
+                    console.log('[CREDENTIALS]: ', credentials);
+                    return axios
+                        .post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+                            email: credentials?.email,
+                            password: credentials?.password
+                        })
+                        .then((res) => {
+                            const user = res.data;
+                            console.log('[IN AXIOS RESPONSE]: ', user);
+                            return createUser(user)
+                        })
+                        .catch((err) => {
+                            console.log(err.response);
+                            throw new Error(err.response.data.message);
+                        }) || null;
 
                 } catch (error) {
                     console.error('❌ Error during authentication', error);
