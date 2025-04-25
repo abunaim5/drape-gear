@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const Payment = () => {
+const PaymentComponent = () => {
     const { product, loading } = useAppSelector((state) => state.products);
     const { cart } = useAppSelector((state) => state.cart);
     const searchParams = useSearchParams();
@@ -58,7 +58,7 @@ const Payment = () => {
     if (loading) return
 
     return (
-        <Suspense>
+        <>
             <div className='min-h-screen'>
                 <div className='py-6 border-b'>
                     <div className='max-w-[1180px] mx-auto px-4 md:px-10 flex items-center justify-between'>
@@ -99,8 +99,16 @@ const Payment = () => {
                     </div>
                 </div>
             </div>
-        </Suspense>
+        </>
     );
+};
+
+const Payment = () => {
+    return (
+        <Suspense>
+            <PaymentComponent />
+        </Suspense>
+    )
 };
 
 export default Payment;

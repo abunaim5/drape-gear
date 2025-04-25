@@ -118,6 +118,6 @@ const Login = () => {
             <LoginComponent />
         </Suspense>
     )
-}
+};
 
 export default Login;
