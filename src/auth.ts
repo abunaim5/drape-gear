@@ -25,6 +25,7 @@ declare module "next-auth/jwt" {
 }
 
 const authOptions = {
+    secret: process.env.AUTH_SECRET,
     providers: [
         CredentialsProvider({
             id: 'credentials',
@@ -41,8 +42,8 @@ const authOptions = {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            email: typeof credentials.email === 'string' ? credentials.email : '',
-                            password: typeof credentials.password === 'string' ? credentials.password : ''
+                            email: credentials?.email ?? '',
+                            password: credentials?.password ?? ''
                         })
                     });
                     console.log(user);

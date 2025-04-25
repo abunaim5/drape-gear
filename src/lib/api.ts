@@ -4,7 +4,7 @@ export const fetchUser = async (url: string, options: RequestInit) => {
     try {
         const res = await fetch(url, options);
         const user = await res.json();
-        
+
         if (res.ok && user) {
             return user;
         } else {
@@ -13,5 +13,6 @@ export const fetchUser = async (url: string, options: RequestInit) => {
         }
     } catch (error) {
         console.error(`Error during fetch: ${error}`);
+        return null;
     }
 };
