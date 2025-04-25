@@ -4,7 +4,8 @@ import type { NextAuthConfig, Session, User } from "next-auth";
 import type { UserType, UserResponseType } from "./types/user";
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
-import { fetchUser } from "./lib/api";
+// import { fetchUser } from "./lib/api";
+import axios from "axios";
 
 declare module "next-auth" {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -30,22 +31,28 @@ const authOptions = {
         CredentialsProvider({
             id: 'credentials',
             name: 'Credentials',
-            credentials: {
-                email: { label: 'Email', type: 'email' },
-                password: { label: 'Password', type: 'password' }
-            },
+            // credentials: {
+            //     email: { label: 'Email', type: 'email' },
+            //     password: { label: 'Password', type: 'password' }
+            // },
             authorize: async (credentials) => {
+                if (!credentials) return null
                 console.log("🔥 authorize() called"); // << test log
                 if (credentials) console.log("📨 Credentials:", credentials);
                 try {
                     console.log(process.env.NEXT_PUBLIC_BASE_URL);
-                    const user = await fetchUser(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                        email: typeof credentials?.email === 'string' ? credentials.email : '',
-                        password: typeof credentials?.password === 'string' ? credentials.password : ''
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+                        email: credentials?.email,
+                        password: credentials?.password
                     });
-                    console.log("✅ Response:", user);
+                    console.log("✅ Response:", res.data);
+                    if (res.data) {
+                        const user = res.data
+                        return createUser(user)
+                    }
+                    return null;
 
-                    return user ? createUser(user) : null
+                    // return user ? createUser(user) : null
 
                 } catch (error) {
                     console.error('❌ Error during authentication', error);
