@@ -54,7 +54,7 @@ const LoginComponent = () => {
                     <input
                         id='email'
                         className={`${iClass} ${errors.email ? 'border-red-500' : ''} ${errors.email ? 'focus:border-red-500' : 'focus:border-black'}`}
-                        type='text'
+                        type='email'
                         {...register("email", {
                             required: 'Please input your email!',
                             maxLength: 20,
@@ -77,7 +77,7 @@ const LoginComponent = () => {
                     <input
                         id='pass'
                         className={`${iClass} ${errors.password ? 'border-red-500' : ''} ${errors.password ? 'focus:border-red-500' : 'focus:border-black'}`}
-                        type='text'
+                        type='password'
                         {...register("password", {
                             required: 'Please input your password!',
                             minLength: {

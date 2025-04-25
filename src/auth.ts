@@ -30,26 +30,25 @@ const authOptions = {
         CredentialsProvider({
             id: 'credentials',
             name: 'Credentials',
-            // credentials: {
-            //     email: { label: 'Email', type: 'email' },
-            //     password: { label: 'Password', type: 'password' }
-            // },
+            credentials: {
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' }
+            },
             authorize: async (credentials) => {
+                console.log("🔥 authorize() called"); // << test log
+                if (credentials) console.log("📨 Credentials:", credentials);
                 try {
+                    console.log(process.env.NEXT_PUBLIC_BASE_URL);
                     const user = await fetchUser(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            email: credentials?.email ?? '',
-                            password: credentials?.password ?? ''
-                        })
+                        email: typeof credentials?.email === 'string' ? credentials.email : '',
+                        password: typeof credentials?.password === 'string' ? credentials.password : ''
                     });
-                    console.log(user);
-                    return user ? createUser(user) : null;
+                    console.log("✅ Response:", user);
+
+                    return user ? createUser(user) : null
+
                 } catch (error) {
-                    console.error('Error during authentication', error);
+                    console.error('❌ Error during authentication', error);
                     return null;
                 }
             }

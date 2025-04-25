@@ -1,8 +1,17 @@
+import { CredentialsType } from '@/types/login';
 
 // authenticate and fetch user details
-export const fetchUser = async (url: string, options: RequestInit) => {
+export const fetchUser = async (url: string, body: CredentialsType) => {
     try {
-        const res = await fetch(url, options);
+        console.log('[FETCH USER]: ',url, body);
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        // const res = await axios.post(url, body);
         const user = await res.json();
 
         if (res.ok && user) {
