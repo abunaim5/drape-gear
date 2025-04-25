@@ -12,7 +12,7 @@ interface IFormInput {
     password: string
 };
 
-const Login = () => {
+const LoginComponent = () => {
     const [adminAccess, setAdminAccess] = useState<boolean>(false);
     const iClass = `rounded-none px-[14px] py-[10px] mt-2 border focus:outline-none`
     const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ const Login = () => {
     }
 
     return (
-        <Suspense>
+        <>
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-268px)] flex items-center py-10 text-sm'>
                 <form className='flex flex-col w-full md:w-[410px] mx-auto' onSubmit={handleSubmit(onSubmit)}>
@@ -108,8 +108,16 @@ const Login = () => {
                     <h5 className='mt-4 text-center'>New Customer? <Link href='/register' className='text-cyan-500'>Register</Link></h5>
                 </form>
             </div>
-        </Suspense>
+        </>
     );
 };
+
+const Login = () => {
+    return (
+        <Suspense>
+            <LoginComponent />
+        </Suspense>
+    )
+}
 
 export default Login;
