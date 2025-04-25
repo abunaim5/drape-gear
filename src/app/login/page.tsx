@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface IFormInput {
@@ -46,7 +46,7 @@ const Login = () => {
     }
 
     return (
-        <>
+        <Suspense>
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-268px)] flex items-center py-10 text-sm'>
                 <form className='flex flex-col w-full md:w-[410px] mx-auto' onSubmit={handleSubmit(onSubmit)}>
@@ -108,7 +108,7 @@ const Login = () => {
                     <h5 className='mt-4 text-center'>New Customer? <Link href='/register' className='text-cyan-500'>Register</Link></h5>
                 </form>
             </div>
-        </>
+        </Suspense>
     );
 };
 
