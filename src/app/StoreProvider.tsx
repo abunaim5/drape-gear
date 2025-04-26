@@ -9,6 +9,25 @@ import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import { useSession } from 'next-auth/react';
 import { fetchUsers } from '@/lib/features/users/usersSlice';
 import { fetchOrders } from '@/lib/features/orders/ordersSlice';
+import { Session } from 'next-auth';
+
+const loadStoreData = (store: AppStore, collection: string, session: Session | null) => {
+    store.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
+    store.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
+    store.dispatch(fetchCategories({ collection: collection }));
+    store.dispatch(fetchSearchProducts({ searchText: '' }));
+
+    if (session?.user?.email) {
+        store.dispatch(fetchOrders({ email: session.user.email }));
+        if (session.user.role === '/user') {
+            store.dispatch(fetchCartProducts({ email: session.user.email }));
+        }
+    }
+    if (session?.user.role === 'admin') {
+        store.dispatch(fetchUsers());
+        store.dispatch(fetchAllProducts());
+    }
+}
 
 const StoreProvider = ({
     children
@@ -18,30 +37,17 @@ const StoreProvider = ({
     const storeRef = useRef<AppStore | null>(null);
     const location = usePathname();
     const collection = location.split('/')[2];
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     if (!storeRef.current) {
         // Create the store instance the first time this renders
         storeRef.current = makeStore()
     }
 
     useEffect(() => {
-        if (storeRef.current) {
-            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
-            storeRef.current.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
-            storeRef.current.dispatch(fetchCategories({ collection: collection }));
-            if (session?.user?.email) {
-                storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
-                if (session.user.role === '/user') {
-                    storeRef.current.dispatch(fetchCartProducts({ email: session.user.email }));
-                }
-            }
-            if (session?.user.role === 'admin') {
-                storeRef.current.dispatch(fetchUsers());
-                storeRef.current.dispatch(fetchAllProducts());
-            }
-            storeRef.current.dispatch(fetchSearchProducts({ searchText: '' }));
-        }
-    }, [collection, session?.user.email, session?.user.role]);
+        if (!storeRef.current) return;
+        if (status === 'loading') return;
+        loadStoreData(storeRef.current, collection, session)
+    }, [collection, session, status]);
 
     return <Provider store={storeRef.current}>{children}</Provider>
 }
