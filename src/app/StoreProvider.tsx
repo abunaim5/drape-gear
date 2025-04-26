@@ -27,21 +27,20 @@ const StoreProvider = ({
 
     useEffect(() => {
         console.log('[SESSION STATUS]: ', status)
-        if (status === 'loading') return;
+        if (status !== 'authenticated') return;
         if (storeRef.current) {
             storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
             storeRef.current.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
             storeRef.current.dispatch(fetchCategories({ collection: collection }));
             storeRef.current.dispatch(fetchSearchProducts({ searchText: '' }));
 
-            if (session?.user?.email !== 'undefined' && session?.user?.email) {
+            if (session?.user?.email) {
+                storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
                 if (session?.user?.role === 'user') {
-                    storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
                     storeRef.current.dispatch(fetchCartProducts({ email: session.user.email }));
                 }
 
                 if (session?.user?.role === 'admin') {
-                    storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
                     storeRef.current.dispatch(fetchUsers());
                     storeRef.current.dispatch(fetchAllProducts());
                 }

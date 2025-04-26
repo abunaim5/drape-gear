@@ -53,7 +53,9 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, callbackUrl: '/login' });
+    await signOut({ redirect: false });
+    router.push('/login');
+    router.refresh();
   };
 
   useEffect(() => {

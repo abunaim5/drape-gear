@@ -3,9 +3,11 @@ import { useAppSelector } from '@/lib/hooks';
 import { signOut, useSession } from "next-auth/react";
 import DashboardLink from "./DashboardLink";
 import { adminDashboardLinks, userDashboardLinks } from "./dashboardLinks";
+import { useRouter } from "next/navigation";
 
 const DashboardNav = () => {
     const { data: session } = useSession();
+    const router = useRouter();
     const isAdmin = session?.user.role === 'admin';
     const isUser = session?.user.role === 'user';
     const ordersCount = useAppSelector((state) => state.orders.orders.length);
@@ -16,7 +18,9 @@ const DashboardNav = () => {
     const linkCls = 'flex items-center gap-[5px] px-[15px] py-[10px] hover:text-black hover:bg-[#F3F3F3] transition-all duration-[400ms]'
 
     const handleLogout = async () => {
-        await signOut({ redirect: true, callbackUrl: '/login' });
+        await signOut({ redirect: false });
+        router.push('/login');
+        router.refresh();
     };
 
     return (
