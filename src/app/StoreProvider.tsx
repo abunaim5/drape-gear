@@ -9,27 +9,6 @@ import { fetchCartProducts } from '@/lib/features/cart/cartSlice';
 import { useSession } from 'next-auth/react';
 import { fetchUsers } from '@/lib/features/users/usersSlice';
 import { fetchOrders } from '@/lib/features/orders/ordersSlice';
-import { Session } from 'next-auth';
-
-const loadStoreData = (store: AppStore, collection: string, session: Session | null) => {
-    store.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
-    store.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
-    store.dispatch(fetchCategories({ collection: collection }));
-    store.dispatch(fetchSearchProducts({ searchText: '' }));
-
-    if (session?.user?.email) {
-        if (session?.user?.role === 'user') {
-            store.dispatch(fetchOrders({ email: session.user.email }));
-            store.dispatch(fetchCartProducts({ email: session.user.email }));
-        }
-
-        if (session?.user?.role === 'admin') {
-            store.dispatch(fetchOrders({ email: session.user.email }));
-            store.dispatch(fetchUsers());
-            store.dispatch(fetchAllProducts());
-        }
-    }
-}
 
 const StoreProvider = ({
     children
@@ -44,15 +23,33 @@ const StoreProvider = ({
         // Create the store instance the first time this renders
         storeRef.current = makeStore()
     }
-    
+    console.log('[IN PROVIDER]: ', session?.user.email)
+
     useEffect(() => {
+        console.log('[SESSION STATUS]: ', status)
         if (status === 'loading') return;
-        if (storeRef.current){
-            loadStoreData(storeRef.current, collection, session)
+        if (storeRef.current) {
+            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
+            storeRef.current.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
+            storeRef.current.dispatch(fetchCategories({ collection: collection }));
+            storeRef.current.dispatch(fetchSearchProducts({ searchText: '' }));
+
+            if (session?.user?.email !== 'undefined' && session?.user?.email) {
+                if (session?.user?.role === 'user') {
+                    storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
+                    storeRef.current.dispatch(fetchCartProducts({ email: session.user.email }));
+                }
+
+                if (session?.user?.role === 'admin') {
+                    storeRef.current.dispatch(fetchOrders({ email: session.user.email }));
+                    storeRef.current.dispatch(fetchUsers());
+                    storeRef.current.dispatch(fetchAllProducts());
+                }
+            }
         }
-        
-        
-    }, [collection, session?.user?.email, session?.user?.role, session, status]);
+
+
+    }, [collection, session?.user?.email, session?.user?.role, status]);
 
     return <Provider store={storeRef.current}>{children}</Provider>
 }
