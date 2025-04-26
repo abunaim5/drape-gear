@@ -44,12 +44,15 @@ const StoreProvider = ({
         // Create the store instance the first time this renders
         storeRef.current = makeStore()
     }
-
+    
     useEffect(() => {
-        if (!storeRef.current) return;
         if (status === 'loading') return;
-        loadStoreData(storeRef.current, collection, session)
-    }, [collection, session, status]);
+        if (storeRef.current){
+            loadStoreData(storeRef.current, collection, session)
+        }
+        
+        
+    }, [collection, session?.user?.email, session?.user?.role, session, status]);
 
     return <Provider store={storeRef.current}>{children}</Provider>
 }
