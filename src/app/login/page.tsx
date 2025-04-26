@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -29,6 +29,8 @@ const LoginComponent = () => {
             });
             if (res?.ok && res.url) {
                 toast.success('Great to see you again!');
+                await getSession();
+
                 router.replace(res.url);
             } else {
                toast.error('Invalid email or password');

@@ -17,24 +17,26 @@ export default auth((req) => {
     const currentPath = req.nextUrl.pathname;
     const session = req.auth;
 
-    if (!session) {
-        return NextResponse.redirect(
-            new URL(`/login?next=${currentPath}`, req.url)
-        );
-    };
-
-    const userRole = session?.user?.role;
     const protectedRoute = roleProtectedRoutes.find(route => currentPath === route.path);
 
-    if (protectedRoute && !protectedRoute.role.includes(userRole)) {
-        return NextResponse.redirect(
-            new URL('/unauthorized', req.url)
-        )
+    if (protectedRoute) {
+        if (!session) {
+            return NextResponse.redirect(
+                new URL(`/login?next=${currentPath}`, req.url)
+            );
+        };
+
+        const userRole = session?.user?.role;
+        if (!protectedRoute.role.includes(userRole)) {
+            return NextResponse.redirect(
+                new URL('/unauthorized', req.url)
+            )
+        }
     }
 
     return NextResponse.next();
 });
 
 export const config = {
-    matcher: ['/account', '/addresses', '/allproducts', '/addproduct', '/cart', '/orders', '/payment', '/users',]
+    matcher: roleProtectedRoutes.map(route => route.path)
 };
