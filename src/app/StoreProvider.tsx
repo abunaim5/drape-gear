@@ -18,14 +18,16 @@ const loadStoreData = (store: AppStore, collection: string, session: Session | n
     store.dispatch(fetchSearchProducts({ searchText: '' }));
 
     if (session?.user?.email) {
-        store.dispatch(fetchOrders({ email: session.user.email }));
-        if (session.user.role === '/user') {
+        if (session?.user?.role === 'user') {
+            store.dispatch(fetchOrders({ email: session.user.email }));
             store.dispatch(fetchCartProducts({ email: session.user.email }));
         }
-    }
-    if (session?.user.role === 'admin') {
-        store.dispatch(fetchUsers());
-        store.dispatch(fetchAllProducts());
+
+        if (session?.user?.role === 'admin') {
+            store.dispatch(fetchOrders({ email: session.user.email }));
+            store.dispatch(fetchUsers());
+            store.dispatch(fetchAllProducts());
+        }
     }
 }
 
