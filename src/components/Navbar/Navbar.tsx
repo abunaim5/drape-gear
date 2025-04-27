@@ -93,7 +93,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className='bg-transparent h-fit py-6'>
+    <nav className='bg-transparent h-fit py-4 lg:py-5'>
       <SideDrawer title='Search' place='right' open={open} setOpen={setOpen} drawerElem={searchDrawerElem} />
       <div className='container flex items-center'>
         <div className='flex items-center gap-2 flex-1'>
@@ -108,43 +108,44 @@ const Navbar = () => {
               </DrawerHeader>
               <div className='flex-1 flex flex-col text-sm text-gray-500'>
                 {
-                  navLinks.map((link, idx) => <Link key={idx} href={link.href} className={`${linkCls} ${pathname === link.href ? 'bg-[#F3F3F3]' : ''}`}>{link.label}</Link>)
+                  navLinks.map((link, idx) => <Link key={idx} href={link.href} onClick={() => setMenuOpen(!menuOpen)} className={`${linkCls} ${pathname === link.href ? 'bg-[#F3F3F3]' : ''}`}>{link.label}</Link>)
                 }
-                <Link href='/wishlist' className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/wishlist' ? 'bg-[#F3F3F3]' : ''}`}><IoMdHeartEmpty className='text-lg' /> <span>Wishlist</span></Link>
+
+                <Link href='/wishlist' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/wishlist' ? 'bg-[#F3F3F3]' : ''}`}><IoMdHeartEmpty className='text-lg' /> <span>Wishlist</span></Link>
+
+                <button onClick={() => {setMenuOpen(!menuOpen); handleSearchDrawer()}} className={`flex items-center gap-[5px] ${linkCls}`}><IoSearchOutline className='text-lg' /> <span>Search</span></button>
+
                 {
-                  session?.user ? (<Link href='/account' className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/account' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>My account</span></Link>) : (<Link href='/login' className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/login' ? 'text-black' : ''} ${pathname === '/login' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>Login / Register</span></Link>)
+                  session?.user ? (<Link href='/account' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/account' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>My account</span></Link>) : (<Link href='/login' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/login' ? 'text-black' : ''} ${pathname === '/login' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>Login / Register</span></Link>)
                 }
                 {
                   session?.user ? (<button onClick={() => { handleLogout(); setMenuOpen(!menuOpen) }} className={`flex items-center gap-[5px] ${linkCls}`}><FiLogOut className='text-lg' /> Logout</button>) : ('')
                 }
 
               </div>
-              {/* <DrawerFooter className='border-t mt-0'>
-                <Link href='/products/all' className='flex items-center gap-2 hover:text-cyan-500'>
-                  View all
-                  <IoMdArrowForward />
-                </Link>
-              </DrawerFooter> */}
             </DrawerContent>
           </Drawer>
-          <Link href='/' className='logo flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
+          <Link href='/' className='logo max-w-fit flex-1 text-2xl md:text-3xl font-semibold hidden lg:block'>
             drapegear<span className='text-cyan-500'>.</span>
           </Link>
         </div>
-        <Link href='/' className='logo flex-1 text-2xl md:text-3xl text-center font-semibold lg:hidden'>
+        <Link href='/' className='logo flex-1 max-w-fit text-2xl md:text-3xl text-center font-semibold lg:hidden'>
           drapegear<span className='text-cyan-500'>.</span>
         </Link>
         <div className='hidden lg:block'>
-          <ul className='flex items-center justify-center gap-8'>
+          <ul className='flex items-center justify-center gap-11'>
             {navLinks.map((link, idx) => (
-              <li key={idx}>
+              <li key={idx} className='relative cursor-pointer group'>
                 <NavLink href={link.href} label={link.label} />
+                {
+                  link.label === 'Shop' || link.label === 'Sale' ? <div className={`absolute -top-2 -right-6 min-w-4 min-h-4 px-2 rounded-full flex items-center justify-center text-[9px] leading-none text-white ${link.label === 'Shop' ? 'bg-cyan-400' : link.label === 'Sale' ? 'bg-orange-400' : 'bg-black'}`}>{link.label === 'Shop' ? 'New' : link.label === 'Sale' ? 'Sale' : ''}</div> : ''
+                }
               </li>
             ))}
           </ul>
         </div>
         <div className='flex items-center justify-end gap-2 md:gap-4 text-[22px] md:text-2xl flex-1'>
-          <IoSearchOutline onClick={handleSearchDrawer} className='cursor-pointer transition-all duration-300 hover:text-cyan-500' />
+          <IoSearchOutline onClick={handleSearchDrawer} className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' />
           {
             session?.user ? (<DropdownMenu>
               <DropdownMenuTrigger>

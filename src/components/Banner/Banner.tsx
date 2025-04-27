@@ -15,7 +15,7 @@ const Banner = () => {
     ];
 
     return (
-        <section className='h-[320px] md:h-[450px] lg:h-[calc(100vh-84px)] cursor-grab'>
+        <section className='h-[320px] md:h-[450px] lg:h-[calc(100vh-76px)] cursor-grab'>
             <Flicking circular={true} plugins={_plugins}>
                 {
                     banners.map((banner, idx) => <div key={idx} className='w-full h-full bg-no-repeat bg-center md:bg-top bg-cover object-contain flex-1' style={{ backgroundImage: `url(${banner.img})` }}>
