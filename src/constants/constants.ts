@@ -1,16 +1,16 @@
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
-import { BannerType, CollectionType, FootContentType, SupportType } from "@/types/types";
+import { BannerType, BlogType, CollectionType, FootContentType, SupportType } from "@/types/types";
 
 const banners: BannerType = [
     {
-        title: 'Fashion For Her',
-        subtitle: 'New Arrival',
-        img: '/images/banner1.png'
-    },
-    {
         title: 'Fashion For Him',
         subtitle: 'New Arrival',
-        img: '/images/banner2.png'
+        img: '/images/banner-men-gray.png'
+    },
+    {
+        title: 'Fashion For Her',
+        subtitle: 'New Arrival',
+        img: '/images/banner-women-gray.png'
     },
 ];
 
@@ -46,6 +46,27 @@ const collections: CollectionType = [
         colSpan: 3
     },
 ];
+
+const blogs: BlogType[] = [
+    {
+        title: 'Spring – Summer Trending Collections This Year',
+        img: '/images/blog-1.png',
+        description: 'This spring, fashion merges the uniqueness of retro and modern styles, creating individualistic outfits, ...',
+        date: 'January 27, 2025'
+    },
+    {
+        title: 'The Easiest Way to Break Out on Top',
+        img: '/images/blog-2.png',
+        description: 'During this summer, accessories like hair bows and statement necklaces highlight cute and trendy styles, ...',
+        date: 'January 27, 2025'
+    },
+    {
+        title: 'Latest Swimsuit Model For Next Year',
+        img: '/images/blog-3.png',
+        description: 'Get ready to make a splash this summer with the hottest swimwear trends next year, ...',
+        date: 'January 27, 2025'
+    },
+]
 
 const supports: SupportType = [
     {
@@ -181,4 +202,4 @@ const footContents: FootContentType = [
     },
 ];
 
-export { banners, collections, supports, footContents }
+export { banners, collections, blogs, supports, footContents }

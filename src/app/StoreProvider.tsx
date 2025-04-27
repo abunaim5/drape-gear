@@ -23,10 +23,8 @@ const StoreProvider = ({
         // Create the store instance the first time this renders
         storeRef.current = makeStore()
     }
-    console.log('[IN PROVIDER]: ', session?.user.email)
 
     useEffect(() => {
-        console.log('[SESSION STATUS]: ', status)
         if (status !== 'authenticated') return;
         if (storeRef.current) {
             storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));

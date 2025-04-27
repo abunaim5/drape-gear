@@ -120,6 +120,13 @@ type CollectionType = {
     colSpan: number
 }[];
 
+type BlogType = {
+    title: string;
+    description: string;
+    img: string;
+    date: string;
+}
+
 type SupportType = {
     title: string;
     description: string;
@@ -136,4 +143,4 @@ type FootContentType = {
     }[];
 }[];
 
-export type { BannerType,ProductType, ProductListType, ProductResponseType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsInfoResponseType, OrderedProductsType, CollectionType, SupportType, FootContentType };
+export type { BannerType,ProductType, ProductListType, ProductResponseType, CategoryType, AvailabilityType, CartProductType, CartProductResponseType, CartProductListType, OrderedProductsInfoType, OrderedProductsInfoResponseType, OrderedProductsType, CollectionType, BlogType, SupportType, FootContentType };

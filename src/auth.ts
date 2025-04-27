@@ -4,7 +4,6 @@ import type { NextAuthConfig, Session, User } from "next-auth";
 import type { UserType, UserResponseType } from "./types/user";
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
-// import { fetchUser } from "./lib/api";
 import axios from "axios";
 
 declare module "next-auth" {
@@ -61,7 +60,6 @@ const authOptions = {
         jwt: async ({ token, user }: { token: JWT; user: User }) => {
             // add user properties to the token after signing in
             if (user) {
-                console.log('[IN JWT CALLBACK: ]', 'TOKEN:', token, 'USER:', user)
                 token.id = user.id as string;
                 token.name = user.name;
                 token.email = user.email;
