@@ -7,7 +7,6 @@ const roleProtectedRoutes: { path: string, role: string[] }[] = [
     { path: '/allproducts', role: ['admin'] },
     { path: '/addproduct', role: ['admin'] },
     { path: '/cart', role: ['user'] },
-    { path: '/wishlist', role: ['user'] },
     { path: '/orders', role: ['admin', 'user'] },
     { path: '/payment', role: ['user'] },
     { path: '/users', role: ['admin'] }
