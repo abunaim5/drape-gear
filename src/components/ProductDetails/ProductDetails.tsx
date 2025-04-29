@@ -49,9 +49,9 @@ const ProductDetails = ({ _id, name, image, old_price, sale_price, description, 
     return (
         <>
             <div className={`flex flex-col md:flex-row gap-8 ${pathname !== `/product/${_id}` ? 'p-4 md:p-0' : ''}`}>
-                <div className='relative flex-1 flex items-center'>
+                <div className='relative flex-1 flex items-center justify-center'>
                     <div className='absolute z-50 w-full h-full bg-black/5 cursor-grab' />
-                    <Image className='w-full' alt={`${name} image`} src={image} width={400} height={500} />
+                    <Image className='w-2/3' alt={`${name} image`} src={image} width={400} height={500} />
                 </div>
                 <div className={`flex-1 ${pathname !== `/product/${_id}` ? 'py-0 md:py-8 pr-0 md:pr-8' : ''}`}>
                     <h3 className='font-semibold'>{name}</h3>

@@ -8,8 +8,8 @@ const Blogs = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container mb-20'>
-                <div className='flex items-center gap-5 mt-12'>
+            <div className='container my-8 lg:my-16'>
+                <div className='grid grid-flow-row md:grid-cols-2 xl:grid-cols-3 gap-4'>
                     {
                         blogs.map((blog: BlogType, idx) => <BlogCard key={idx} blog={blog} />)
                     }

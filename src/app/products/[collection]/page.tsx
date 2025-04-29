@@ -100,10 +100,10 @@ const Products = () => {
     </>
 
     return (
-        <div className='mb-16' id={`${currentPage}`}>
+        <div className='mb-8 lg:mb-16' id={`${currentPage}`}>
             <Breadcrumb />
             <SideDrawer title='Filter' place='left' open={open} setOpen={setOpen} drawerElem={filterDrawerElem} />
-            <div className='container my-16'>
+            <div className='container my-8 lg:my-16'>
                 <div className='flex gap-4 items-center justify-between'>
                     <div onClick={handleFilterDrawer} className='flex items-center gap-[2px] text-xl hover:text-[#00BADB] cursor-pointer'>
                         <CiFilter />

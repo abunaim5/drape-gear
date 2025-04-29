@@ -10,7 +10,7 @@ const Collections = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container mb-20'>
+            <div className='container mb-8 lg:mb-16'>
                 <Collection />
             </div>
         </>

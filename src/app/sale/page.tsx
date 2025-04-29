@@ -6,7 +6,7 @@ const Sale = () => {
     return (
         <>
         <Breadcrumb />
-        <div className='container mb-20'>
+        <div className='container my-8 lg:my-16'>
             <Collection />
         </div>
     </>

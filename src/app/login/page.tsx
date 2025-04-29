@@ -49,7 +49,7 @@ const LoginComponent = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container min-h-[calc(100vh-268px)] flex items-center py-10 text-sm'>
+            <div className='container min-h-[calc(100vh-260px)] flex items-center py-8 text-sm'>
                 <form className='flex flex-col w-full md:w-[410px] mx-auto' onSubmit={handleSubmit(onSubmit)}>
                     <label htmlFor='email'>Email <span className='text-red-500'>*</span></label>
                     <input

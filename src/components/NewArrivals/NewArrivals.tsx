@@ -7,14 +7,14 @@ import { useEffect } from "react";
 import { fetchProducts } from "@/lib/features/products/productsSlice";
 
 const NewArrivals = () => {
-    const { queryProducts, loading } = useAppSelector((state) => state.products);
+    const { queryProducts } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', sortPriceVal: 'default' }));
     }, [dispatch]);
 
-    if (loading) return <h1>Loading...</h1>;
+    // if (loading) return <h1>Loading...</h1>;
 
     return (
         <section className='mt-12 md:mt-28'>

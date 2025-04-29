@@ -6,13 +6,13 @@ import { CartProductListType } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Image from "next/image";
-import { TbTruckDelivery } from "react-icons/tb";
 import { Minus, Plus } from "lucide-react";
 import { PiTrashLight } from "react-icons/pi";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { FaTruckFast } from "react-icons/fa6";
 
 const Cart = () => {
     const { cart } = useAppSelector((state) => state.cart);
@@ -52,7 +52,7 @@ const Cart = () => {
             <Breadcrumb />
             <div className='container min-h-[calc(100vh-260px)] content-center'>
                 {
-                    cart.products.length ? (<div className='my-4'>
+                    cart.products.length ? (<div className='my-8 lg:my-16'>
                         <div className={`hidden items-center justify-between text-sm font-semibold pb-3 ${!cart.products.length ? 'hidden' : 'xl:flex'}`}>
                             <h3 className='w-1/4'>Product</h3>
                             <div className='flex items-center justify-between flex-1'>
@@ -111,7 +111,7 @@ const Cart = () => {
                         <div className={`flex flex-col items-center md:items-end mt-10 ${!cart.products.length ? 'hidden' : 'block'}`}>
                             <h6 className='text-[13px]'><span className='text-green-800'>Congratulations!</span> You&apos;ve got free shipping!</h6>
                             <div className='relative my-4 w-full'>
-                                <TbTruckDelivery className='absolute right-0 -top-5 text-3xl z-30 text-[#4f772d]' />
+                                <FaTruckFast className='absolute right-0 -top-5 text-3xl z-30 text-green-800/95' />
                                 <div className='w-full md:w-[330px] lg:w-[420px] place-self-end bg-gray-200 rounded-lg overflow-hidden'>
                                     <div className='h-2 bg-striped bg-[length:40px_40px] animate-stripe-move rounded-lg' />
                                 </div>

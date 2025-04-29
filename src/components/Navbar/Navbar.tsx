@@ -25,9 +25,12 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
+import { fetchProducts } from '@/lib/features/products/productsSlice';
+import { FaSearchengin } from 'react-icons/fa';
 
 const Navbar = () => {
-  const { searchProducts } = useAppSelector((state) => state.searchProducts);
+  const { searchProducts, loading } = useAppSelector((state) => state.searchProducts);
+  const { queryProducts } = useAppSelector((state) => state.products);
   const { cart } = useAppSelector((state) => state.cart);
   const itemIds = useAppSelector((state) => state.wishlist.itemIds);
   const [searchText, setSearchText] = useState<string>('');
@@ -59,6 +62,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', sortPriceVal: 'default' }));
     dispatch(fetchSearchProducts({ searchText: searchText }));
     if (session?.user?.email) {
       dispatch(fetchCartProducts({ email: session.user.email }));
@@ -77,15 +81,19 @@ const Navbar = () => {
       />
       <IoSearchOutline className='text-lg' />
     </label>
-    <h1 className='shadow-md text-base px-4 py-[9px]'>Search results</h1>
+    <h1 className='shadow-md text-base px-4 py-[9px]'>{searchText ? 'Search results' : 'Need some inspiration?'}</h1>
     <div className='max-h-[74.813vh] overflow-y-auto custom-scrollbar'>
-      <div className={`flex items-center justify-center h-96 ${searchProducts?.length ? 'hidden' : ''}`}>
-        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
-        <p>Empty</p>
+      <div className={`flex items-center justify-center h-96 ${searchText && searchProducts?.length && !loading ? 'hidden' : !searchText && !loading ? 'hidden' : ''}`}>
+        {
+          !loading ? <p className='text-sm'>No products were found matching your selection.</p> : <div className='flex flex-col items-center gap-3 text-2xl'>
+            <FaSearchengin className='animate-pulse' />
+            <p className='text-base'>Searching</p>
+          </div>
+        }
       </div>
       <div className='flex flex-col gap-6 mt-6'>
         {
-          searchProducts?.map(product => <DrawerCard key={product._id} name={product.name} image={product.image} sale_price={product.sale_price} />)
+          searchText && !loading ? (searchProducts?.map(product => <DrawerCard key={product._id} id={product._id} name={product.name} image={product.image} sale_price={product.sale_price} />)) : !searchText && !loading ? (queryProducts?.products.map(product => <DrawerCard key={product._id} id={product._id} name={product.name} image={product.image} sale_price={product.sale_price} />)) : <></>
         }
       </div>
     </div>
@@ -113,7 +121,7 @@ const Navbar = () => {
 
                 <Link href='/wishlist' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/wishlist' ? 'bg-[#F3F3F3]' : ''}`}><IoMdHeartEmpty className='text-lg' /> <span>Wishlist</span></Link>
 
-                <button onClick={() => {setMenuOpen(!menuOpen); handleSearchDrawer()}} className={`flex items-center gap-[5px] ${linkCls}`}><IoSearchOutline className='text-lg' /> <span>Search</span></button>
+                <button onClick={() => { setMenuOpen(!menuOpen); handleSearchDrawer() }} className={`flex items-center gap-[5px] ${linkCls}`}><IoSearchOutline className='text-lg' /> <span>Search</span></button>
 
                 {
                   session?.user ? (<Link href='/account' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/account' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>My account</span></Link>) : (<Link href='/login' onClick={() => setMenuOpen(!menuOpen)} className={`flex items-center gap-[5px] ${linkCls} ${pathname === '/login' ? 'text-black' : ''} ${pathname === '/login' ? 'bg-[#F3F3F3]' : ''}`}><FiUser className='text-lg' /> <span>Login / Register</span></Link>)

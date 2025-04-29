@@ -71,12 +71,12 @@ const blogs: BlogType[] = [
 const supports: SupportType = [
     {
         title: 'Fast Delivery',
-        description: '70 Taka shipping on all orders',
+        description: 'Free shipping on all orders',
         img: '/icons/fast-delivery.png'
     },
     {
         title: 'Safe Payment',
-        description: 'We ensure cash on delivery',
+        description: 'We ensure secure payment with stripe',
         img: '/icons/payment.png'
     },
     {
