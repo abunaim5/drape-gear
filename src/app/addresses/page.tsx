@@ -9,8 +9,8 @@ const Addresses = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container min-h-[calc(100vh-412px)] mb-20'>
-                <div className='flex flex-col md:flex-row gap-8 mt-16'>
+            <div className='container min-h-[calc(100vh-384px)] my-8 lg:my-16'>
+                <div className='flex flex-col md:flex-row gap-8'>
                     <DashboardNav />
                     <div className='mx-auto text-center'>
                         <button className='text-sm px-[15px] py-[11px] transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-white'>

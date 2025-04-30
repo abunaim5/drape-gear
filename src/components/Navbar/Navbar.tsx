@@ -85,7 +85,7 @@ const Navbar = () => {
     <div className='max-h-[74.813vh] overflow-y-auto custom-scrollbar'>
       <div className={`flex items-center justify-center h-96 ${searchText && searchProducts?.length && !loading ? 'hidden' : !searchText && !loading ? 'hidden' : ''}`}>
         {
-          !loading ? <p className='text-sm'>No products were found matching your selection.</p> : <div className='flex flex-col items-center gap-3 text-2xl'>
+          !loading ? <p className='text-sm'>No products were found matching your selection.</p> : <div className='flex flex-col items-center gap-3 text-3xl'>
             <FaSearchengin className='animate-pulse' />
             <p className='text-base'>Searching</p>
           </div>
@@ -159,7 +159,7 @@ const Navbar = () => {
               <DropdownMenuTrigger>
                 <FiUser className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className='w-56 rounded-none mt-[26px] text-gray-500'>
+              <DropdownMenuContent className='w-56 rounded-none mt-[22px] text-gray-500'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push('/account')} className='cursor-pointer'>

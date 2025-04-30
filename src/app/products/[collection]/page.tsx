@@ -25,6 +25,7 @@ import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import { Checkbox } from "@/components/ui/checkbox";
 import SideDrawer from "@/components/SideDrawer/SideDrawer";
+import { FaBoxOpen } from "react-icons/fa";
 
 const Products = () => {
     const { queryProducts, productCount, categories, availabilityData } = useAppSelector((state) => state.products);
@@ -57,6 +58,14 @@ const Products = () => {
         dispatch(fetchProductCount({ collection: collection }));
         dispatch(fetchCategories({ collection: collection }));
     }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
+    const hasSameCollection: boolean = queryProducts.products.some(product => product.collection === collection);
+
+    if (!queryProducts.products.length || !hasSameCollection) {
+        return <div className='flex flex-col items-center justify-center gap-3 min-h-[calc(100vh-76px)] bg-gray-50'>
+            <FaBoxOpen className='text-4xl text-gray-500' />
+            <p>No products found in this collection.</p>
+        </div>
+    }
 
     const filterDrawerElem = <>
         <div className='px-4 py-5 border-b'>

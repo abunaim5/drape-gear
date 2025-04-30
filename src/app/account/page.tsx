@@ -11,16 +11,16 @@ const Account = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container min-h-[calc(100vh-412px)] mb-20'>
-                <div className='flex flex-col md:flex-row gap-8 mt-16'>
+            <div className='container min-h-[calc(100vh-384px)] my-8 lg:my-16'>
+                <div className='flex flex-col md:flex-row gap-8'>
                     <DashboardNav />
                     <div className='flex-1'>
                         <h4 className='text-sm mb-5 text-gray-500'>Hello <span className='font-semibold'>{session?.user.name}</span></h4>
                         <h3 className='font-semibold mb-4'>Order History:</h3>
                         <div className='flex items-center gap-2'>
                             <IoIosCheckmarkCircle className='text-green-600' />
-                            <Link href='/shop' className='underline text-gray-500'>Make your first order</Link>
-                            <span>You haven&apos;t placed any order yet.</span>
+                            <Link href={session?.user?.role !== 'admin' ? '/shop' : '/orders'} className='underline text-gray-500'>{session?.user?.role !== 'admin' ? 'Make your first order' : 'Kindly review the order history'}</Link>
+                            <span>{session?.user?.role !== 'admin' ? "You haven't placed any order yet." : 'New orders are awaiting your response.' }</span>
                         </div>
                         <div className='mt-14'>
                             <h3 className='font-semibold mb-4'>Account details:</h3>

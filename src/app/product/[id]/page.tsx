@@ -5,6 +5,7 @@ import { use, useEffect } from "react";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
 import Link from "next/link";
 import { MdArrowForwardIos } from "react-icons/md";
+import { FaBoxOpen } from "react-icons/fa";
 
 type ProductId = {
     params: Promise<{ id: string }>
@@ -20,8 +21,9 @@ const Product = ({ params }: ProductId) => {
     }, [dispatch, id]);
 
     if (!product) {
-        return <div className='container'>
-            Product Not found.
+        return <div className='flex flex-col items-center justify-center gap-3 min-h-[calc(100vh-76px)] bg-gray-50'>
+            <FaBoxOpen className='text-4xl text-gray-500' />
+            <p>Product Not found.</p>
         </div>
     }
 
@@ -34,7 +36,7 @@ const Product = ({ params }: ProductId) => {
                     <span className='text-gray-500'>{product.name}</span>
                 </div>
             </div>
-            <div className='container my-8 lg:my-16'>
+            <div className='container min-h-[calc(100vh-130px)] my-8 lg:my-16'>
                 <ProductDetails
                     _id={product._id}
                     name={product.name}

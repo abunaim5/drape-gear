@@ -28,8 +28,8 @@ const Orders = () => {
     return (
         <>
             <Breadcrumb />
-            <div className='container min-h-[calc(100vh-412px)] mb-20'>
-                <div className='flex flex-col md:flex-row gap-8 mt-16'>
+            <div className='container min-h-[calc(100vh-384px)] my-8 lg:my-16'>
+                <div className='flex flex-col md:flex-row gap-8'>
                     <DashboardNav />
 
                     <Accordion type='multiple' className='w-full'>
