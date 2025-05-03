@@ -5,12 +5,12 @@ const banners: BannerType = [
     {
         title: 'Fashion For Him',
         subtitle: 'New Arrival',
-        img: '/images/banner-men-gray.png'
+        img: '/images/banner-men.png'
     },
     {
         title: 'Fashion For Her',
         subtitle: 'New Arrival',
-        img: '/images/banner-women-gray.png'
+        img: '/images/banner-women.png'
     },
 ];
 
@@ -22,13 +22,13 @@ const collections: CollectionType = [
         colSpan: 2
     },
     {
-        img: '/images/1.png',
+        img: '/images/men.png',
         btnName: 'Men',
         path: '/products/men',
         colSpan: 2
     },
     {
-        img: '/images/3.png',
+        img: '/images/kids.png',
         btnName: 'Kids',
         path: '/products/kids',
         colSpan: 2
