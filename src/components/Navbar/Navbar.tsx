@@ -57,7 +57,6 @@ const Navbar = () => {
   const handleLogout = async () => {
     await signOut({ redirect: false });
     router.push('/login');
-    router.refresh();
   };
 
   useEffect(() => {
@@ -196,7 +195,7 @@ const Navbar = () => {
           </div>
           <div className='relative cursor-pointer group'>
             <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{cart?.products.length}</div>
+            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{session?.user?.email ? cart?.products.length : 0}</div>
           </div>
         </div>
       </div>
