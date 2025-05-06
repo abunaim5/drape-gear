@@ -44,13 +44,13 @@ const authOptions = {
 
                     const user = res?.data;
                     if (!user) {
-                        console.error("❌ No user returned from backend");
+                        console.error("No user returned from backend");
                         return null;
                     }
 
                     return createUser(user);
                 } catch (error) {
-                    console.error('❌ Error during authentication', error);
+                    console.error('Error during authentication', error);
                     return null;
                 }
             }

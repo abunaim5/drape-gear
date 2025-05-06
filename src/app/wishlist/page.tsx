@@ -15,8 +15,6 @@ const Wishlist = () => {
         dispatch(fetchWishlist(itemIds))
     }, [dispatch, itemIds]);
 
-    console.log(wishlistItems);
-
     // if (loading) {
     //     return <p>Loading...</p>
     // }

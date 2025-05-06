@@ -26,8 +26,9 @@ const StoreProvider = ({
 
     useEffect(() => {
         if (status !== 'authenticated') return;
+        
         if (storeRef.current) {
-            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', sortPriceVal: 'default' }));
+            storeRef.current.dispatch(fetchProducts({ currentPage: 1, itemsPerPage: collection ? 10 : 5, collection: collection ? collection : 'all', category: [], availability: [], sortPriceVal: 'default' }));
             storeRef.current.dispatch(fetchProductCount({ collection: collection ? collection : 'all' }));
             storeRef.current.dispatch(fetchCategories({ collection: collection }));
             storeRef.current.dispatch(fetchSearchProducts({ searchText: '' }));
@@ -44,8 +45,6 @@ const StoreProvider = ({
                 }
             }
         }
-
-
     }, [collection, session?.user?.email, session?.user?.role, status]);
 
     return <Provider store={storeRef.current}>{children}</Provider>

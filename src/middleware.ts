@@ -2,21 +2,20 @@ import { NextResponse } from "next/server";
 import { auth } from "./auth";
 
 const roleProtectedRoutes: { path: string, role: string[] }[] = [
-    { path: '/account', role: ['admin', 'user'] },
     { path: '/addresses', role: ['admin', 'user'] },
+    { path: '/account', role: ['admin', 'user'] },
+    { path: '/orders', role: ['admin', 'user'] },
     { path: '/allproducts', role: ['admin'] },
     { path: '/addproduct', role: ['admin'] },
-    { path: '/cart', role: ['user'] },
-    { path: '/orders', role: ['admin', 'user'] },
     { path: '/payment', role: ['user'] },
-    { path: '/users', role: ['admin'] }
+    { path: '/users', role: ['admin'] },
 ];
 
 export default auth((req) => {
     const currentPath = req.nextUrl.pathname;
     const session = req.auth;
 
-    const protectedRoute = roleProtectedRoutes.find(route => currentPath === route.path);
+    const protectedRoute = roleProtectedRoutes.find(route => route.path === currentPath);
 
     if (protectedRoute) {
         if (!session) {

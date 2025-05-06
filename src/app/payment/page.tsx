@@ -48,12 +48,12 @@ const PaymentComponent = () => {
     };
 
     useEffect(() => {
-        if (session?.user?.email && !productId) {
+        if (session?.user?.email && !productId && session?.user?.role === 'user') {
             dispatch(fetchCartProducts({ email: session.user.email }));
         } else {
             dispatch(fetchSingleProduct(productId));
         }
-    }, [dispatch, session?.user?.email, productId]);
+    }, [dispatch, session?.user?.email, session?.user?.role, productId]);
 
     if (loading) return
 

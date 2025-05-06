@@ -33,6 +33,8 @@ const ProductCard = ({ _id, name, image, old_price, sale_price, availability, ca
     const handleAddToCart = () => {
         if (!session?.user) {
             router.push('/login')
+        } else if (session?.user?.role === 'admin') {
+            toast.error('Oops! Admins can’t add items to the cart.')
         } else {
             const cartProduct: CartProductListType = {
                 productId: _id,

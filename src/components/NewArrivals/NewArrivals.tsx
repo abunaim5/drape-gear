@@ -11,7 +11,7 @@ const NewArrivals = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', sortPriceVal: 'default' }));
+        dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', category: [], availability: [], sortPriceVal: 'default' }));
     }, [dispatch]);
 
     // if (loading) return <h1>Loading...</h1>;

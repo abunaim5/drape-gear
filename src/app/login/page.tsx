@@ -29,6 +29,7 @@ const LoginComponent = () => {
             });
             if (res?.ok && res.url) {
                 toast.success('Great to see you again!');
+                router.refresh();
                 router.push(res.url);
             } else {
                toast.error('Invalid email or password');

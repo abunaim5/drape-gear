@@ -16,20 +16,19 @@ import { FaTruckFast } from "react-icons/fa6";
 
 const Cart = () => {
     const { cart } = useAppSelector((state) => state.cart);
-    console.log(cart)
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const router = useRouter();
     const subtotalPrice = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
 
     useEffect(() => {
-        if (session?.user?.email) {
+        if (session?.user?.email && session?.user?.role === 'user') {
             dispatch(fetchCartProducts({ email: session.user.email }));
         }
-    }, [dispatch, session?.user?.email]);
+    }, [dispatch, session?.user?.email, session?.user?.role]);
 
     const handleRemoveFromCart = (id: string) => {
-        if (session?.user?.email) {
+        if (session?.user?.email && session?.user?.role === 'user') {
             dispatch(removeFromCart({ id, email: session.user.email }));
             if (cart.success) {
                 toast.success('Item removed from cart.');
@@ -38,14 +37,10 @@ const Cart = () => {
     };
 
     const handleUpdateProductQuantity = ({ id, email, productQuantity }: { id: string, email: string, productQuantity: number }) => {
-        if (session?.user?.email) {
+        if (session?.user?.email && session?.user?.role === 'user') {
             dispatch(updateCartQuantity({ id, email, productQuantity }));
         }
     }
-
-    // if (loading) {
-    //     return <p>Loading...</p>
-    // }
 
     return (
         <>
@@ -127,9 +122,9 @@ const Cart = () => {
                             </button>
                         </div>
                     </div>) : (<div className='flex flex-col items-center justify-center gap-6 my-4'>
-                        <Image width={150} height={150} alt='wishlist empty' src='/icons/wishlist-empty.png' />
-                        <h3 className='text-3xl font-semibold'>Wishlist is empty.</h3>
-                        <p className='text-sm text-gray-500'>You don&apos;t have any products in the wishlist yet. You will find a lot of interesting products on our &quot;Shop&quot; page.</p>
+                        <Image width={150} height={150} alt='cart empty' src='/icons/cart-empty.png' />
+                        <h3 className='text-3xl font-semibold'>Cart is empty.</h3>
+                        <p className='text-sm text-gray-500'>You don&apos;t have any products in the cart yet. You will find a lot of interesting products on our &quot;Shop&quot; page.</p>
                     </div>)
                 }
             </div>

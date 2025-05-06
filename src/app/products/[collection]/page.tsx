@@ -31,6 +31,8 @@ const Products = () => {
     const { queryProducts, productCount, categories, availabilityData } = useAppSelector((state) => state.products);
     const [sortPriceVal, setSortPriceVal] = useState<string>('default');
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [selectedAvailability, setSelectedAvailability] = useState<boolean[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
     const [open, setOpen] = useState<boolean>(false);
     const itemsPerPage: number = 10;
     const totalPages = Math.ceil(productCount / itemsPerPage);
@@ -54,10 +56,12 @@ const Products = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProducts({ currentPage, itemsPerPage, collection: collection, sortPriceVal }));
-        dispatch(fetchProductCount({ collection: collection }));
-        dispatch(fetchCategories({ collection: collection }));
-    }, [dispatch, currentPage, itemsPerPage, collection, sortPriceVal]);
+        dispatch(fetchProducts({ currentPage, itemsPerPage, collection: collection, sortPriceVal, category: selectedCategory, availability: selectedAvailability }));
+        if (!selectedCategory.length && !selectedAvailability.length) {
+            dispatch(fetchProductCount({ collection: collection }));
+            dispatch(fetchCategories({ collection: collection }));
+        }
+    }, [dispatch, currentPage, itemsPerPage, collection, selectedCategory, selectedAvailability, sortPriceVal]);
 
     if (!queryProducts.products.length) {
         return <div className='flex flex-col items-center justify-center gap-3 min-h-[calc(100vh-76px)] bg-gray-50'>
@@ -73,7 +77,13 @@ const Products = () => {
             <div className='flex flex-col gap-3 mt-5'>
                 {
                     availabilityData.map((available: AvailabilityType, idx) => <div key={idx} className="items-top flex space-x-2">
-                        <Checkbox id={available.availability ? 'inStock' : 'outStock'} />
+                        <Checkbox
+                            checked={selectedAvailability.includes(available.availability)}
+                            onCheckedChange={(checked) => {
+                                return checked ? setSelectedAvailability([...selectedAvailability, available.availability]) : setSelectedAvailability(selectedAvailability.filter(avail => avail !== available.availability))
+                            }}
+                            id={available.availability ? 'inStock' : 'outStock'}
+                        />
                         <div className="leading-none">
                             <label
                                 htmlFor={available.availability ? 'inStock' : 'outStock'}
@@ -92,7 +102,13 @@ const Products = () => {
             <div className='flex flex-col gap-3 mt-5'>
                 {
                     categories?.map((category: CategoryType, idx) => <div key={idx} className="items-top flex space-x-2">
-                        <Checkbox id={category.category} />
+                        <Checkbox
+                            checked={selectedCategory.includes(category.category)}
+                            onCheckedChange={(checked) => {
+                                return checked ? setSelectedCategory([...selectedCategory, category.category]) : setSelectedCategory(selectedCategory.filter(cat => cat !== category.category))
+                            }}
+                            id={category.category}
+                        />
                         <div className="leading-none">
                             <label
                                 htmlFor={category.category}

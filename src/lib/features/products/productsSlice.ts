@@ -21,8 +21,10 @@ export const removeProduct = createAsyncThunk('remove/removeProduct', async (id:
     return res.data;
 });
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ currentPage, itemsPerPage, collection, sortPriceVal }: { currentPage: number, itemsPerPage: number, collection: string, sortPriceVal: string }) => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}`);
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ currentPage, itemsPerPage, collection, category, availability, sortPriceVal }: { currentPage: number, itemsPerPage: number, collection: string, category: string[], availability: boolean[], sortPriceVal: string }) => {
+    const categoryQuery = category.length > 0 ? `&category=${category.join(',')}` : '';
+    const availabilityQuery = availability.length > 0 ? `&availability=${availability.join(',')}` : '';
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&filter=${collection}&sort=${sortPriceVal}${categoryQuery}${availabilityQuery}`);
     return res.data;
 });
 

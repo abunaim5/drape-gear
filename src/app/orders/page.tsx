@@ -23,7 +23,7 @@ const Orders = () => {
         if (session?.user?.email) {
             dispatch(fetchOrders({ email: session.user.email }));
         }
-    }, [dispatch, session?.user.email]);
+    }, [dispatch, session?.user?.email]);
 
     return (
         <>

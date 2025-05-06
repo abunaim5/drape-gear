@@ -57,8 +57,8 @@ const UpdateProductModal = ({ open, setOpen, product }: UpdateProductModalPropsT
         const updatedData: ProductListType = {
             name: data.name,
             image: data.image,
-            category: data.category,
-            collection: data.collection,
+            category: data.category.trim(),
+            collection: data.collection.trim(),
             description: data.description,
             createdAt: new Date(product.createdAt),
             old_price: parseFloat(data.oldPrice),

@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/drawer"
 import { fetchProducts } from '@/lib/features/products/productsSlice';
 import { FaSearchengin } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { searchProducts, loading } = useAppSelector((state) => state.searchProducts);
@@ -57,15 +58,17 @@ const Navbar = () => {
   const handleLogout = async () => {
     await signOut({ redirect: false });
     router.push('/login');
+    router.refresh();
+    toast.success('Logged out. Come back soon!');
   };
 
   useEffect(() => {
-    dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', sortPriceVal: 'default' }));
+    dispatch(fetchProducts({ currentPage: 1, itemsPerPage: 5, collection: 'all', category: [], availability: [], sortPriceVal: 'default' }));
     dispatch(fetchSearchProducts({ searchText: searchText }));
-    if (session?.user?.email) {
+    if (session?.user?.email && session?.user?.role === 'user') {
       dispatch(fetchCartProducts({ email: session.user.email }));
     }
-  }, [dispatch, searchText, session?.user?.email]);
+  }, [dispatch, searchText, session?.user?.email, session?.user?.role]);
 
   const searchDrawerElem = <>
     <label htmlFor='search' className='flex items-center gap-2 px-[14px] py-[10px] my-5 mx-4 group border focus-within:border-black'>
@@ -195,7 +198,7 @@ const Navbar = () => {
           </div>
           <div className='relative cursor-pointer group'>
             <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{session?.user?.email ? cart?.products.length : 0}</div>
+            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{session?.user?.role === 'user' ? cart?.products.length : 0}</div>
           </div>
         </div>
       </div>

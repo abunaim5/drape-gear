@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import DashboardLink from "./DashboardLink";
 import { adminDashboardLinks, userDashboardLinks } from "./dashboardLinks";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const DashboardNav = () => {
     const { data: session } = useSession();
@@ -21,6 +22,7 @@ const DashboardNav = () => {
         await signOut({ redirect: false });
         router.push('/login');
         router.refresh();
+        toast.success('Logged out. Come back soon!');
     };
 
     return (
