@@ -96,13 +96,13 @@ const LoginComponent = () => {
                         <p className='text-red-500' role="alert">{errors.password.message}</p>
                     )}
                     <a className='py-4' href="">Forgot password?</a>
-                    <input className='cursor-pointer py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value='Login' />
+                    <input className='cursor-pointer py-[10px] bg-black hover:bg-gray-900 text-white transition-all duration-500' type="submit" value='Login' />
                     <div className='flex items-center justify-between gap-2 my-4'>
                         <div className='w-full h-[1px] bg-black' />
                         <span className='text-nowrap'>Admin Access</span>
                         <div className='w-full h-[1px] bg-black' />
                     </div>
-                    <button onClick={() => { setAdminAccess(!adminAccess); handleResetDefaultVal() }} type='button' className='flex items-center justify-center w-full rounded-none py-[10px] border-[1px] border-black'>
+                    <button onClick={() => { setAdminAccess(!adminAccess); handleResetDefaultVal() }} type='button' className='flex items-center justify-center w-full rounded-none py-[10px] border-[1px] border-black hover:border-cyan-500 hover:bg-cyan-500 hover:text-white transition-all duration-500'>
                         Admin
                         {/* <FcGoogle /> */}
                     </button>

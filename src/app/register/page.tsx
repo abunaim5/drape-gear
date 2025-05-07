@@ -109,7 +109,7 @@ const Register = () => {
                         <p className='text-red-500' role="alert">{errors.password.message}</p>
                     )}
                     {/* <a className='py-4' href="">Forgot password?</a> */}
-                    <input className='cursor-pointer mt-8 py-[10px] bg-black hover:bg-gray-900 text-white' type="submit" value={loading ? 'Register...' : 'Register'} />
+                    <input className='cursor-pointer mt-8 py-[10px] bg-black hover:bg-gray-900 text-white transition-all duration-500' type="submit" value={loading ? 'Register...' : 'Register'} />
                     <h5 className='mt-4 text-center'>Already have an account? <Link href='/login' className='text-cyan-500'>Login</Link></h5>
                 </form>
             </div>
