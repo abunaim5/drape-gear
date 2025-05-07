@@ -192,14 +192,14 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>) : (<Link href='/login'><FiUser className='hidden md:block cursor-pointer transition-all duration-300 hover:text-cyan-500' /></Link>)
           }
-          <div className='relative hidden md:block cursor-pointer group'>
-            <Link href='/wishlist'><IoMdHeartEmpty className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{itemIds.length}</div>
-          </div>
-          <div className='relative cursor-pointer group'>
-            <Link href='/cart'><PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' /></Link>
-            <div className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{session?.user?.role === 'user' ? cart?.products.length : 0}</div>
-          </div>
+          <Link href='/wishlist' className='relative hidden md:block group'>
+            <IoMdHeartEmpty className='transition-all duration-300 group-hover:text-cyan-500' />
+            <span className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{itemIds.length}</span>
+          </Link>
+          <Link href='/cart' className='relative group'>
+            <PiShoppingCartSimple className='transition-all duration-300 group-hover:text-cyan-500' />
+            <span className='absolute -top-1 -right-1.5 min-w-4 min-h-4 rounded-full flex items-center justify-center text-[10px] leading-none text-white bg-black'>{session?.user?.role === 'user' ? cart?.products.length : 0}</span>
+          </Link>
         </div>
       </div>
     </nav>

@@ -19,7 +19,7 @@ const Account = () => {
                         <h3 className='font-semibold mb-4'>Order History:</h3>
                         <div className='flex items-center gap-2'>
                             <IoIosCheckmarkCircle className='text-green-600' />
-                            <Link href={session?.user?.role !== 'admin' ? '/shop' : '/orders'} className='underline text-gray-500'>{session?.user?.role !== 'admin' ? 'Make your first order' : 'Kindly review the order history'}</Link>
+                            <Link href={session?.user?.role !== 'admin' ? '/collections' : '/orders'} className='underline text-gray-500'>{session?.user?.role !== 'admin' ? 'Make your first order' : 'Kindly review the order history'}</Link>
                             <span>{session?.user?.role !== 'admin' ? "You haven't placed any order yet." : 'New orders are awaiting your response.' }</span>
                         </div>
                         <div className='mt-14'>
