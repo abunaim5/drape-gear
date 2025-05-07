@@ -2,20 +2,14 @@
 
 **Drape Gear** is a modern full-stack e-commerce web application built with a focus on functionality, clean design, and a smooth user experience. It supports both user and admin roles, complete product browsing features, secure authentication, Stripe payments, and dynamic PDF invoice generation.
 
----
-
 ## Admin Access
 
 - **Email:** admin@mail.com
 - **Password:** 123456
 
----
-
 ## Live Site URL
 
 Visit the live site at: [DrapeGear](https://drape-gear.vercel.app)
-
----
 
 ## Tech Stack
 
@@ -38,8 +32,6 @@ Visit the live site at: [DrapeGear](https://drape-gear.vercel.app)
 ### Payments
 - [Stripe](https://stripe.com/)
 
----
-
 ## Features
 
 ### User Functionality
@@ -60,14 +52,10 @@ Visit the live site at: [DrapeGear](https://drape-gear.vercel.app)
 - View all users.
 - View all orders placed by users.
 
----
-
 ## Security
 - Passwords are hashed using `bcrypt` before storing in the database.
 - JWT tokens used for secure API route access.
 - Role-based access control (admin vs. user) implemented throughout both frontend and backend.
-
----
 
 ## Steps to Clone and Run the Project Locally
 
