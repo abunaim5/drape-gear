@@ -34,6 +34,31 @@ const AllProducts = () => {
         }
     };
 
+    const handleWarning = (id: string) => {
+        toast.custom((t) => (
+            <div className={`${t.visible ? 'animate-enter' : 'animate-leave'} max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex flex-col items-center justify-center gap-4 p-4 ring-1 ring-black ring-opacity-5`}>
+                <div className='text-center'>
+                    <p className="text-lg font-semibold text-gray-900">Are you sure?</p>
+                    <p className="mt-1 text-sm text-gray-500">You won&apos;t be able to revert this!</p>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                    <button
+                        onClick={() => {handleRemoveProduct(id); toast.dismiss(t.id)}}
+                        className="max-w-fit text-sm transform transition-all duration-500 text-white bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-sm"
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="max-w-fit text-sm transform transition-all duration-500 text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-sm"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        ))
+    }
+
     return (
         <>
             <Breadcrumb />
@@ -74,7 +99,7 @@ const AllProducts = () => {
                                         <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-black text-white hover:bg-gray-800 hover:text-green-500 $`} onClick={() => { setSelectedProduct(product); setOpen(!open) }}><MdOutlineUpdate /></button>
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-red-500 text-white hover:bg-red-600`} onClick={() => handleRemoveProduct(product._id)}><PiTrashLight /></button>
+                                        <button className={`text-center text-base px-5 py-2 transition-all duration-500 bg-red-500 text-white hover:bg-red-600`} onClick={() => handleWarning(product._id)}><PiTrashLight /></button>
                                     </TableCell>
                                 </TableRow>
                             ))}

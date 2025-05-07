@@ -2,7 +2,7 @@
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import { fetchCartProducts, removeFromCart, updateCartQuantity } from "@/lib/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { CartProductListType } from "@/types/types";
+import { CartProductType } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Image from "next/image";
@@ -19,7 +19,8 @@ const Cart = () => {
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const subtotalPrice = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
+    const subtotal = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
+    const subtotalPrice = parseFloat(subtotal.toFixed(2));
 
     useEffect(() => {
         if (session?.user?.email && session?.user?.role === 'user') {
@@ -57,7 +58,7 @@ const Cart = () => {
                             </div>
                         </div>
                         {
-                            cart.products.map((product: CartProductListType, idx) => <div key={idx} className='mt-5 xl:mt-0'>
+                            cart.products.map((product: CartProductType, idx) => <div key={idx} className='mt-5 xl:mt-0'>
                                 <div className={`flex items-center gap-3 border xl:border-0 ${cart.products.length === 1 ? 'xl:border-b' : 'xl:border-b-0'} xl:border-t font-semibold py-5 md:py-0`}>
                                     <Image className='block xl:hidden' alt={`${product.name} image`} src={product.image} width={120} height={200} />
                                     <div className='xl:flex items-center justify-between flex-1'>
@@ -65,7 +66,7 @@ const Cart = () => {
                                             <Image className='hidden xl:block' alt={`${product.name} image`} src={product.image} width={120} height={200} />
                                             <div className='flex-1'>
                                                 <h4 className='text-sm'>{product.name}</h4>
-                                                <button onClick={() => handleRemoveFromCart(product.productId)} className='text-xl mt-2'><PiTrashLight /></button>
+                                                <button onClick={() => handleRemoveFromCart(product._id)} className='text-xl mt-2'><PiTrashLight /></button>
                                             </div>
                                         </div>
                                         <div className='block md:hidden border-b border-dashed my-2' />
@@ -77,13 +78,13 @@ const Cart = () => {
                                             <div className='block md:hidden border-b border-dashed my-2' />
                                             <div className='flex-1'>
                                                 <div className='flex items-center gap-6 xl:mx-auto max-w-max text-lg font-semibold px-3 py-[5px] border border-black'>
-                                                    <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
+                                                    <button onClick={() => handleUpdateProductQuantity({ id: product._id, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
                                                     <span>{product.quantity}</span>
-                                                    <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
+                                                    <button onClick={() => handleUpdateProductQuantity({ id: product._id, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
                                                 </div>
                                             </div>
                                             <div className='block md:hidden border-b border-dashed my-2' />
-                                            <h5 className='text-sm flex-1 xl:text-right'>${product.sale_price * product.quantity}</h5>
+                                            <h5 className='text-sm flex-1 xl:text-right'>${(product.sale_price * product.quantity).toFixed(2)}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -94,12 +95,12 @@ const Cart = () => {
                                     </div>
                                     <div className='flex-1 px-2'>
                                         <div className='flex items-center gap-6 mx-auto max-w-max text-lg font-semibold px-3 py-[5px] border border-black'>
-                                            <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
+                                            <button onClick={() => handleUpdateProductQuantity({ id: product._id, email: product.email, productQuantity: product.quantity - 1 })} className={`hover:text-cyan-500 ${product.quantity <= 1 ? 'pointer-events-none' : ''}`}><Minus size={20} /></button>
                                             <span>{product.quantity}</span>
-                                            <button onClick={() => handleUpdateProductQuantity({ id: product.productId, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
+                                            <button onClick={() => handleUpdateProductQuantity({ id: product._id, email: product.email, productQuantity: product.quantity + 1 })} className='hover:text-cyan-500'><Plus size={20} /></button>
                                         </div>
                                     </div>
-                                    <h5 className='flex-1 text-center text-sm'>${product.sale_price * product.quantity}</h5>
+                                    <h5 className='flex-1 text-center text-sm'>${(product.sale_price * product.quantity).toFixed(2)}</h5>
                                 </div>
                             </div>)
                         }

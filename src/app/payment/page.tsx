@@ -22,7 +22,8 @@ const PaymentComponent = () => {
     const productId = searchParams.get('id') as string;
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    const subtotalPrice = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
+    const subtotal = cart.products.reduce((total, item) => total + item.sale_price * item.quantity, 0);
+    const subtotalPrice = parseFloat(subtotal.toFixed(2));
     const totalItems = cart.products.reduce((total, item) => total + item.quantity, 0);
     const totalAmount = !productId ? subtotalPrice : product?.sale_price ?? 0;
     let orderedProducts: OrderedProductsType[];

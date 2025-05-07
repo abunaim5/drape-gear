@@ -56,11 +56,11 @@ type CartProductType = {
     sale_price: number;
     availability: boolean;
     quantity: number
-}[];
+};
 
 type CartProductResponseType = {
     success: boolean;
-    products: CartProductType
+    products: CartProductType[]
 }
 
 type CartProductListType = {
