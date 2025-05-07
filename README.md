@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drape Gear – Full-Stack E-Commerce Web App
 
-## Getting Started
+**Drape Gear** is a modern full-stack e-commerce web application built with a focus on functionality, clean design, and a smooth user experience. It supports both user and admin roles, complete product browsing features, secure authentication, Stripe payments, and dynamic PDF invoice generation.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Admin Access
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Email:** admin@mail.com
+- **Password:** 123456
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live Site URL
 
-## Learn More
+Visit the live site at: [DrapeGear](https://drape-gear.vercel.app)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Frontend
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Redux](https://redux.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Shadcn/UI](https://ui.shadcn.com/)
+- [NextAuth](https://next-auth.js.org/)
+- [Axios](https://axios-http.com/)
 
-## Deploy on Vercel
+### Backend
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [JWT](https://jwt.io/)
+- [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Payments
+- [Stripe](https://stripe.com/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Features
+
+### User Functionality
+- Register and login with secure authentication (hashed passwords using `bcrypt`, JWT-based).
+- Role-based access: separate user and admin flows.
+- Browse products by category, price (low to high, high to low), and with pagination.
+- Search functionality for products.
+- Quick view product modal and detailed product pages via dynamic routing.
+- Add to and remove from **Cart** and **Wishlist**.
+- Checkout with card payments via Stripe.
+- Place orders with selected quantity.
+- View order history with detailed product breakdown.
+- View and download PDF invoices for placed orders.
+
+### Admin Functionality
+- Admin dashboard with secure access.
+- Add, update, and delete products.
+- View all users.
+- View all orders placed by users.
+
+---
+
+## Security
+- Passwords are hashed using `bcrypt` before storing in the database.
+- JWT tokens used for secure API route access.
+- Role-based access control (admin vs. user) implemented throughout both frontend and backend.
+
+---
+
+## Steps to Clone and Run the Project Locally
+
+### Steps to Run Locally:
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone <repository-url>
+    ```
+
+2. **Navigate to the repository:**
+
+    ```bash
+    cd <repository-folder>
+    ```
+
+3. **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+4. **Configure environment variables:** Create a `.env.local` file and add the necessary configurations.
+
+5. **Start the development server:**
+
+    ```bash
+    npm start
+    ```
+
+6. **View the application in the browser:**
+
+    Open `http://localhost:5000` in your browser.
